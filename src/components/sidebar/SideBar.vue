@@ -2,8 +2,7 @@
 import { Icon } from '@iconify/vue'
 import { onClickOutside } from '@vueuse/core'
 import { computed, ref, useTemplateRef } from 'vue'
-import { items } from '@/constants/menu-items'
-import SideBarSection from './SideBarSection.vue'
+import { items } from '@/constants/sidebar/menu-items.ts'
 
 const componentAnchor = useTemplateRef('anchor')
 
@@ -72,5 +71,7 @@ onClickOutside(componentAnchor, () => {
         </template>
       </SideBarSection>
     </div>
+
+    <ThemeButton />
   </div>
 </template>
