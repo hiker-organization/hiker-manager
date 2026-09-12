@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
-import { useThemeStore } from '@/stores/theme-store'
+import { useThemeStore } from '@/stores/core/theme-store'
 
 const themeStore = useThemeStore()
 </script>

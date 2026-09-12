@@ -11,11 +11,14 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ActionButton: typeof import('./src/components/formkit/ActionButton.vue')['default']
+    GeneralForm: typeof import('./src/components/formkit/GeneralForm.vue')['default']
+    GeneralInput: typeof import('./src/components/formkit/GeneralInput.vue')['default']
     GeneralTable: typeof import('./src/components/table/GeneralTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SideBar: typeof import('./src/components/sidebar/SideBar.vue')['default']
     SideBarSection: typeof import('./src/components/sidebar/SideBarSection.vue')['default']
-    ThemeButton: typeof import('./src/components/ThemeButton.vue')['default']
+    ThemeButton: typeof import('./src/components/core/ThemeButton.vue')['default']
   }
 }

@@ -1,14 +1,23 @@
 import './assets/main.css'
 
+import type { ToastContainerOptions } from 'vue3-toastify'
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+
+import { plugin, defaultConfig } from '@formkit/vue'
+
+import Vue3Toastify from 'vue3-toastify'
 
 import App from './App.vue'
 import router from './router'
 
-const app = createApp(App)
-
-app.use(createPinia())
-app.use(router)
-
-app.mount('#app')
+createApp(App) // Arquivo Raíz (Vue).
+  .use(createPinia()) // Pinia (Stores).
+  .use(router) // Vue Router (Gerenciamento de Rotas).
+  .use(plugin, defaultConfig) // FormKit (Desenvolvimento de Formulários).
+  .use(Vue3Toastify, {
+    autoClose: 5000,
+    theme: 'colored',
+  } as ToastContainerOptions) // Vue3 Toastify (Alertas).
+  .mount('#app') // Container de Carregamento (index.html).

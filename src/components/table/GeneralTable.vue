@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TableColumn, TableRow } from '@/models/table/table-model'
+import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 import { pseudoColumns, pseudoRows } from '@/constants/table/table-pseudo-data'
 
 const props = withDefaults(defineProps<{

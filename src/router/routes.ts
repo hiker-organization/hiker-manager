@@ -2,6 +2,18 @@ import type { RouteRecordRaw } from 'vue-router'
 
 export const routes: Array<RouteRecordRaw> = [
   {
+    path: '/auth',
+    component: () => import('@/layouts/AuthLayout.vue'),
+    children: [
+      {
+        path: '',
+        name: 'login',
+        component: () => import('@/views/auth/LoginForm.vue'),
+        meta: { title: 'Login' },
+      }
+    ],
+  },
+  {
     path: '/',
     component: import('@/layouts/AppLayout.vue'),
     children: [

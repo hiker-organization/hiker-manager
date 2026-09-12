@@ -27,7 +27,7 @@ onClickOutside(componentAnchor, () => {
     @mouseleave="isOpen = false"
   >
     <div class="min-w-max flex items-center justify-start gap-4">
-      <img class="size-12" src="/icons/male.png" alt="logo" />
+      <img class="size-12" src="/icons/favicon.png" alt="logo" />
       <h1 class="text-xl font-extrabold">Hiker Manager</h1>
     </div>
 
