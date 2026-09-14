@@ -1,4 +1,5 @@
 import './assets/main.css'
+import 'vue3-toastify/dist/index.css'
 
 import type { ToastContainerOptions } from 'vue3-toastify'
 
@@ -19,5 +20,7 @@ createApp(App) // Arquivo Raíz (Vue).
   .use(Vue3Toastify, {
     autoClose: 5000,
     theme: 'colored',
+    position: 'bottom-right',
+    limit: 5,
   } as ToastContainerOptions) // Vue3 Toastify (Alertas).
   .mount('#app') // Container de Carregamento (index.html).

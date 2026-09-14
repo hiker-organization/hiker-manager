@@ -2,13 +2,16 @@
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 import { pseudoColumns, pseudoRows } from '@/constants/table/table-pseudo-data'
 
-const props = withDefaults(defineProps<{
-  columns: Array<TableColumn>,
-  rows: Array<TableRow>,
-}>(), {
-  columns: () => [...pseudoColumns],
-  rows: () => [...pseudoRows],
-})
+const props = withDefaults(
+  defineProps<{
+    columns: Array<TableColumn>
+    rows: Array<TableRow>
+  }>(),
+  {
+    columns: () => [...pseudoColumns],
+    rows: () => [...pseudoRows],
+  },
+)
 </script>
 
 <template>
@@ -16,7 +19,11 @@ const props = withDefaults(defineProps<{
     <table class="table table-fixed table-zebra">
       <thead>
         <tr>
-          <th v-for="column in props.columns" :key="column.value" class="text-base-content font-bold">
+          <th
+            v-for="column in props.columns"
+            :key="column.value"
+            class="text-base-content font-bold"
+          >
             {{ column.label }}
           </th>
         </tr>

@@ -1,4 +1,4 @@
-import type { TableColumn, TableRow } from "@/models/components/table/table-model"
+import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 
 const pseudoColumns: Array<TableColumn> = [
   {

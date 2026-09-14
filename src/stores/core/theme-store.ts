@@ -1,5 +1,5 @@
-import { useLocalStorage } from "@vueuse/core"
-import { defineStore } from "pinia"
+import { useLocalStorage } from '@vueuse/core'
+import { defineStore } from 'pinia'
 import { computed } from 'vue'
 
 type ThemeOptions = 'light' | 'dark'

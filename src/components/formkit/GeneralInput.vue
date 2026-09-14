@@ -10,10 +10,5 @@ const props = defineProps<{
 </script>
 
 <template>
-  <FormKit
-    :classes="props.classes"
-    :type="props.type"
-    :name="props.name"
-    :label="props.label"
-  />
+  <FormKit :classes="props.classes" :type="props.type" :name="props.name" :label="props.label" />
 </template>

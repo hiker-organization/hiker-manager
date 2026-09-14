@@ -10,7 +10,7 @@ export const routes: Array<RouteRecordRaw> = [
         name: 'login',
         component: () => import('@/views/auth/LoginForm.vue'),
         meta: { title: 'Login' },
-      }
+      },
     ],
   },
   {
