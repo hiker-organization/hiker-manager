@@ -1,17 +1,10 @@
 <script setup lang="ts">
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
-import { pseudoColumns, pseudoRows } from '@/constants/table/table-pseudo-data'
 
-const props = withDefaults(
-  defineProps<{
-    columns: Array<TableColumn>
-    rows: Array<TableRow>
-  }>(),
-  {
-    columns: () => [...pseudoColumns],
-    rows: () => [...pseudoRows],
-  },
-)
+const props = defineProps<{
+  columns: Array<TableColumn>
+  rows: Array<TableRow>
+}>()
 </script>
 
 <template>

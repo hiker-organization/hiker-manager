@@ -5,11 +5,15 @@ import { useToast } from '@/composables/notify/toastify'
 
 const router = createRouter({
   routes: routes,
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
 })
 
 router.beforeEach((to) => {
   const authStore = useAuthStore()
+
+  if (to.name === 'login' && authStore.isAuthenticated) {
+    return false
+  }
 
   if (to.name !== 'login' && !authStore.isAuthenticated) {
     return {
