@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
 import { useThemeStore } from '@/stores/core/theme-store'
+import { ToastifyContainer } from 'vue3-toastify'
 
 const themeStore = useThemeStore()
 
@@ -14,5 +15,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <RouterView />
+  <div class="size-full">
+    <RouterView />
+
+    <ToastifyContainer />
+  </div>
 </template>

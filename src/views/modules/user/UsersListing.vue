@@ -9,10 +9,13 @@ const userStore = useUserStore()
 const admins = ref<Array<UserListingResponse>>([])
 
 onMounted(async () => {
-  const { data, statusCode } = await userStore.fetchAdmins({
-    page: '1',
-    limit: '10',
-  }, {})
+  const { data, statusCode } = await userStore.fetchAdmins(
+    {
+      page: '1',
+      limit: '10',
+    },
+    {},
+  )
 
   if (statusCode.value === 200 && data.value) {
     admins.value = data.value.data

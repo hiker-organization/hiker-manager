@@ -17,17 +17,6 @@ export const items: Array<MenuSection | MenuItem> = [
     routeName: 'home',
   },
   {
-    icon: 'lucide:settings',
-    label: 'Configurações',
-    chidlren: [
-      {
-        icon: 'lucide:shield',
-        label: 'Administradores',
-        routeName: 'adminsManagement',
-      },
-    ],
-  },
-  {
     icon: 'lucide:users',
     label: 'Usuários',
     chidlren: [

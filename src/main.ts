@@ -22,5 +22,6 @@ createApp(App) // Arquivo Raíz (Vue).
     theme: 'colored',
     position: 'bottom-right',
     limit: 5,
+    clearOnUrlChange: false,
   } as ToastContainerOptions) // Vue3 Toastify (Alertas).
   .mount('#app') // Container de Carregamento (index.html).

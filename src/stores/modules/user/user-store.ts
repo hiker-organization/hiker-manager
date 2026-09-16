@@ -7,13 +7,9 @@ import { generateFullEndpoint } from '@/utils/api/api-params-utils'
 
 export const useUserStore = defineStore('UserStore', () => {
   async function fetchAdmins(queryParams: QueryParams, routeParams: RouteParams) {
-    return await useApiConnection(
-      generateFullEndpoint(
-        '/admin/users',
-        queryParams,
-        routeParams,
-      )
-    ).get().json<PaginatedResponse<UserListingResponse>>()
+    return await useApiConnection(generateFullEndpoint('/admin/users', queryParams, routeParams))
+      .get()
+      .json<PaginatedResponse<UserListingResponse>>()
   }
 
   return {

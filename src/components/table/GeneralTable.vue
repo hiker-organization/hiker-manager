@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
+import { formatCellValue } from '@/utils/components/table/table-utils'
 
 const props = defineProps<{
   columns: Array<TableColumn>
@@ -25,7 +26,7 @@ const props = defineProps<{
       <tbody>
         <tr v-for="(row, index) in props.rows" :key="index">
           <td v-for="column in props.columns" :key="column.value">
-            {{ row[column.value] }}
+            {{ formatCellValue(String(row[column.value]), column.type) }}
           </td>
         </tr>
       </tbody>
