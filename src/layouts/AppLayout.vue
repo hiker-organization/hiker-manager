@@ -1,7 +1,7 @@
 <template>
-  <div class="h-full w-full flex items-stretch justify-stretch">
+  <div class="size-full flex items-stretch justify-stretch">
     <SideBar />
-    <div class="h-full w-full bg-base-100 p-4">
+    <div class="h-full w-full bg-base-100 p-4 overflow-hidden">
       <RouterView />
     </div>
   </div>

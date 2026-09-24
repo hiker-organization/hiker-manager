@@ -7,7 +7,7 @@ interface MenuItem {
 interface MenuSection {
   icon: string
   label: string
-  chidlren: Array<MenuItem>
+  children: Array<MenuItem>
 }
 
 export const items: Array<MenuSection | MenuItem> = [
@@ -19,7 +19,7 @@ export const items: Array<MenuSection | MenuItem> = [
   {
     icon: 'lucide:users',
     label: 'Usuários',
-    chidlren: [
+    children: [
       {
         icon: 'lucide:list',
         label: 'Listagem',

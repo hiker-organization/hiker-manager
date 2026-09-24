@@ -19,7 +19,7 @@ onClickOutside(componentAnchor, () => {
   <div
     ref="anchor"
     :class="[
-      'h-full bg-base-300 flex flex-col items-stretch justify-start gap-4 p-4 overflow-hidden transition-all duration-200',
+      'min-w-20 h-full bg-base-300 flex flex-col items-stretch justify-start gap-4 p-4 overflow-hidden transition-all duration-200',
       sidebarWidth,
     ]"
     @click="isOpen = true"
@@ -58,7 +58,7 @@ onClickOutside(componentAnchor, () => {
 
         <template #subItems>
           <RouterLink
-            v-for="(subItem, index) in item.chidlren"
+            v-for="(subItem, index) in item.children"
             :key="index"
             :to="{
               name: subItem.routeName,

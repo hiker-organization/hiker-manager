@@ -8,7 +8,7 @@ function generateEndpointWithRouteParams(endpoint: string, routeParams: RoutePar
   let fullEndpoint = endpoint
 
   Object.entries(routeParams).forEach(([param, value]) => {
-    fullEndpoint = fullEndpoint.replace(param, value)
+    fullEndpoint = fullEndpoint.replace(`:${param}`, value)
   })
 
   return fullEndpoint

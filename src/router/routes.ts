@@ -15,24 +15,13 @@ export const routes: Array<RouteRecordRaw> = [
   },
   {
     path: '/',
-    component: import('@/layouts/AppLayout.vue'),
+    component: () => import('@/layouts/AppLayout.vue'),
     children: [
       {
         path: '',
         name: 'home',
         component: () => import('@/views/HomePage.vue'),
         meta: { title: 'Hiker Manager' },
-      },
-      {
-        path: 'config',
-        children: [
-          {
-            path: 'admins',
-            name: 'adminsManagement',
-            component: () => import('@/views/modules/config/admin/AdminsManagement.vue'),
-            meta: { title: 'Gerenciamento de Administradores' },
-          },
-        ],
       },
       {
         path: 'users',
@@ -46,5 +35,11 @@ export const routes: Array<RouteRecordRaw> = [
         ],
       },
     ],
+  },
+  {
+    path: '/restrict',
+    name: 'restrict',
+    component: () => import('@/layouts/RestrictLayout.vue'),
+    meta: { title: 'Área Restrita' },
   },
 ]

@@ -10,3 +10,7 @@ export interface UserListingResponse {
   cargo: 'ADM' | 'USER'
   bloqueado: boolean
 }
+
+export interface UserBlockingParameters {
+  data: string
+}

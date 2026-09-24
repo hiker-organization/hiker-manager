@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { LoginPayload } from '@/models/auth/auth-model'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth/auth-store'
 import { useToast } from '@/composables/notify/toastify'
@@ -17,7 +18,7 @@ const { formData, formIsLoading, handleSubmit } = useCreateGeneralForm<LoginPayl
     password: '',
   },
   submitFunction: async () => {
-    const { statusCode } = await authStore.executeAuth(formData.value)
+    const { statusCode } = await authStore.login(formData.value)
 
     if (statusCode.value !== 201) {
       notify.error('Erro de autenticação!')
@@ -31,6 +32,12 @@ const { formData, formIsLoading, handleSubmit } = useCreateGeneralForm<LoginPayl
       name: 'home',
     })
   },
+})
+
+onMounted(() => {
+  if (router.currentRoute.value.query.authError === 'invalid') {
+    notify.error('Autenticação inválida.')
+  }
 })
 </script>
 
