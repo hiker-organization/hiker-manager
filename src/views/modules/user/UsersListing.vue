@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UserListingResponse } from '@/models/modules/user/user-model'
+import type { Pagination } from '@/models/components/table/pagination-model'
 import { onMounted, ref } from 'vue'
 import { USER_TABLE_COLUMNS } from '@/constants/modules/user/user-table-columns'
 import { useUserStore } from '@/stores/modules/user/user-store'
@@ -10,6 +11,13 @@ const userStore = useUserStore()
 const { notify } = useToast()
 
 const admins = ref<Array<UserListingResponse>>([])
+
+const pagination = ref<Pagination>({
+  page: 1,
+  limit: 10,
+  total: 0,
+  total_pages: 1,
+})
 
 async function loadUsers() {
   const { data, statusCode } = await userStore.fetchAdmins(
@@ -22,6 +30,8 @@ async function loadUsers() {
 
   if (statusCode.value === 200 && data.value) {
     admins.value = data.value.data
+
+    pagination.value = data.value.meta
   }
 }
 
@@ -67,7 +77,17 @@ onMounted(async () => {
   <div class="h-full w-full flex flex-col items-start justify-stretch gap-4">
     <h1 class="text-lg font-bold">Listagem de Usuários</h1>
 
-    <GeneralTable :columns="USER_TABLE_COLUMNS" :rows="admins">
+    <GeneralTable :columns="USER_TABLE_COLUMNS" :rows="admins" :pagination="pagination">
+      <template #bloqueado="{ data }">
+        <ConditionBadge
+          :value="data['bloqueado']"
+          activeText="Bloqueado"
+          inactiveText="Desbloqueado"
+          activeVariant="error"
+          inactiveVariant="success"
+        />
+      </template>
+
       <template #registerActions="{ data }">
         <GeneralButton
           v-if="data['bloqueado']"

@@ -42,8 +42,8 @@ export const USER_TABLE_COLUMNS: Array<TableColumn> = [
     type: 'text',
   },
   {
-    label: 'Bloqueio',
+    label: 'Status',
     value: 'bloqueado',
     type: 'boolean',
-  }
+  },
 ]

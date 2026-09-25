@@ -46,7 +46,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
 <template>
   <button
     :class="[
-      'btn flex items-center justify-center gap-2',
+      'btn flex items-center justify-center gap-2 p-4',
       buttonTypes[props.type],
       buttonVariants[props.variant],
       { 'btn-disabled': props.disabled },

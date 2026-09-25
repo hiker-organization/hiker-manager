@@ -1,16 +1,18 @@
 <script setup lang="ts">
+import type { Pagination } from '@/models/components/table/pagination-model'
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 import { formatCellValue } from '@/utils/components/table/table-utils'
 
 const props = defineProps<{
   columns: Array<TableColumn>
   rows: Array<TableRow>
+  pagination?: Pagination
 }>()
 </script>
 
 <template>
-  <div class="h-full w-full border rounded-md overflow-x-hidden overflow-y-auto">
-    <table class="table table-zebra">
+  <div class="size-full flex flex-col gap-4">
+    <table class="table table-zebra border rounded-md overflow-auto">
       <thead>
         <tr>
           <th
@@ -32,18 +34,19 @@ const props = defineProps<{
             :title="formatCellValue(String(row[column.value]), column.type)"
             class="truncate"
           >
-            <GeneralBadge v-if="column.type === 'boolean'" :value="Boolean(row[column.value])" />
-            <span v-else>
+            <slot :name="column.value" :data="row">
               {{ formatCellValue(String(row[column.value]), column.type) }}
-            </span>
+            </slot>
           </td>
           <td v-if="$slots['registerActions']">
-            <GeneralDropdown type="left">
+            <GeneralDropdown type="bottom">
               <slot name="registerActions" :data="row" />
             </GeneralDropdown>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <GeneralPagination v-if="props.pagination" :pagination="props.pagination" />
   </div>
 </template>

@@ -8,6 +8,14 @@ import { Icon } from '@iconify/vue'
 
     <h2 class="text-xl font-extrabold text-center uppercase">
       Você não tem acesso aos recursos exigidos pela aplicação.
+
+      <RouterLink
+        :to="{
+          name: 'home',
+        }"
+      >
+        <GeneralButton label="Home" icon="lucide:home" />
+      </RouterLink>
     </h2>
   </div>
 </template>

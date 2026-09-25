@@ -12,11 +12,13 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/formkit/ActionButton.vue')['default']
+    ConditionBadge: typeof import('./src/components/daisyui/ConditionBadge.vue')['default']
     GeneralBadge: typeof import('./src/components/daisyui/GeneralBadge.vue')['default']
     GeneralButton: typeof import('./src/components/daisyui/GeneralButton.vue')['default']
     GeneralDropdown: typeof import('./src/components/daisyui/GeneralDropdown.vue')['default']
     GeneralForm: typeof import('./src/components/formkit/GeneralForm.vue')['default']
     GeneralInput: typeof import('./src/components/formkit/GeneralInput.vue')['default']
+    GeneralPagination: typeof import('./src/components/table/GeneralPagination.vue')['default']
     GeneralTable: typeof import('./src/components/table/GeneralTable.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
