@@ -40,7 +40,7 @@ const containerMargin = computed<string>(() => {
 <template>
   <!-- https://daisyui.com/components/dropdown/ -->
   <div :class="['dropdown', `dropdown-${props.type}`]">
-    <GeneralButton label="Ações Disponíveis" icon="lucide:circle-ellipsis" variant="primary" />
+    <Button label="Ações Disponíveis" icon="lucide:circle-ellipsis" variant="primary" />
     <div
       :class="[
         'dropdown-content bg-base-300 border border-base-content rounded-md p-2',

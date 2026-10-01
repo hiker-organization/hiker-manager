@@ -1,5 +1,5 @@
-export interface UserListingResponse {
-  id: number
+export interface User {
+  id?: number
   nome_usuario: string
   nome_exibicao: string
   email: string

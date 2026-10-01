@@ -19,12 +19,6 @@ export const items: Array<MenuSection | MenuItem> = [
   {
     icon: 'lucide:users',
     label: 'Usuários',
-    children: [
-      {
-        icon: 'lucide:list',
-        label: 'Listagem',
-        routeName: 'usersListing',
-      },
-    ],
+    routeName: 'users',
   },
 ]

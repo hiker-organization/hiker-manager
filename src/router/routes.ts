@@ -25,12 +25,21 @@ export const routes: Array<RouteRecordRaw> = [
       },
       {
         path: 'users',
+        name: 'users',
+        redirect: { name: 'usersListing' },
+        component: () => import('@/views/modules/user/UserLayout.vue'),
         children: [
           {
             path: '',
             name: 'usersListing',
             component: () => import('@/views/modules/user/UsersListing.vue'),
             meta: { title: 'Listagem de Usuários' },
+          },
+          {
+            path: ':user',
+            name: 'userForm',
+            component: () => import('@/views/modules/user/UserForm.vue'),
+            meta: { title: 'Detalhes do Usuário' },
           },
         ],
       },

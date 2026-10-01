@@ -27,17 +27,15 @@ const props = defineProps<{
       </thead>
 
       <tbody>
-        <tr v-for="(row, index) in props.rows" :key="index">
-          <td
-            v-for="column in props.columns"
-            :key="column.value"
-            :title="formatCellValue(String(row[column.value]), column.type)"
-            class="truncate"
-          >
+        <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex" class="relative">
+          <td v-for="(column, cellIndex) in props.columns" :key="column.value" class="truncate">
+            <slot v-if="cellIndex === 0" :data="row" name="registerLink" />
+
             <slot :name="column.value" :data="row">
               {{ formatCellValue(String(row[column.value]), column.type) }}
             </slot>
           </td>
+
           <td v-if="$slots['registerActions']">
             <Dropdown type="bottom">
               <slot name="registerActions" :data="row" />

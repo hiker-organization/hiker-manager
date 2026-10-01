@@ -3,10 +3,11 @@ import type { FormKitClasses } from '@formkit/core'
 
 const props = withDefaults(
   defineProps<{
-    classes: Record<string, string | Record<string, boolean> | FormKitClasses> | undefined
-    disabled: boolean
+    classes?: Record<string, string | Record<string, boolean> | FormKitClasses> | undefined
+    disabled?: boolean
   }>(),
   {
+    classes: undefined,
     disabled: false,
   },
 )

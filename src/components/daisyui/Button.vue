@@ -44,6 +44,7 @@ const buttonVariants: Record<ButtonVariant, string> = {
 </script>
 
 <template>
+  <!-- https://daisyui.com/components/button/ -->
   <button
     :class="[
       'btn flex items-center justify-center gap-2 p-4',

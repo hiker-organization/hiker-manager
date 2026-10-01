@@ -2,7 +2,7 @@ import { ref } from 'vue'
 
 interface CreateFormOptions<T> {
   initialFormData: T
-  submitFunction: () => Promise<void>
+  submitFunction?: () => Promise<void>
 }
 
 export function useCreateForm<T>(options: CreateFormOptions<T>) {
@@ -13,6 +13,10 @@ export function useCreateForm<T>(options: CreateFormOptions<T>) {
   const formIsLoading = ref<boolean>(false)
 
   async function handleSubmit() {
+    if (!submitFunction) {
+      return
+    }
+
     try {
       formIsLoading.value = true
 

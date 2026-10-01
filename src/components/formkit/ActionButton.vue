@@ -12,7 +12,7 @@ const props = defineProps<{
   icon: {
     name: string
     class?: ClassValue
-  },
+  }
   classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
 }>()
 </script>

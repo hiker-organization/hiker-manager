@@ -69,7 +69,7 @@ onClickOutside(componentAnchor, () => {
             {{ subItem.label }}
           </RouterLink>
         </template>
-      </SideBarSection>
+      </SidebarSection>
     </div>
 
     <ThemeButton />
