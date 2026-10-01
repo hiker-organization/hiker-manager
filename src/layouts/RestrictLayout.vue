@@ -14,7 +14,7 @@ import { Icon } from '@iconify/vue'
           name: 'home',
         }"
       >
-        <GeneralButton label="Home" icon="lucide:home" />
+        <Button label="Home" icon="lucide:home" />
       </RouterLink>
     </h2>
   </div>

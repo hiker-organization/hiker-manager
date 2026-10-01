@@ -1,11 +1,11 @@
 import { ref } from 'vue'
 
-interface CreateGeneralFormOptions<T> {
+interface CreateFormOptions<T> {
   initialFormData: T
   submitFunction: () => Promise<void>
 }
 
-export function useCreateGeneralForm<T>(options: CreateGeneralFormOptions<T>) {
+export function useCreateForm<T>(options: CreateFormOptions<T>) {
   const { initialFormData, submitFunction } = options
 
   const formData = ref<T>(initialFormData)
@@ -17,6 +17,8 @@ export function useCreateGeneralForm<T>(options: CreateGeneralFormOptions<T>) {
       formIsLoading.value = true
 
       await submitFunction()
+    } catch (error) {
+      console.error('Erro ao enviar o formulário!', error)
     } finally {
       formIsLoading.value = false
     }

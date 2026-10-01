@@ -12,18 +12,19 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/formkit/ActionButton.vue')['default']
+    Button: typeof import('./src/components/daisyui/Button.vue')['default']
     ConditionBadge: typeof import('./src/components/daisyui/ConditionBadge.vue')['default']
-    GeneralBadge: typeof import('./src/components/daisyui/GeneralBadge.vue')['default']
-    GeneralButton: typeof import('./src/components/daisyui/GeneralButton.vue')['default']
-    GeneralDropdown: typeof import('./src/components/daisyui/GeneralDropdown.vue')['default']
-    GeneralForm: typeof import('./src/components/formkit/GeneralForm.vue')['default']
-    GeneralInput: typeof import('./src/components/formkit/GeneralInput.vue')['default']
-    GeneralPagination: typeof import('./src/components/table/GeneralPagination.vue')['default']
-    GeneralTable: typeof import('./src/components/table/GeneralTable.vue')['default']
+    Dropdown: typeof import('./src/components/daisyui/Dropdown.vue')['default']
+    Form: typeof import('./src/components/formkit/Form.vue')['default']
+    Input: typeof import('./src/components/formkit/Input.vue')['default']
+    Pagination: typeof import('./src/components/table/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Sidebar: typeof import('./src/components/sidebar/Sidebar.vue')['default']
     SideBar: typeof import('./src/components/sidebar/SideBar.vue')['default']
+    SidebarSection: typeof import('./src/components/sidebar/SidebarSection.vue')['default']
     SideBarSection: typeof import('./src/components/sidebar/SideBarSection.vue')['default']
+    Table: typeof import('./src/components/table/Table.vue')['default']
     ThemeButton: typeof import('./src/components/core/ThemeButton.vue')['default']
   }
 }

@@ -77,7 +77,7 @@ onMounted(async () => {
   <div class="h-full w-full flex flex-col items-start justify-stretch gap-4">
     <h1 class="text-lg font-bold">Listagem de Usuários</h1>
 
-    <GeneralTable :columns="USER_TABLE_COLUMNS" :rows="admins" :pagination="pagination">
+    <Table :columns="USER_TABLE_COLUMNS" :rows="admins" :pagination="pagination">
       <template #bloqueado="{ data }">
         <ConditionBadge
           :value="data['bloqueado']"
@@ -89,14 +89,14 @@ onMounted(async () => {
       </template>
 
       <template #registerActions="{ data }">
-        <GeneralButton
+        <Button
           v-if="data['bloqueado']"
           label="Desbloquear"
           icon="lucide:lock-open"
           variant="success"
           @click="unblockUser(data['nome_usuario'])"
         />
-        <GeneralButton
+        <Button
           v-else
           label="Bloquear"
           icon="lucide:lock"
@@ -104,6 +104,6 @@ onMounted(async () => {
           @click="blockUser(data['nome_usuario'])"
         />
       </template>
-    </GeneralTable>
+    </Table>
   </div>
 </template>

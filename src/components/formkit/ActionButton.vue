@@ -4,7 +4,6 @@ import type { FormKitClasses } from '@formkit/core'
 import { Icon } from '@iconify/vue'
 
 const props = defineProps<{
-  classes: Record<string, string | Record<string, boolean> | FormKitClasses> | undefined
   type: 'submit' | 'button'
   label: {
     text: string
@@ -13,7 +12,8 @@ const props = defineProps<{
   icon: {
     name: string
     class?: ClassValue
-  }
+  },
+  classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
 }>()
 </script>
 

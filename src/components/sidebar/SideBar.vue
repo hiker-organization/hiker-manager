@@ -50,7 +50,7 @@ onClickOutside(componentAnchor, () => {
         {{ item.label }}
       </RouterLink>
 
-      <SideBarSection v-else>
+      <SidebarSection v-else>
         <template #sectionTitle>
           <Icon :icon="item.icon" />
           {{ item.label }}

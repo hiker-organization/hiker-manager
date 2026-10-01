@@ -4,7 +4,7 @@ import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth/auth-store'
 import { useToast } from '@/composables/notify/toastify'
-import { useCreateGeneralForm } from '@/composables/forms/create-general-form'
+import { useCreateForm } from '@/composables/forms/create-form'
 
 const router = useRouter()
 
@@ -12,7 +12,7 @@ const authStore = useAuthStore()
 
 const { notify } = useToast()
 
-const { formData, formIsLoading, handleSubmit } = useCreateGeneralForm<LoginPayload>({
+const { formData, formIsLoading, handleSubmit } = useCreateForm<LoginPayload>({
   initialFormData: {
     email: '',
     password: '',
@@ -43,7 +43,7 @@ onMounted(() => {
 
 <template>
   <div class="w-96 bg-base-300 rounded-lg p-4">
-    <GeneralForm
+    <Form
       v-model:form="formData"
       :classes="{
         form: 'w-full flex flex-col items-center justify-center gap-4',
@@ -51,7 +51,7 @@ onMounted(() => {
       :disabled="formIsLoading"
       @submit="handleSubmit"
     >
-      <GeneralInput
+      <Input
         :classes="{
           outer: 'w-full',
           label: 'font-bold',
@@ -62,7 +62,7 @@ onMounted(() => {
         label="E-mail:"
       />
 
-      <GeneralInput
+      <Input
         :classes="{
           outer: 'w-full',
           label: 'font-bold',
@@ -88,6 +88,6 @@ onMounted(() => {
         }"
         type="submit"
       />
-    </GeneralForm>
+    </Form>
   </div>
 </template>

@@ -39,14 +39,14 @@ const props = defineProps<{
             </slot>
           </td>
           <td v-if="$slots['registerActions']">
-            <GeneralDropdown type="bottom">
+            <Dropdown type="bottom">
               <slot name="registerActions" :data="row" />
-            </GeneralDropdown>
+            </Dropdown>
           </td>
         </tr>
       </tbody>
     </table>
 
-    <GeneralPagination v-if="props.pagination" :pagination="props.pagination" />
+    <Pagination v-if="props.pagination" :pagination="props.pagination" />
   </div>
 </template>
