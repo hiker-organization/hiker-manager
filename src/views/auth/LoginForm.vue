@@ -57,8 +57,8 @@ onMounted(() => {
           label: 'font-bold',
           input: 'w-full bg-base-100 rounded-sm mt-2 p-1',
         }"
-        type="email"
         name="email"
+        type="email"
         label="E-mail:"
       />
 
@@ -68,8 +68,8 @@ onMounted(() => {
           label: 'font-bold',
           input: 'w-full bg-base-100 rounded-sm mt-2 p-1',
         }"
-        type="password"
         name="password"
+        type="password"
         label="Senha:"
       />
 

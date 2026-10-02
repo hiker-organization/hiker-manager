@@ -17,6 +17,7 @@ declare module 'vue' {
     Dropdown: typeof import('./src/components/daisyui/Dropdown.vue')['default']
     FieldsContainer: typeof import('./src/components/forms/FieldsContainer.vue')['default']
     Form: typeof import('./src/components/formkit/Form.vue')['default']
+    FormSection: typeof import('./src/components/forms/FormSection.vue')['default']
     Input: typeof import('./src/components/formkit/Input.vue')['default']
     Pagination: typeof import('./src/components/table/Pagination.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

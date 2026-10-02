@@ -26,7 +26,7 @@ const isOpen = ref<boolean>(false)
 
     <div
       v-show="isOpen"
-      class="w-full flex flex-col items-start justify-stretch transition-all duration-200"
+      class="w-full flex flex-col items-start justify-stretch transition-all duration-250"
     >
       <slot name="subItems" />
     </div>

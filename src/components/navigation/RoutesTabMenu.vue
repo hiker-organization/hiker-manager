@@ -21,8 +21,8 @@ function isCurrentTab(tab: RouteTab) {
         v-for="tab in props.tabs"
         :key="tab.label"
         :class="[
-          'rounded-md text-base-content',
-          isCurrentTab(tab) ? 'bg-primary pointer-events-none' : 'bg-base-100 hover:bg-primary/50',
+          'border border-base-content rounded-md text-base-content',
+          isCurrentTab(tab) ? 'bg-primary pointer-events-none' : 'bg-base-300 hover:bg-primary/50',
         ]"
       >
         <RouterLink

@@ -31,6 +31,13 @@ const { formData } = useCreateForm<User>({
   },
 })
 
+const normalizedBithDate = computed<string>({
+  get: () => formData.value.data_nascimento.slice(0, 10),
+  set: (value: string) => {
+    formData.value.data_nascimento = value
+  },
+})
+
 onMounted(async () => {
   if (!user.value) {
     return
@@ -52,16 +59,110 @@ onMounted(async () => {
 <template>
   <Form
     v-model:form="formData"
+    :disabled="true"
     :classes="{
-      form: 'size-full flex items-stretch justify-stretch gap-4',
+      form: 'w-full flex items-stretch justify-stretch gap-4',
     }"
   >
     <FieldsContainer>
-      <h1>Teste</h1>
+      <FormSection label="Dados Básicos" icon="lucide:info">
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="nome_usuario"
+          type="text"
+          label="Usuário:"
+        />
+
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="nome_exibicao"
+          type="text"
+          label="Nome:"
+        />
+
+        <Input
+          :options="[
+            { label: 'Usuário', value: 'USER' },
+            { label: 'Administrador', value: 'ADM' },
+          ]"
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="cargo"
+          type="select"
+          label="Cargo:"
+        />
+
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="email"
+          type="email"
+          label="E-mail:"
+        />
+
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="numero_celular"
+          type="text"
+          label="Celular:"
+        />
+
+        <Input
+          v-model="normalizedBithDate"
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="data_nascimento"
+          type="date"
+          label="Data de Nascimento:"
+        />
+
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="reputacao"
+          type="number"
+          label="Reputação:"
+        />
+
+        <Input
+          :classes="{
+            label: 'font-bold',
+            input:
+              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+          }"
+          name="foto_url"
+          type="text"
+          label="Foto (URL):"
+        />
+      </FormSection>
     </FieldsContainer>
 
     <ToggleFieldsContainer>
-      <Toggle v-model:is-checked="formData.bloqueado" label="Bloqueado" />
+      <Toggle v-model:is-checked="formData.bloqueado" :disabled="true" label="Bloqueado" />
     </ToggleFieldsContainer>
   </Form>
 </template>
