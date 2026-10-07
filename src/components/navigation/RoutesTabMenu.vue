@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import type { RouteTab } from '@/models/navigation/routes-tab-menu-model'
-import { Icon } from '@iconify/vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const props = defineProps<{
   tabs: Array<RouteTab>
 }>()
 
+const router = useRouter()
+
 const route = useRoute()
 
 function isCurrentTab(tab: RouteTab) {
   return route.name === tab.route.name
+}
+
+function openTab(tab: RouteTab) {
+  router.push(tab.route)
 }
 </script>
 
@@ -20,19 +25,14 @@ function isCurrentTab(tab: RouteTab) {
       <span
         v-for="tab in props.tabs"
         :key="tab.label"
-        :class="[
-          'border border-base-content rounded-md text-base-content',
-          isCurrentTab(tab) ? 'bg-primary pointer-events-none' : 'bg-base-300 hover:bg-primary/50',
-        ]"
       >
-        <RouterLink
+        <Button
           v-if="tab.isVisible"
-          :to="tab.route"
-          class="flex items-center justify-start gap-2 p-2"
-        >
-          <Icon :icon="tab.icon" class="text-base-content" />
-          {{ tab.label }}
-        </RouterLink>
+          :label="tab.label"
+          :icon="tab.icon"
+          :disabled="isCurrentTab(tab)"
+          @click="openTab(tab)"
+        />
       </span>
     </div>
 

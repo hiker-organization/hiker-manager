@@ -8,7 +8,7 @@ type ButtonVariant =
 
 const props = withDefaults(
   defineProps<{
-    label: string
+    label?: string
     icon?: string
     type?: ButtonType
     variant?: ButtonVariant
@@ -54,6 +54,6 @@ const buttonVariants: Record<ButtonVariant, string> = {
     ]"
   >
     <Icon v-if="props.icon" :icon="props.icon" />
-    {{ props.label }}
+    <span v-if="props.label">{{ props.label }}</span>
   </button>
 </template>

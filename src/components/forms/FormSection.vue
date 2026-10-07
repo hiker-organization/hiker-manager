@@ -17,7 +17,7 @@ const isOpen = ref<boolean>(props.openByDefault)
 </script>
 
 <template>
-  <div class="bg-base-200">
+  <div class="bg-base-200 rounded-md">
     <div
       class="w-full bg-base-100 flex items-center justify-between gap-4 border border-base-content/25 rounded-md p-4 cursor-pointer hover:border-base-content/75"
       @click="isOpen = !isOpen"

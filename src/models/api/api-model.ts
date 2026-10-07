@@ -1,8 +1,8 @@
 import type { Pagination } from '@/models/components/table/pagination-model'
 
-export type QueryParams = Record<string, string>
+export type QueryParams = Record<string, unknown>
 
-export type RouteParams = Record<string, string>
+export type RouteParams = Record<string, unknown>
 
 export interface ApiReponse<T> {
   data: T

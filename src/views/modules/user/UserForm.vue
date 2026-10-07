@@ -61,7 +61,7 @@ onMounted(async () => {
     v-model:form="formData"
     :disabled="true"
     :classes="{
-      form: 'w-full flex items-stretch justify-stretch gap-4',
+      form: 'w-full flex items-start justify-stretch gap-4',
     }"
   >
     <FieldsContainer>
