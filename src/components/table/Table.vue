@@ -5,6 +5,7 @@ import { ref } from 'vue'
 import { formatCellValue } from '@/utils/components/table/table-utils'
 
 const props = defineProps<{
+  namespace: string
   columns: Array<TableColumn>
   rows: Array<TableRow>
   pagination?: Pagination
@@ -15,6 +16,8 @@ const emits = defineEmits<{
 }>()
 
 const tableOptionsModalIsVisible = ref<boolean>(false)
+
+const tableVisibleColumns = ref<Array<string>>([])
 </script>
 
 <template>
@@ -32,6 +35,7 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
         <tr>
           <th
             v-for="column in props.columns"
+            v-show="tableVisibleColumns.includes(column.value)"
             :key="column.value"
             class="text-base-content font-bold"
           >
@@ -43,7 +47,12 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
 
       <tbody>
         <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex" class="relative">
-          <td v-for="(column, cellIndex) in props.columns" :key="column.value" class="truncate">
+          <td
+            v-for="(column, cellIndex) in props.columns"
+            v-show="tableVisibleColumns.includes(column.value)"
+            :key="column.value"
+            class="truncate"
+          >
             <slot v-if="cellIndex === 0" :data="row" name="registerLink" />
 
             <slot :name="column.value" :data="row">
@@ -68,10 +77,19 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
 
     <Modal
       v-model:is-visible="tableOptionsModalIsVisible"
+      title="Opções da Tabela"
+      icon="lucide:settings"
     >
-      <div class="grid grid-cols-2">
+      <div class="grid grid-cols-2 gap-4">
         <TablePageLimit
+          :namespace="props.namespace"
           @update-params="(params) => emits('updateParams', params)"
+        />
+
+        <TableColumnSelector
+          :namespace="props.namespace"
+          :all-columns="props.columns"
+          @update-visible-columns="(columns) => tableVisibleColumns = columns"
         />
       </div>
     </Modal>

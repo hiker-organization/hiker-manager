@@ -1,4 +1,4 @@
-import { computed, watch } from 'vue'
+import { computed, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 interface UseUrlParamsManagerOptions {
@@ -13,6 +13,8 @@ export function useUrlParamsManager(options: UseUrlParamsManagerOptions) {
   const router = useRouter()
 
   const route = useRoute()
+
+  let reloadQueue: Promise<void> = Promise.resolve()
 
   const allRouteParams = computed<Record<string, unknown>>(() => {
     return Object.entries(route.params).reduce<Record<string, unknown>>(
@@ -51,42 +53,54 @@ export function useUrlParamsManager(options: UseUrlParamsManagerOptions) {
     )
   })
 
-  function setNamespaceQueryParams(newQueryParams: Record<string, unknown>) {
-    const invalidOptions = ['undefined', 'null', '']
+  async function setNamespaceQueryParams(newQueryParams: Record<string, unknown>) {
+    reloadQueue = reloadQueue.then(async () => {
+      const invalidOptions = ['undefined', 'null', '']
 
-    const queryParamsWithNamespace = Object.entries(newQueryParams).reduce<Record<string, string>>(
-      (accumulator, [key, value]) => {
-        const normalizedValue = String(value).trim()
+      const queryParamsWithNamespace = Object.entries(newQueryParams).reduce<Record<string, string>>(
+        (accumulator, [key, value]) => {
+          const normalizedValue = String(value).trim()
 
-        if (!invalidOptions.includes(normalizedValue)) {
-          const keyWithNamespace = `${namespace}[${key}]`
+          if (!invalidOptions.includes(normalizedValue)) {
+            const keyWithNamespace = `${namespace}[${key}]`
 
-          accumulator[keyWithNamespace] = normalizedValue
-        }
+            accumulator[keyWithNamespace] = normalizedValue
+          }
 
-        return accumulator
-      },
-      {},
-    )
+          return accumulator
+        },
+        {},
+      )
 
-    router.replace({
-      name: route.name,
-      params: route.params,
-      query: {
-        ...route.query,
-        ...queryParamsWithNamespace,
-      },
+      await router.replace({
+        name: route.name,
+        params: route.params,
+        query: {
+          ...route.query,
+          ...queryParamsWithNamespace,
+        },
+      })
     })
+
+    await reloadQueue
   }
 
   watch(
-    () => currentNamespaceQueryParams.value,
+    () => JSON.stringify(currentNamespaceQueryParams.value),
     async () => {
-      if (onNamespaceQueryParamsChange) {
-        await onNamespaceQueryParamsChange()
+      if (!onNamespaceQueryParamsChange) {
+        return
       }
+
+      await nextTick()
+
+      await onNamespaceQueryParamsChange()
     },
-    { immediate, deep: true },
+    {
+      immediate: immediate,
+      deep: true,
+      flush: 'post',
+    },
   )
 
   return {

@@ -13,7 +13,7 @@ const props = defineProps<{
     name: string
     class?: ClassValue
   }
-  classes?: Record<string, string | Record<string, boolean> | FormKitClasses>
+  classes?: Record<string, string | Record<string, boolean> | FormKitClasses> | undefined
 }>()
 </script>
 

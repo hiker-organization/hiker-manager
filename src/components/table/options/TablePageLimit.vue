@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
+import { useStorage } from '@vueuse/core'
+
+const props = defineProps<{
+  namespace: string
+}>()
 
 const emits = defineEmits<{
   (e: 'updateParams', params: Record<string, unknown>): void
 }>()
 
-const currentLimit = ref<number>(1)
+const currentLimit = useStorage<number>(`${props.namespace}-limit`, 10, localStorage)
 
 watch(
   () => currentLimit.value,
@@ -20,7 +25,7 @@ watch(
 
 <template>
   <TableOptionContainer
-    label="Exibição"
+    label="Listagem"
     icon="lucide:list"
   >
     <Input
@@ -35,6 +40,7 @@ watch(
       :classes="{
         wrapper: 'w-full bg-base-300 rounded-md p-2',
         input: 'w-full cursor-pointer',
+        option: 'bg-base-100',
       }"
       type="select"
     />

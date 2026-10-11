@@ -8,6 +8,8 @@ import { useUrlParamsManager } from '@/composables/navigation/use-url-params-man
 
 const userStore = useUserStore()
 
+const namespace: string = 'users-list'
+
 const admins = ref<Array<User>>([])
 
 const pagination = ref<Pagination>({
@@ -21,7 +23,7 @@ const {
   currentNamespaceQueryParams,
   setNamespaceQueryParams,
 } = useUrlParamsManager({
-  namespace: 'users-list',
+  namespace,
   onNamespaceQueryParamsChange: async () => {
     const { data, statusCode } = await userStore.fetchAdmins(currentNamespaceQueryParams.value, {})
 
@@ -31,11 +33,13 @@ const {
       pagination.value = data.value.meta
     }
   },
+  immediate: true,
 })
 </script>
 
 <template>
   <Table
+    :namespace
     :columns="USER_TABLE_COLUMNS"
     :rows="admins"
     :pagination="pagination"
@@ -57,8 +61,8 @@ const {
         :value="data['bloqueado'] === true"
         activeText="Bloqueado"
         inactiveText="Desbloqueado"
-        activeVariant="error"
-        inactiveVariant="success"
+        activeClass="badge-error"
+        inactiveClass="badge-success"
       />
     </template>
   </Table>

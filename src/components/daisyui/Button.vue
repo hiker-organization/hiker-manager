@@ -1,59 +1,36 @@
 <script setup lang="ts">
+import type { ClassValue } from 'vue'
 import { Icon } from '@iconify/vue'
-
-type ButtonType = 'default' | 'soft' | 'outline' | 'dash' | 'active' | 'ghost' | 'link'
-
-type ButtonVariant =
-  'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'
 
 const props = withDefaults(
   defineProps<{
     label?: string
     icon?: string
-    type?: ButtonType
-    variant?: ButtonVariant
+    customClass?: ClassValue
+    type?: 'button' | 'submit' | 'reset'
     disabled?: boolean
   }>(),
   {
-    type: 'default',
-    variant: 'primary',
+    customClass: 'btn-primary flex items-center justify-center gap-2 p-4',
+    type: 'button',
     disabled: false,
   },
 )
-
-const buttonTypes: Record<ButtonType, string> = {
-  default: '',
-  soft: 'btn-soft',
-  outline: 'btn-outline',
-  dash: 'btn-dash',
-  active: 'btn-active',
-  ghost: 'btn-ghost',
-  link: 'btn-link',
-}
-
-const buttonVariants: Record<ButtonVariant, string> = {
-  primary: 'btn-primary',
-  secondary: 'btn-secondary',
-  accent: 'btn-accent',
-  info: 'btn-info',
-  success: 'btn-success',
-  warning: 'btn-warning',
-  error: 'btn-error',
-  neutral: 'btn-neutral',
-}
 </script>
 
 <template>
   <!-- https://daisyui.com/components/button/ -->
   <button
     :class="[
-      'btn flex items-center justify-center gap-2 p-4',
-      buttonTypes[props.type],
-      buttonVariants[props.variant],
+      'btn',
       { 'btn-disabled': props.disabled },
+      props.customClass,
     ]"
+    :type="props.type"
   >
-    <Icon v-if="props.icon" :icon="props.icon" />
-    <span v-if="props.label">{{ props.label }}</span>
+    <slot>
+      <Icon v-if="props.icon" :icon="props.icon" />
+      <span v-if="props.label">{{ props.label }}</span>
+    </slot>
   </button>
 </template>
