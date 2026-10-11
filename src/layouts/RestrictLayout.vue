@@ -3,19 +3,19 @@ import { Icon } from '@iconify/vue'
 </script>
 
 <template>
-  <div class="size-full flex flex-col items-center justify-center gap-4">
+  <div class="size-full flex flex-col items-center justify-center gap-8">
     <Icon icon="lucide:shield-alert" class="size-24 text-error" />
 
     <h2 class="text-xl font-extrabold text-center uppercase">
       Você não tem acesso aos recursos exigidos pela aplicação.
-
-      <RouterLink
-        :to="{
-          name: 'home',
-        }"
-      >
-        <Button label="Home" icon="lucide:home" />
-      </RouterLink>
     </h2>
+
+    <RouterLink
+      :to="{
+        name: 'home',
+      }"
+    >
+      <Button label="Home" icon="lucide:home" />
+    </RouterLink>
   </div>
 </template>

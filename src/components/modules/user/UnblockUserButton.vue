@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { User } from '@/models/modules/user/user-model'
 import { useUserStore } from '@/stores/modules/user/user-store'
+import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
   user: User
@@ -12,12 +13,22 @@ const emits = defineEmits<{
 
 const userStore = useUserStore()
 
+const { notify } = useToast()
+
 async function handleSubmit() {
-  await userStore.unblockUser({}, {
+  const { statusCode } = await userStore.unblockUser({}, {
     user: props.user.nome_usuario,
   })
 
-  emits('unblockProcessed')
+  if (statusCode.value === 200) {
+    notify.success('Usuário desbloqueado com sucesso.')
+
+    emits('unblockProcessed')
+
+    return
+  }
+
+  notify.error('Erro ao desbloquear o usuário!')
 }
 </script>
 

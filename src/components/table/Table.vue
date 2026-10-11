@@ -77,6 +77,20 @@ const tableVisibleColumns = ref<Array<string>>([])
       icon="lucide:settings"
     >
       <div class="grid grid-cols-2 gap-4">
+        <TableSortableFieldSelector
+          v-if="props.pagination && props.pagination.sortable_fields"
+          :namespace="props.namespace"
+          :all-columns="props.columns"
+          :sortable-fields="props.pagination.sortable_fields"
+          @update-params="(params) => emits('updateParams', params)"
+        />
+
+        <TableSortSense
+          v-if="props.pagination && props.pagination.sortable_fields"
+          :namespace="props.namespace"
+          @update-params="(params) => emits('updateParams', params)"
+        />
+
         <TablePageLimit
           :namespace="props.namespace"
           @update-params="(params) => emits('updateParams', params)"

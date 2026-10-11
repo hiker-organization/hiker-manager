@@ -17,6 +17,7 @@ const pagination = ref<Pagination>({
   limit: 10,
   total: 0,
   total_pages: 1,
+  sortable_fields: [],
 })
 
 const actionsModalIsVisible = ref<boolean>(false)
@@ -34,7 +35,10 @@ const {
     if (statusCode.value === 200 && data.value) {
       admins.value = data.value.data
 
-      pagination.value = data.value.meta
+      pagination.value = {
+        ...data.value.meta,
+        sortable_fields: ['id', 'nome_exibicao', 'email'],
+      }
     }
   },
   immediate: true,

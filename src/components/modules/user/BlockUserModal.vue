@@ -3,6 +3,7 @@ import type { User, UserBlockingParameters } from '@/models/modules/user/user-mo
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user/user-store'
 import { useCreateForm } from '@/composables/forms/create-form'
+import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
   user: User
@@ -14,6 +15,8 @@ const emits = defineEmits<{
 
 const userStore = useUserStore()
 
+const { notify } = useToast()
+
 const blockModalIsVisible = ref<boolean>(false)
 
 const { formData: userBlockFormData, formIsLoading: userBlockFormIsLoading, handleSubmit: userBlockFormHandleSubmit } = useCreateForm<UserBlockingParameters>({
@@ -21,7 +24,7 @@ const { formData: userBlockFormData, formIsLoading: userBlockFormIsLoading, hand
     data: ''
   },
   submitFunction: async () => {
-    await userStore.blockUser(
+    const { statusCode } = await userStore.blockUser(
       {
       data: userBlockFormData.value.data
       },
@@ -31,9 +34,17 @@ const { formData: userBlockFormData, formIsLoading: userBlockFormIsLoading, hand
       },
     )
 
-    blockModalIsVisible.value = false
+    if (statusCode.value === 200) {
+      notify.success('Usuário bloqueado com sucesso.')
 
-    emits('blockProcessed')
+      blockModalIsVisible.value = false
+
+      emits('blockProcessed')
+
+      return
+    }
+
+    notify.error('Erro ao bloquear o usuário!')
   }
 })
 </script>

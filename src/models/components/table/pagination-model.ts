@@ -3,4 +3,5 @@ export interface Pagination {
   limit: number
   total: number
   total_pages: number
+  sortable_fields?: Array<string>
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { User } from '@/models/modules/user/user-model'
 import { useUserStore } from '@/stores/modules/user/user-store'
+import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
   user: User
@@ -12,12 +13,22 @@ const emits = defineEmits<{
 
 const userStore = useUserStore()
 
+const { notify } = useToast()
+
 async function handleSubmit() {
-  await userStore.banUser({}, {
+  const { statusCode } = await userStore.banUser({}, {
     user: props.user.nome_usuario,
   })
 
-  emits('banProcessed')
+  if (statusCode.value === 200) {
+    notify.success('Usuário banido com sucesso.')
+
+    emits('banProcessed')
+
+    return
+  }
+
+  notify.error('Erro ao banir o usuário!')
 }
 </script>
 

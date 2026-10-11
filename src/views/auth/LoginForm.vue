@@ -20,17 +20,17 @@ const { formData: authFormData, formIsLoading: authFormIsLoading, handleSubmit: 
   submitFunction: async () => {
     const { statusCode } = await authStore.login(authFormData.value)
 
-    if (statusCode.value !== 201) {
-      notify.error('Erro de autenticação!')
+    if (statusCode.value === 201) {
+      notify.success('Autenticação concluída.')
+
+      router.push({
+        name: 'home',
+      })
 
       return
     }
 
-    notify.success('Autenticação concluída.')
-
-    router.push({
-      name: 'home',
-    })
+    notify.error('Erro de autenticação!')
   },
 })
 
