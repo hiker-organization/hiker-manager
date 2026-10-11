@@ -12,13 +12,13 @@ const authStore = useAuthStore()
 
 const { notify } = useToast()
 
-const { formData, formIsLoading, handleSubmit } = useCreateForm<LoginPayload>({
+const { formData: authFormData, formIsLoading: authFormIsLoading, handleSubmit: authFormHandleSubmit } = useCreateForm<LoginPayload>({
   initialFormData: {
     email: '',
     password: '',
   },
   submitFunction: async () => {
-    const { statusCode } = await authStore.login(formData.value)
+    const { statusCode } = await authStore.login(authFormData.value)
 
     if (statusCode.value !== 201) {
       notify.error('Erro de autenticação!')
@@ -44,12 +44,12 @@ onMounted(() => {
 <template>
   <div class="w-96 bg-base-300 rounded-lg p-4">
     <Form
-      v-model:form="formData"
+      v-model:form="authFormData"
       :classes="{
         form: 'w-full flex flex-col items-center justify-center gap-4',
       }"
-      :disabled="formIsLoading"
-      @submit="handleSubmit"
+      :disabled="authFormIsLoading"
+      @submit="authFormHandleSubmit"
     >
       <Input
         :classes="{
@@ -80,11 +80,11 @@ onMounted(() => {
             'w-full flex items-center justify-center gap-2 text-success-content p-2 cursor-pointer',
         }"
         :label="{
-          text: formIsLoading ? 'Carregando' : 'Entrar',
+          text: authFormIsLoading ? 'Carregando' : 'Entrar',
         }"
         :icon="{
-          name: formIsLoading ? 'lucide:loader-circle' : 'lucide:log-in',
-          class: [{ 'animate-spin': formIsLoading }],
+          name: authFormIsLoading ? 'lucide:loader-circle' : 'lucide:log-in',
+          class: [{ 'animate-spin': authFormIsLoading }],
         }"
         type="submit"
       />

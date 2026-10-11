@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang="ts" generic="TRow extends TableRow">
 import type { Pagination } from '@/models/components/table/pagination-model'
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 import { ref } from 'vue'
@@ -7,7 +7,7 @@ import { formatCellValue } from '@/utils/components/table/table-utils'
 const props = defineProps<{
   namespace: string
   columns: Array<TableColumn>
-  rows: Array<TableRow>
+  rows: Array<TRow>
   pagination?: Pagination
 }>()
 
@@ -46,24 +46,20 @@ const tableVisibleColumns = ref<Array<string>>([])
       </thead>
 
       <tbody>
-        <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex" class="relative">
+        <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex">
           <td
-            v-for="(column, cellIndex) in props.columns"
+            v-for="column in props.columns"
             v-show="tableVisibleColumns.includes(column.value)"
             :key="column.value"
             class="truncate"
           >
-            <slot v-if="cellIndex === 0" :data="row" name="registerLink" />
-
             <slot :name="column.value" :data="row">
               {{ formatCellValue(String(row[column.value]), column.type) }}
             </slot>
           </td>
 
-          <td v-if="$slots['registerActions']">
-            <Dropdown type="bottom">
-              <slot name="registerActions" :data="row" />
-            </Dropdown>
+          <td>
+            <slot name="registerActions" :data="row" />
           </td>
         </tr>
       </tbody>

@@ -13,6 +13,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/formkit/ActionButton.vue')['default']
     Badge: typeof import('./src/components/daisyui/Badge.vue')['default']
+    BanUserButton: typeof import('./src/components/modules/BanUserButton.vue')['default']
+    BlockUserModal: typeof import('./src/components/modules/user/BlockUserModal.vue')['default']
     Button: typeof import('./src/components/daisyui/Button.vue')['default']
     ConditionBadge: typeof import('./src/components/daisyui/ConditionBadge.vue')['default']
     Dropdown: typeof import('./src/components/daisyui/Dropdown.vue')['default']
@@ -35,5 +37,6 @@ declare module 'vue' {
     ThemeButton: typeof import('./src/components/core/ThemeButton.vue')['default']
     Toggle: typeof import('./src/components/daisyui/Toggle.vue')['default']
     ToggleFieldsContainer: typeof import('./src/components/forms/ToggleFieldsContainer.vue')['default']
+    UnblockUserButton: typeof import('./src/components/modules/user/UnblockUserButton.vue')['default']
   }
 }

@@ -17,7 +17,7 @@ const user = computed<string | undefined>(() => {
   return String(route.params.user)
 })
 
-const { formData } = useCreateForm<User>({
+const { formData: userFormData } = useCreateForm<User>({
   initialFormData: {
     nome_usuario: '',
     nome_exibicao: '',
@@ -31,10 +31,10 @@ const { formData } = useCreateForm<User>({
   },
 })
 
-const normalizedBithDate = computed<string>({
-  get: () => formData.value.data_nascimento.slice(0, 10),
+const normalizedBirthDate = computed<string>({
+  get: () => userFormData.value.data_nascimento.slice(0, 10),
   set: (value: string) => {
-    formData.value.data_nascimento = value
+    userFormData.value.data_nascimento = value
   },
 })
 
@@ -51,14 +51,14 @@ onMounted(async () => {
   )
 
   if (data.value) {
-    formData.value = data.value.data
+    userFormData.value = data.value.data
   }
 })
 </script>
 
 <template>
   <Form
-    v-model:form="formData"
+    v-model:form="userFormData"
     :disabled="true"
     :classes="{
       form: 'w-full flex items-start justify-stretch gap-4',
@@ -126,7 +126,7 @@ onMounted(async () => {
         />
 
         <Input
-          v-model="normalizedBithDate"
+          v-model="normalizedBirthDate"
           :classes="{
             label: 'font-bold',
             input:
@@ -162,7 +162,7 @@ onMounted(async () => {
     </FieldsContainer>
 
     <ToggleFieldsContainer>
-      <Toggle v-model:is-checked="formData.bloqueado" :disabled="true" label="Bloqueado" />
+      <Toggle v-model:is-checked="userFormData.bloqueado" :disabled="true" label="Bloqueado" />
     </ToggleFieldsContainer>
   </Form>
 </template>

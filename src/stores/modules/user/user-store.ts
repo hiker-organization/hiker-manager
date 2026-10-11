@@ -42,10 +42,19 @@ export const useUserStore = defineStore('UserStore', () => {
       .json()
   }
 
+  async function banUser(queryParams: QueryParams, routeParams: RouteParams) {
+    return await useApiConnection(
+      generateFullEndpoint('/admin/:user/ban', queryParams, routeParams),
+    )
+      .put()
+      .json()
+  }
+
   return {
     fetchAdmins,
     getUser,
     blockUser,
     unblockUser,
+    banUser,
   }
 })
