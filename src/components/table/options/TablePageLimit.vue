@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useStorage } from '@vueuse/core'
 
 const props = defineProps<{
@@ -12,12 +12,27 @@ const emits = defineEmits<{
 
 const currentLimit = useStorage<number>(`${props.namespace}-limit`, 10, localStorage)
 
+const didInitialSync = ref<boolean>(false)
+
 watch(
   () => currentLimit.value,
   (newLimit: number) => {
+    // Se não for a primeira execução, reseta a página.
+
+    if (didInitialSync.value) {
+      emits('updateParams', {
+        limit: newLimit,
+        page: 1,
+      })
+
+      return
+    }
+
     emits('updateParams', {
       limit: newLimit,
     })
+
+    didInitialSync.value = true
   },
   { immediate: true },
 )

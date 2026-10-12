@@ -26,6 +26,8 @@ const sortOptions = computed<Array<SortOption>>(() => {
 
 const currentSortableField = ref<string | null>(null)
 
+const didInitialSync = ref<boolean>(false)
+
 const { currentNamespaceQueryParams } = useUrlParamsManager({
   namespace: props.namespace,
 })
@@ -33,9 +35,22 @@ const { currentNamespaceQueryParams } = useUrlParamsManager({
 watch(
   () => currentSortableField.value,
   (newSortableField: string | null) => {
+    // Se não for a primeira execução, reseta a página.
+
+    if (didInitialSync.value) {
+      emits('updateParams', {
+        sortBy: newSortableField,
+        page: 1,
+      })
+
+      return
+    }
+
     emits('updateParams', {
       sortBy: newSortableField,
     })
+
+    didInitialSync.value = true
   },
 )
 

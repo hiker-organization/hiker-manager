@@ -10,14 +10,22 @@ const emits = defineEmits<{
   (e: 'updateParams', params: Record<string, unknown>): void
 }>()
 
-const currentPage = ref<number>(props.pagination.page || 1)
+const currentPage = ref<number>(0)
+
+function changePage(page: number) {
+  if (currentPage.value === page) {
+    return
+  }
+
+  emits('updateParams', {
+    page,
+  })
+}
 
 watch(
-  () => currentPage.value,
+  () => props.pagination.page,
   (newPage: number) => {
-    emits('updateParams', {
-      page: newPage,
-    })
+    currentPage.value = newPage
   },
   { immediate: true },
 )
@@ -25,14 +33,14 @@ watch(
 
 <template>
   <div class="w-full flex items-center justify-center gap-2">
-    <span v-for="index in pagination.total_pages" :key="index">
+    <span v-for="page in pagination.total_pages" :key="page">
       <Button
-        v-if="props.pagination.page == index"
-        :label="String(index)"
-      />
-      <Button
-        v-else :label="String(index)"
-        @click="emits('updateParams', { page: index })"
+        :label="String(page)"
+        :custom-class="[
+          'btn-primary flex items-center justify-center gap-2 p-4',
+          { 'opacity-50': currentPage !== page },
+        ]"
+        @click="changePage(page)"
       />
     </span>
   </div>
