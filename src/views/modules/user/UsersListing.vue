@@ -72,11 +72,25 @@ async function forceUsersListingReload() {
       :pagination="pagination"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
+      <template #reputacao="{ data }">
+        {{ data.reputacao }}%
+      </template>
+
+      <template #banido="{ data }">
+        <ConditionBadge
+          :value="data.banido === true"
+          activeText="Sim"
+          inactiveText="Não"
+          activeClass="badge-error"
+          inactiveClass="badge-success"
+        />
+      </template>
+
       <template #bloqueado="{ data }">
         <ConditionBadge
-          :value="data['bloqueado'] === true"
-          activeText="Bloqueado"
-          inactiveText="Desbloqueado"
+          :value="data.bloqueado === true"
+          activeText="Sim"
+          inactiveText="Não"
           activeClass="badge-error"
           inactiveClass="badge-success"
         />
@@ -94,6 +108,7 @@ async function forceUsersListingReload() {
     <Modal
       v-if="selectedUser"
       v-model:isVisible="actionsModalIsVisible"
+      icon="lucide:user-2"
       :title="`Ações (${selectedUser.nome_usuario})`"
     >
       <div class="grid grid-cols-2 gap-2">
@@ -104,17 +119,17 @@ async function forceUsersListingReload() {
               user: String(selectedUser.nome_usuario),
             },
           }"
-          class="w-full col-span-2"
+          class="w-full"
         >
           <Button
             label="Visualizar"
-            icon="lucide:user-2"
+            icon="lucide:form"
             custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
           />
         </RouterLink>
 
         <BlockUserModal
-          v-if="selectedUser.bloqueado === false"
+          v-if="!selectedUser.bloqueado"
           :user="selectedUser"
           @block-processed="forceUsersListingReload"
         />
@@ -125,6 +140,7 @@ async function forceUsersListingReload() {
         />
 
         <BanUserButton
+          v-if="!selectedUser.banido"
           :user="selectedUser"
           @ban-processed="forceUsersListingReload"
         />

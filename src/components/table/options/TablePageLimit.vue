@@ -50,7 +50,6 @@ watch(
         { value: 10, label: '10 Itens' },
         { value: 20, label: '20 Itens' },
         { value: 50, label: '50 Itens' },
-        { value: 100, label: '100 Itens' },
       ]"
       :classes="{
         wrapper: 'w-full bg-base-300 rounded-md p-2',
