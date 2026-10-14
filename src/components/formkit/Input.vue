@@ -1,11 +1,9 @@
 <script setup lang="ts">
 defineOptions({
-  inheritAttrs: false
+  inheritAttrs: false,
 })
 </script>
 
 <template>
-  <FormKit
-    v-bind="$attrs"
-  />
+  <FormKit v-bind="$attrs" />
 </template>

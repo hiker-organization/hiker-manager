@@ -5,8 +5,8 @@ const props = withDefaults(
   defineProps<{
     label?: string
     disabled?: boolean
-    checkedClass?: ClassValue,
-    uncheckedClass?: ClassValue,
+    checkedClass?: ClassValue
+    uncheckedClass?: ClassValue
     checkedIcon?: string
     uncheckedIcon?: string
   }>(),
@@ -28,21 +28,12 @@ const isChecked = defineModel<boolean>('isChecked', {
   <!-- https://daisyui.com/components/toggle/ -->
   <div class="w-full flex items-center justify-between gap-4">
     <span v-if="props.label" class="font-bold">{{ props.label }}</span>
-    <label
-      :class="[
-        { 'pointer-events-none': props.disabled }
-      ]"
-    >
+    <label :class="[{ 'pointer-events-none': props.disabled }]">
       <input
         v-model="isChecked"
-        :class="[
-          'toggle',
-          (isChecked)
-            ? props.checkedClass
-            : props.uncheckedClass,
-        ]"
+        :class="['toggle', isChecked ? props.checkedClass : props.uncheckedClass]"
         type="checkbox"
-      >
+      />
     </label>
   </div>
 </template>

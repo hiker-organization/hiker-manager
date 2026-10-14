@@ -24,10 +24,7 @@ const actionsModalIsVisible = ref<boolean>(false)
 
 const selectedUser = ref<User | null>(null)
 
-const {
-  currentNamespaceQueryParams,
-  setNamespaceQueryParams,
-} = useUrlParamsManager({
+const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
   namespace,
   onNamespaceQueryParamsChange: async () => {
     const { data, statusCode } = await userStore.fetchAdmins(currentNamespaceQueryParams.value, {})
@@ -72,9 +69,7 @@ async function forceUsersListingReload() {
       :pagination="pagination"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
-      <template #reputacao="{ data }">
-        {{ data.reputacao }}%
-      </template>
+      <template #reputacao="{ data }"> {{ data.reputacao }}% </template>
 
       <template #banido="{ data }">
         <ConditionBadge
@@ -97,11 +92,7 @@ async function forceUsersListingReload() {
       </template>
 
       <template #registerActions="{ data }">
-        <Button
-          label="Opções"
-          icon="lucide:circle-ellipsis"
-          @click="openActionsModal(data)"
-        />
+        <Button label="Opções" icon="lucide:circle-ellipsis" @click="openActionsModal(data)" />
       </template>
     </Table>
 

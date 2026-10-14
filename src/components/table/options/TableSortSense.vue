@@ -28,17 +28,14 @@ watch(
 )
 
 onMounted(() => {
-  currentSortSense.value = (currentNamespaceQueryParams.value.order)
-    ? String(currentNamespaceQueryParams.value.order) as SortSense
+  currentSortSense.value = currentNamespaceQueryParams.value.order
+    ? (String(currentNamespaceQueryParams.value.order) as SortSense)
     : 'desc'
 })
 </script>
 
 <template>
-  <TableOptionContainer
-    icon="lucide:arrow-down-up"
-    label="Sentido"
-  >
+  <TableOptionContainer icon="lucide:arrow-down-up" label="Sentido">
     <Input
       v-model="currentSortSense"
       :options="[

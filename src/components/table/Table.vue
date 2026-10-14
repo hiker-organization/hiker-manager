@@ -23,11 +23,7 @@ const tableVisibleColumns = ref<Array<string>>([])
 <template>
   <div class="max-size-full flex flex-col gap-4">
     <div class="w-full flex items-center justify-end gap-4">
-      <Button
-        label="Opções"
-        icon="lucide:table"
-        @click="tableOptionsModalIsVisible = true"
-      />
+      <Button label="Opções" icon="lucide:table" @click="tableOptionsModalIsVisible = true" />
     </div>
 
     <div class="w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden">
@@ -101,7 +97,7 @@ const tableVisibleColumns = ref<Array<string>>([])
         <TableColumnSelector
           :namespace="props.namespace"
           :all-columns="props.columns"
-          @update-visible-columns="(columns) => tableVisibleColumns = columns"
+          @update-visible-columns="(columns) => (tableVisibleColumns = columns)"
         />
       </div>
     </Modal>

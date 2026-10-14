@@ -21,11 +21,7 @@ const props = withDefaults(
 <template>
   <!-- https://daisyui.com/components/button/ -->
   <button
-    :class="[
-      'btn',
-      { 'btn-disabled': props.disabled },
-      props.customClass,
-    ]"
+    :class="['btn', { 'btn-disabled': props.disabled }, props.customClass]"
     :type="props.type"
   >
     <slot>

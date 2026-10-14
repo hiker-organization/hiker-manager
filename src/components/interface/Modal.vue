@@ -7,18 +7,14 @@ const props = defineProps<{
 }>()
 
 const isVisible = defineModel('isVisible', {
-  default: false
+  default: false,
 })
 </script>
 
 <template>
   <Teleport to="body">
     <!-- https://daisyui.com/components/modal/ -->
-    <dialog
-      :open="isVisible"
-      class="modal"
-      @click="isVisible = false"
-    >
+    <dialog :open="isVisible" class="modal" @click="isVisible = false">
       <div
         class="modal-box bg-base-300 flex flex-col items-stretch justify-stretch gap-4 p-4"
         @click.stop

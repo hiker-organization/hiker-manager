@@ -1,4 +1,4 @@
-import { getNormalizedDate } from "@/utils/data/formatting/date-formatting-utils"
+import { getNormalizedDate } from '@/utils/data/formatting/date-formatting-utils'
 
 export function formatCellValue(value: string, type: string) {
   if (value === 'null' || value === 'undefined') {

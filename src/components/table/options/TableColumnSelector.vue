@@ -19,12 +19,12 @@ const columnSelectorModalIsVisible = ref<boolean>(false)
 
 const visibleColumns = useStorage<Array<string>>(
   `${props.namespace}-visible-columns`,
-  props.allColumns.map(column => column.value),
+  props.allColumns.map((column) => column.value),
   localStorage,
 )
 
 function checkAllColumns() {
-  visibleColumns.value = props.allColumns.map(column => column.value)
+  visibleColumns.value = props.allColumns.map((column) => column.value)
 }
 
 function uncheckAllColumns() {
@@ -49,7 +49,7 @@ function toggleColumnVisibility(columnKey: string, event: Event) {
       return
     }
 
-    visibleColumns.value = currentVisibleColumns.filter(column => column !== columnKey)
+    visibleColumns.value = currentVisibleColumns.filter((column) => column !== columnKey)
 
     return
   }
@@ -64,19 +64,14 @@ watch(
   (newVisibleColumns) => {
     emits('updateVisibleColumns', newVisibleColumns)
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 
 <template>
-  <TableOptionContainer
-    icon="lucide:columns-3"
-    label="Exibição"
-  >
+  <TableOptionContainer icon="lucide:columns-3" label="Exibição">
     <Button
-      :custom-class="[
-        'bg-base-300'
-      ]"
+      :custom-class="['bg-base-300']"
       :label="`Colunas (${visibleColumns.length})`"
       @click="columnSelectorModalIsVisible = !columnSelectorModalIsVisible"
     />

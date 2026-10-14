@@ -12,7 +12,11 @@ const authStore = useAuthStore()
 
 const { notify } = useToast()
 
-const { formData: authFormData, formIsLoading: authFormIsLoading, handleSubmit: authFormHandleSubmit } = useCreateForm<LoginPayload>({
+const {
+  formData: authFormData,
+  formIsLoading: authFormIsLoading,
+  handleSubmit: authFormHandleSubmit,
+} = useCreateForm<LoginPayload>({
   initialFormData: {
     email: '',
     password: '',

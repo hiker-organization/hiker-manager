@@ -3,7 +3,7 @@ import type { TableColumn } from '@/models/components/table/table-model'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-type SortOption = { value: string, label: string }
+type SortOption = { value: string; label: string }
 
 const props = defineProps<{
   namespace: string
@@ -17,10 +17,10 @@ const emits = defineEmits<{
 
 const sortOptions = computed<Array<SortOption>>(() => {
   return props.allColumns
-    .filter(column => props.sortableFields.includes(column.value))
-    .map(column => ({
+    .filter((column) => props.sortableFields.includes(column.value))
+    .map((column) => ({
       value: column.value,
-      label: column.label
+      label: column.label,
     }))
 })
 
@@ -67,22 +67,19 @@ watch(
       return
     }
 
-    currentSortableField.value = (newSortOptions[0]) ? newSortOptions[0].value : null
+    currentSortableField.value = newSortOptions[0] ? newSortOptions[0].value : null
   },
 )
 
 onMounted(() => {
-  currentSortableField.value = (currentNamespaceQueryParams.value.sortBy)
+  currentSortableField.value = currentNamespaceQueryParams.value.sortBy
     ? String(currentNamespaceQueryParams.value.sortBy)
     : null
 })
 </script>
 
 <template>
-  <TableOptionContainer
-    icon="lucide:list-ordered"
-    label="Ordenação"
-  >
+  <TableOptionContainer icon="lucide:list-ordered" label="Ordenação">
     <Input
       v-model="currentSortableField"
       :options="sortOptions"

@@ -39,10 +39,7 @@ watch(
 </script>
 
 <template>
-  <TableOptionContainer
-    label="Listagem"
-    icon="lucide:list"
-  >
+  <TableOptionContainer label="Listagem" icon="lucide:list">
     <Input
       v-model="currentLimit"
       :options="[
