@@ -21,49 +21,47 @@ const tableVisibleColumns = ref<Array<string>>([])
 </script>
 
 <template>
-  <div class="size-full flex flex-col gap-4">
+  <div class="max-size-full flex flex-col gap-4">
     <div class="w-full flex items-center justify-end gap-4">
-      <Button
-        label="Opções"
-        icon="lucide:table"
-        @click="tableOptionsModalIsVisible = true"
-      />
+      <Button label="Opções" icon="lucide:table" @click="tableOptionsModalIsVisible = true" />
     </div>
 
-    <table class="table table-zebra border rounded-md overflow-hidden">
-      <thead>
-        <tr>
-          <th
-            v-for="column in props.columns"
-            v-show="tableVisibleColumns.includes(column.value)"
-            :key="column.value"
-            class="text-base-content font-bold"
-          >
-            {{ column.label }}
-          </th>
-          <th v-if="$slots['registerActions']" class="text-base-content font-bold">Ações</th>
-        </tr>
-      </thead>
+    <div class="w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden">
+      <table class="table table-zebra max-w-full border rounded-md overflow-hidden">
+        <thead>
+          <tr>
+            <th
+              v-for="column in props.columns"
+              v-show="tableVisibleColumns.includes(column.value)"
+              :key="column.value"
+              class="text-base-content font-bold"
+            >
+              {{ column.label }}
+            </th>
+            <th v-if="$slots['registerActions']" class="text-base-content font-bold">Ações</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex">
-          <td
-            v-for="column in props.columns"
-            v-show="tableVisibleColumns.includes(column.value)"
-            :key="column.value"
-            class="truncate"
-          >
-            <slot :name="column.value" :data="row">
-              {{ formatCellValue(String(row[column.value]), column.type) }}
-            </slot>
-          </td>
+        <tbody>
+          <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex">
+            <td
+              v-for="column in props.columns"
+              v-show="tableVisibleColumns.includes(column.value)"
+              :key="column.value"
+              class="truncate"
+            >
+              <slot :name="column.value" :data="row">
+                {{ formatCellValue(String(row[column.value]), column.type) }}
+              </slot>
+            </td>
 
-          <td>
-            <slot name="registerActions" :data="row" />
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <td>
+              <slot name="registerActions" :data="row" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <Pagination
       v-if="props.pagination"
@@ -99,7 +97,7 @@ const tableVisibleColumns = ref<Array<string>>([])
         <TableColumnSelector
           :namespace="props.namespace"
           :all-columns="props.columns"
-          @update-visible-columns="(columns) => tableVisibleColumns = columns"
+          @update-visible-columns="(columns) => (tableVisibleColumns = columns)"
         />
       </div>
     </Modal>

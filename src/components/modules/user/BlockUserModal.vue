@@ -19,14 +19,18 @@ const { notify } = useToast()
 
 const blockModalIsVisible = ref<boolean>(false)
 
-const { formData: userBlockFormData, formIsLoading: userBlockFormIsLoading, handleSubmit: userBlockFormHandleSubmit } = useCreateForm<UserBlockingParameters>({
+const {
+  formData: userBlockFormData,
+  formIsLoading: userBlockFormIsLoading,
+  handleSubmit: userBlockFormHandleSubmit,
+} = useCreateForm<UserBlockingParameters>({
   initialFormData: {
-    data: ''
+    data: '',
   },
   submitFunction: async () => {
     const { statusCode } = await userStore.blockUser(
       {
-      data: userBlockFormData.value.data
+        data: userBlockFormData.value.data,
       },
       {},
       {
@@ -45,7 +49,7 @@ const { formData: userBlockFormData, formIsLoading: userBlockFormIsLoading, hand
     }
 
     notify.error('Erro ao bloquear o usuário!')
-  }
+  },
 })
 </script>
 

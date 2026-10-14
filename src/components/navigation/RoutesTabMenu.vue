@@ -22,10 +22,7 @@ function openTab(tab: RouteTab) {
 <template>
   <div class="flex flex-col items-start justify-start gap-4">
     <div class="flex items-center justify-start gap-4">
-      <span
-        v-for="tab in props.tabs"
-        :key="tab.label"
-      >
+      <span v-for="tab in props.tabs" :key="tab.label">
         <Button
           v-if="tab.isVisible"
           :label="tab.label"

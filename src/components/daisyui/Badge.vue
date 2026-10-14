@@ -14,12 +14,7 @@ const props = withDefaults(
 
 <template>
   <!-- https://daisyui.com/components/badge/ -->
-  <div
-    :class="[
-      'badge',
-      props.customClass,
-    ]"
-  >
+  <div :class="['badge', props.customClass]">
     {{ props.text }}
   </div>
 </template>

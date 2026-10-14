@@ -1,11 +1,13 @@
+import { getNormalizedDate } from '@/utils/data/formatting/date-formatting-utils'
+
 export function formatCellValue(value: string, type: string) {
+  if (value === 'null' || value === 'undefined') {
+    return 'Não Definido(a)'
+  }
+
   switch (type) {
     case 'date':
-      const date = value.split('T')[0] || ''
-
-      const [year, month, day] = date.split('-') || ['', '', '']
-
-      return `${day}/${month}/${year}`
+      return getNormalizedDate(value)
 
     default:
       return value

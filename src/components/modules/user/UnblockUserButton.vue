@@ -16,9 +16,12 @@ const userStore = useUserStore()
 const { notify } = useToast()
 
 async function handleSubmit() {
-  const { statusCode } = await userStore.unblockUser({}, {
-    user: props.user.nome_usuario,
-  })
+  const { statusCode } = await userStore.unblockUser(
+    {},
+    {
+      user: props.user.nome_usuario,
+    },
+  )
 
   if (statusCode.value === 200) {
     notify.success('Usuário desbloqueado com sucesso.')

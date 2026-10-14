@@ -57,20 +57,19 @@ export function useUrlParamsManager(options: UseUrlParamsManagerOptions) {
     reloadQueue = reloadQueue.then(async () => {
       const invalidOptions = ['undefined', 'null', '']
 
-      const queryParamsWithNamespace = Object.entries(newQueryParams).reduce<Record<string, string>>(
-        (accumulator, [key, value]) => {
-          const normalizedValue = String(value).trim()
+      const queryParamsWithNamespace = Object.entries(newQueryParams).reduce<
+        Record<string, string>
+      >((accumulator, [key, value]) => {
+        const normalizedValue = String(value).trim()
 
-          if (!invalidOptions.includes(normalizedValue)) {
-            const keyWithNamespace = `${namespace}[${key}]`
+        if (!invalidOptions.includes(normalizedValue)) {
+          const keyWithNamespace = `${namespace}[${key}]`
 
-            accumulator[keyWithNamespace] = normalizedValue
-          }
+          accumulator[keyWithNamespace] = normalizedValue
+        }
 
-          return accumulator
-        },
-        {},
-      )
+        return accumulator
+      }, {})
 
       await router.replace({
         name: route.name,
