@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import type { RouteTab } from '@/models/navigation/routes-tab-menu-model'
+import { Icon } from '@iconify/vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const props = defineProps<{
+  title: string
+  icon: string
   tabs: Array<RouteTab>
 }>()
 
@@ -21,6 +24,15 @@ function openTab(tab: RouteTab) {
 
 <template>
   <div class="flex flex-col items-start justify-start gap-4">
+    <div
+      class="w-full h-24 bg-base-300 flex items-center justify-center gap-2 border border-base-content rounded-lg p-4"
+    >
+      <div class="bg-primary/50 rounded-md p-2">
+        <Icon :icon="props.icon" class="size-6" />
+      </div>
+      <span class="text-3xl font-extrabold">{{ props.title }}</span>
+    </div>
+
     <div class="flex items-center justify-start gap-4">
       <span v-for="tab in props.tabs" :key="tab.label">
         <Button

@@ -76,7 +76,11 @@ const tableVisibleColumns = ref<Array<string>>([])
     >
       <div class="grid grid-cols-2 gap-4">
         <TableSortableFieldSelector
-          v-if="props.pagination && props.pagination.sortable_fields"
+          v-if="
+            props.pagination &&
+            props.pagination.sortable_fields &&
+            props.pagination.sortable_fields?.length > 0
+          "
           :namespace="props.namespace"
           :all-columns="props.columns"
           :sortable-fields="props.pagination.sortable_fields"
@@ -84,7 +88,11 @@ const tableVisibleColumns = ref<Array<string>>([])
         />
 
         <TableSortSense
-          v-if="props.pagination && props.pagination.sortable_fields"
+          v-if="
+            props.pagination &&
+            props.pagination.sortable_fields &&
+            props.pagination.sortable_fields.length > 0
+          "
           :namespace="props.namespace"
           @update-params="(params) => emits('updateParams', params)"
         />

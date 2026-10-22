@@ -10,7 +10,7 @@ const userStore = useUserStore()
 
 const namespace: string = 'users-list'
 
-const admins = ref<Array<User>>([])
+const users = ref<Array<User>>([])
 
 const pagination = ref<Pagination>({
   page: 1,
@@ -27,10 +27,10 @@ const selectedUser = ref<User | null>(null)
 const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
   namespace,
   onNamespaceQueryParamsChange: async () => {
-    const { data, statusCode } = await userStore.fetchAdmins(currentNamespaceQueryParams.value, {})
+    const { data, statusCode } = await userStore.fetchUsers(currentNamespaceQueryParams.value, {})
 
     if (statusCode.value === 200 && data.value) {
-      admins.value = data.value.data
+      users.value = data.value.data
 
       pagination.value = {
         ...data.value.meta,
@@ -50,10 +50,10 @@ function openActionsModal(data: User) {
 async function forceUsersListingReload() {
   actionsModalIsVisible.value = false
 
-  const { data, statusCode } = await userStore.fetchAdmins(currentNamespaceQueryParams.value, {})
+  const { data, statusCode } = await userStore.fetchUsers(currentNamespaceQueryParams.value, {})
 
   if (statusCode.value === 200 && data.value) {
-    admins.value = data.value.data
+    users.value = data.value.data
 
     pagination.value = data.value.meta
   }
@@ -65,11 +65,11 @@ async function forceUsersListingReload() {
     <Table
       :namespace
       :columns="USER_TABLE_COLUMNS"
-      :rows="admins"
+      :rows="users"
       :pagination="pagination"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
-      <template #reputacao="{ data }"> {{ data.reputacao }}% </template>
+      <template #reputacao="{ data }">{{ data.reputacao }}%</template>
 
       <template #banido="{ data }">
         <ConditionBadge

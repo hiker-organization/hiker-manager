@@ -43,6 +43,20 @@ export const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
+      {
+        path: 'reports',
+        name: 'reports',
+        redirect: { name: 'reportsListing' },
+        component: () => import('@/views/modules/report/ReportLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reportsListing',
+            component: () => import('@/views/modules/report/ReportsListing.vue'),
+            meta: { title: 'Listagem de Denúncias' },
+          },
+        ],
+      },
     ],
   },
   {
