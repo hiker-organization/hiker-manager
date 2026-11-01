@@ -2,6 +2,7 @@
 import type { Pagination } from '@/models/components/table/pagination-model'
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
 import { ref } from 'vue'
+import { extractFinalValue } from '@/utils/data/formatting/data-extraction-utils'
 import { formatCellValue } from '@/utils/components/table/table-utils'
 
 const props = defineProps<{
@@ -18,6 +19,15 @@ const emits = defineEmits<{
 const tableOptionsModalIsVisible = ref<boolean>(false)
 
 const tableVisibleColumns = ref<Array<string>>([])
+
+function prepareCellValue(
+  row: TRow,
+  column: TableColumn,
+): unknown {
+  const finalValue = extractFinalValue(row, column.value)
+
+  return formatCellValue(finalValue, column.type)
+}
 </script>
 
 <template>
@@ -51,7 +61,7 @@ const tableVisibleColumns = ref<Array<string>>([])
               class="truncate"
             >
               <slot :name="column.value" :data="row">
-                {{ formatCellValue(String(row[column.value]), column.type) }}
+                {{ prepareCellValue(row, column) }}
               </slot>
             </td>
 

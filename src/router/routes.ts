@@ -44,6 +44,20 @@ export const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: 'reviews',
+        name: 'reviews',
+        redirect: { name: 'reviewsListing' },
+        component: () => import('@/views/modules/review/ReviewLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reviewsListing',
+            component: () => import('@/views/modules/review/ReviewListing.vue'),
+            meta: { title: 'Listagem de Postagens' },
+          }
+        ]
+      },
+      {
         path: 'reports',
         name: 'reports',
         redirect: { name: 'reportsListing' },

@@ -23,6 +23,6 @@ const props = withDefaults(
 <template>
   <!-- https://daisyui.com/components/badge/ -->
   <div :class="['badge', props.customClass, props.value ? props.activeClass : props.inactiveClass]">
-    {{ props.value ? props.activeText : props.inactiveText }}
+    {{ (props.value ? props.activeText : props.inactiveText).toUpperCase() }}
   </div>
 </template>

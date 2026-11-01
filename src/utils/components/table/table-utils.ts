@@ -1,13 +1,13 @@
 import { getNormalizedDate } from '@/utils/data/formatting/date-formatting-utils'
 
-export function formatCellValue(value: string, type: string) {
-  if (value === 'null' || value === 'undefined') {
+export function formatCellValue(value: unknown, type: string) {
+  if (!value) {
     return 'Não Definido(a)'
   }
 
   switch (type) {
     case 'date':
-      return getNormalizedDate(value)
+      return getNormalizedDate(String(value))
 
     default:
       return value

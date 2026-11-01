@@ -1,63 +1,17 @@
 <script setup lang="ts">
-import type { User } from '@/models/modules/user/user-model'
-import type { Pagination } from '@/models/components/table/pagination-model'
-import { ref } from 'vue'
+import { useUserList } from '@/composables/modules/user/use-user-list'
 import { USER_TABLE_COLUMNS } from '@/constants/modules/user/user-table-columns'
-import { useUserStore } from '@/stores/modules/user/user-store'
-import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-const userStore = useUserStore()
-
-const namespace: string = 'users-list'
-
-const users = ref<Array<User>>([])
-
-const pagination = ref<Pagination>({
-  page: 1,
-  limit: 10,
-  total: 0,
-  total_pages: 1,
-  sortable_fields: [],
-})
-
-const actionsModalIsVisible = ref<boolean>(false)
-
-const selectedUser = ref<User | null>(null)
-
-const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
+const {
   namespace,
-  onNamespaceQueryParamsChange: async () => {
-    const { data, statusCode } = await userStore.fetchUsers(currentNamespaceQueryParams.value, {})
-
-    if (statusCode.value === 200 && data.value) {
-      users.value = data.value.data
-
-      pagination.value = {
-        ...data.value.meta,
-        sortable_fields: ['id', 'nome_exibicao', 'email'],
-      }
-    }
-  },
-  immediate: true,
-})
-
-function openActionsModal(data: User) {
-  selectedUser.value = data
-
-  actionsModalIsVisible.value = true
-}
-
-async function forceUsersListingReload() {
-  actionsModalIsVisible.value = false
-
-  const { data, statusCode } = await userStore.fetchUsers(currentNamespaceQueryParams.value, {})
-
-  if (statusCode.value === 200 && data.value) {
-    users.value = data.value.data
-
-    pagination.value = data.value.meta
-  }
-}
+  users,
+  pagination,
+  actionsModalIsVisible,
+  selectedUser,
+  openActionsModal,
+  forceUsersListingReload,
+  setNamespaceQueryParams,
+} = useUserList()
 </script>
 
 <template>

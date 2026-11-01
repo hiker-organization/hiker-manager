@@ -60,7 +60,7 @@ export const useApiConnection = createFetch({
         return context
       }
 
-      return execute()
+      return await execute()
     },
   },
   fetchOptions: {
