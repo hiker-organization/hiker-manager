@@ -11,7 +11,7 @@ interface ReviewApiDTO {
   }
 }
 
-export interface Report {
+export interface ReportListRow {
   id?: number
   categoria: string
   descricao: string

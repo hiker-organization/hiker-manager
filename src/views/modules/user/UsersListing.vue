@@ -53,21 +53,21 @@ const {
     <Modal
       v-if="selectedUser"
       v-model:isVisible="actionsModalIsVisible"
+      :title="`Ações (#${selectedUser.id})`"
       icon="lucide:user-2"
-      :title="`Ações (${selectedUser.nome_usuario})`"
     >
       <div class="grid grid-cols-2 gap-2">
         <RouterLink
           :to="{
             name: 'userForm',
             params: {
-              user: String(selectedUser.nome_usuario),
+              user: selectedUser.nome_usuario,
             },
           }"
           class="w-full"
         >
           <Button
-            label="Visualizar"
+            label="Dados Completos"
             icon="lucide:form"
             custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
           />

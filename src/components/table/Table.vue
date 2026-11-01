@@ -20,10 +20,7 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
 
 const tableVisibleColumns = ref<Array<string>>([])
 
-function prepareCellValue(
-  row: TRow,
-  column: TableColumn,
-): unknown {
+function prepareCellValue(row: TRow, column: TableColumn): unknown {
   const finalValue = extractFinalValue(row, column.value)
 
   return formatCellValue(finalValue, column.type)

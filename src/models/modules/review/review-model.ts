@@ -14,7 +14,7 @@ interface TagApiDTO {
   }
 }
 
-export interface Review {
+export interface ReviewListRow {
   id?: number
   descricao: string
   createdAt: string

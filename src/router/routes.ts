@@ -54,8 +54,8 @@ export const routes: Array<RouteRecordRaw> = [
             name: 'reviewsListing',
             component: () => import('@/views/modules/review/ReviewListing.vue'),
             meta: { title: 'Listagem de Postagens' },
-          }
-        ]
+          },
+        ],
       },
       {
         path: 'reports',
@@ -68,6 +68,20 @@ export const routes: Array<RouteRecordRaw> = [
             name: 'reportsListing',
             component: () => import('@/views/modules/report/ReportsListing.vue'),
             meta: { title: 'Listagem de Denúncias' },
+          },
+        ],
+      },
+      {
+        path: 'reviews/:reviewCode/reports',
+        name: 'reviewReports',
+        redirect: { name: 'reviewReportsListing' },
+        component: () => import('@/views/modules/review-reports/ReviewReportLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reviewReportsListing',
+            component: () => import('@/views/modules/review-reports/ReviewReportsListing.vue'),
+            meta: { title: 'Listagem de Denúncias da Postagem' },
           },
         ],
       },

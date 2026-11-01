@@ -1,4 +1,4 @@
-import type { Review } from '@/models/modules/review/review-model'
+import type { ReviewListRow } from '@/models/modules/review/review-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { ref } from 'vue'
 import { useReviewStore } from '@/stores/modules/review/review-store'
@@ -9,7 +9,7 @@ export function useReviewList() {
 
   const namespace: string = 'reviews-list'
 
-  const reviews = ref<Array<Review>>([])
+  const reviews = ref<Array<ReviewListRow>>([])
 
   const pagination = ref<Pagination>({
     page: 1,
@@ -18,6 +18,10 @@ export function useReviewList() {
     total_pages: 1,
     sortable_fields: [],
   })
+
+  const actionsModalIsVisible = ref<boolean>(false)
+
+  const selectedReview = ref<ReviewListRow | null>(null)
 
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
@@ -39,10 +43,19 @@ export function useReviewList() {
     immediate: true,
   })
 
+  function openActionsModal(data: ReviewListRow) {
+    selectedReview.value = data
+
+    actionsModalIsVisible.value = true
+  }
+
   return {
     namespace,
     reviews,
     pagination,
+    actionsModalIsVisible,
+    selectedReview,
+    openActionsModal,
     setNamespaceQueryParams,
   }
 }

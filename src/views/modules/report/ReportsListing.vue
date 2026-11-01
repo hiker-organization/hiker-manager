@@ -2,12 +2,7 @@
 import { useReportList } from '@/composables/modules/report/use-report-list'
 import { REPORT_TABLE_COLUMNS } from '@/constants/modules/report/report-table-columns'
 
-const {
-  namespace,
-  reports,
-  pagination,
-  setNamespaceQueryParams,
-} = useReportList()
+const { namespace, reports, pagination, setNamespaceQueryParams } = useReportList()
 </script>
 
 <template>

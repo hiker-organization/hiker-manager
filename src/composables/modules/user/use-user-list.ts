@@ -1,4 +1,4 @@
-import type { User } from '@/models/modules/user/user-model'
+import type { UserLisRow } from '@/models/modules/user/user-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user/user-store'
@@ -9,7 +9,7 @@ export function useUserList() {
 
   const namespace: string = 'users-list'
 
-  const users = ref<Array<User>>([])
+  const users = ref<Array<UserLisRow>>([])
 
   const pagination = ref<Pagination>({
     page: 1,
@@ -21,7 +21,7 @@ export function useUserList() {
 
   const actionsModalIsVisible = ref<boolean>(false)
 
-  const selectedUser = ref<User | null>(null)
+  const selectedUser = ref<UserLisRow | null>(null)
 
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
@@ -29,7 +29,7 @@ export function useUserList() {
     immediate: true,
   })
 
-  function openActionsModal(data: User) {
+  function openActionsModal(data: UserLisRow) {
     selectedUser.value = data
 
     actionsModalIsVisible.value = true

@@ -64,7 +64,7 @@ const {
 
     <Modal
       v-model:is-visible="blockModalIsVisible"
-      :title="`Bloqueio de Usuário (${props.user.nome_usuario})`"
+      :title="`Bloqueio de Usuário (#${props.user.id})`"
     >
       <Form
         v-model:form="userBlockFormData"

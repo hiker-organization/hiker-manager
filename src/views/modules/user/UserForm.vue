@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { useUserForm } from '@/composables/modules/user/use-user-form'
 
-const {
-  userFormData,
-  normalizedBirthDate,
-  normalizedBlockExpirationDate,
-} = useUserForm()
+const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = useUserForm()
 </script>
 
 <template>

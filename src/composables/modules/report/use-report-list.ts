@@ -1,4 +1,4 @@
-import type { Report } from '@/models/modules/report/report-model'
+import type { ReportListRow } from '@/models/modules/report/report-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { ref } from 'vue'
 import { useReportStore } from '@/stores/modules/report/report-store'
@@ -9,7 +9,7 @@ export function useReportList() {
 
   const namespace: string = 'reports-list'
 
-  const reports = ref<Array<Report>>([])
+  const reports = ref<Array<ReportListRow>>([])
 
   const pagination = ref<Pagination>({
     page: 1,

@@ -10,7 +10,7 @@ const reviewLayoutTabs = computed<Array<RouteTab>>(() => [
       name: 'reviewsListing',
     },
     isVisible: true,
-  }
+  },
 ])
 </script>
 

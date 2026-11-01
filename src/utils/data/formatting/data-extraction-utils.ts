@@ -6,9 +6,9 @@ export function extractFinalValue(object: Record<string, unknown>, nestedKey: st
   while (keys.length > 0) {
     const currentkey = keys.shift()
 
-    if (currentkey && value) [
+    if (currentkey && value) {
       value = (value as Record<string, unknown>)[currentkey]
-    ]
+    }
   }
 
   return value

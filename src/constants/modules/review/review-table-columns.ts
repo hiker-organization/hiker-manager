@@ -1,4 +1,4 @@
-import type { TableColumn } from "@/models/components/table/table-model"
+import type { TableColumn } from '@/models/components/table/table-model'
 
 export const REVIEW_TABLE_COLUMNS: Array<TableColumn> = [
   { label: 'ID', value: 'id', type: 'text' },
