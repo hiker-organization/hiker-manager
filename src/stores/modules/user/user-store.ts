@@ -17,7 +17,9 @@ export const useUserStore = defineStore('UserStore', () => {
   }
 
   async function getUser(queryParams: QueryParams, routeParams: RouteParams) {
-    return await useApiConnection(generateFullEndpoint('/admin/:user', queryParams, routeParams))
+    return await useApiConnection(
+      generateFullEndpoint('/admin/user/:user', queryParams, routeParams),
+    )
       .get()
       .json<ApiReponse<User>>()
   }

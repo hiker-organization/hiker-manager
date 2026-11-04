@@ -10,11 +10,13 @@ export function useUserForm() {
   const route = useRoute()
 
   const user = computed<string | undefined>(() => {
-    if (!route.params.user) {
+    const param = route.params.user
+
+    if (!param) {
       return undefined
     }
 
-    return String(route.params.user)
+    return String(param)
   })
 
   const { formData: userFormData } = useCreateForm<User>({

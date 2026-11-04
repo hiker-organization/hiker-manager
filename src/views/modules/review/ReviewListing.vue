@@ -36,6 +36,22 @@ const {
       <div class="grid grid-cols-2 gap-2">
         <RouterLink
           :to="{
+            name: 'reviewForm',
+            params: {
+              reviewCode: selectedReview.id,
+            },
+          }"
+          class="w-full"
+        >
+          <Button
+            label="Dados Completos"
+            icon="lucide:form"
+            custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
+          />
+        </RouterLink>
+
+        <RouterLink
+          :to="{
             name: 'reviewReportsListing',
             params: {
               reviewCode: selectedReview.id,

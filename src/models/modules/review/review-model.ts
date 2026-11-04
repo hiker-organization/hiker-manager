@@ -23,3 +23,18 @@ export interface ReviewListRow {
   lugar: LocaleApiDTO
   tags: Array<TagApiDTO>
 }
+
+export interface Review {
+  descricao: string
+  local: string
+  qnt_likes: number
+  qnt_dislikes: number
+  qnt_denuncia: number
+  qnt_favoritos: number
+  nota: number
+  createdAt: string
+  liked: boolean
+  disliked: boolean
+  reported: boolean
+  favorited: boolean
+}

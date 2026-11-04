@@ -55,6 +55,12 @@ export const routes: Array<RouteRecordRaw> = [
             component: () => import('@/views/modules/review/ReviewListing.vue'),
             meta: { title: 'Listagem de Postagens' },
           },
+          {
+            path: ':reviewCode',
+            name: 'reviewForm',
+            component: () => import('@/views/modules/review/ReviewForm.vue'),
+            meta: { title: 'Detalhes da Postagem' },
+          },
         ],
       },
       {
