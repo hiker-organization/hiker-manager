@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { User, UserBlockingParameters } from '@/models/modules/user/user-model'
+import type { UserListRow, UserBlockingParameters } from '@/models/modules/user/user-model'
 import { ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user/user-store'
 import { useCreateForm } from '@/composables/forms/create-form'
 import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
-  user: User
+  user: UserListRow
 }>()
 
 const emits = defineEmits<{

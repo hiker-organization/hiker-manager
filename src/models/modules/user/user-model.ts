@@ -1,4 +1,4 @@
-export interface UserLisRow {
+export interface UserListRow {
   id?: number
   cargo: 'ADM' | 'USER'
   nome_usuario: string
@@ -13,7 +13,7 @@ export interface UserLisRow {
   bloqueado_ate: string | null
 }
 
-export type User = UserLisRow
+export type User = UserListRow
 
 export interface UserBlockingParameters {
   data: string

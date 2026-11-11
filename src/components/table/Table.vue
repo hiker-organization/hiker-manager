@@ -1,24 +1,52 @@
-<script setup lang="ts" generic="TRow extends TableRow">
+<script
+  setup
+  lang="ts"
+  generic="TRow extends TableRow, TColumns extends ReadonlyArray<TableColumn>"
+>
 import type { Pagination } from '@/models/components/table/pagination-model'
 import type { TableColumn, TableRow } from '@/models/components/table/table-model'
+import { Icon } from '@iconify/vue'
 import { ref } from 'vue'
 import { extractFinalValue } from '@/utils/data/formatting/data-extraction-utils'
 import { formatCellValue } from '@/utils/components/table/table-utils'
 
+// Extraindo o valor da propriedade "value" de cada coluna.
+
+type TableColumnsKeys = TColumns[number]['value']
+
+// Props.
+
 const props = defineProps<{
   namespace: string
-  columns: Array<TableColumn>
+  columns: TColumns
   rows: Array<TRow>
   pagination?: Pagination
+  extraSlots?: Array<string>
 }>()
+
+// Emits.
 
 const emits = defineEmits<{
   (e: 'updateParams', params: Record<string, unknown>): void
 }>()
 
+// Slots.
+
+defineSlots<
+  {
+    registerActions(props: { data: TRow }): void
+    extraTableHeaderActions(): void
+  } & Record<TableColumnsKeys, (props: { data: TRow }) => void> &
+    Record<string, (props: Record<string, unknown>) => void> // Slots genéricos.
+>()
+
+// Variáveis.
+
 const tableOptionsModalIsVisible = ref<boolean>(false)
 
 const tableVisibleColumns = ref<Array<string>>([])
+
+// Funções.
 
 function prepareCellValue(row: TRow, column: TableColumn): unknown {
   const finalValue = extractFinalValue(row, column.value)
@@ -30,11 +58,16 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
 <template>
   <div class="max-size-full flex flex-col gap-4">
     <div class="w-full flex items-center justify-end gap-4">
+      <slot name="extraTableHeaderActions" />
+
       <Button label="Opções" icon="lucide:table" @click="tableOptionsModalIsVisible = true" />
     </div>
 
     <div class="w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden">
-      <table class="table table-zebra max-w-full border rounded-md overflow-hidden">
+      <table
+        v-if="props.rows.length > 0"
+        class="table table-zebra max-w-full border rounded-md overflow-hidden"
+      >
         <thead>
           <tr>
             <th
@@ -68,6 +101,10 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
           </tr>
         </tbody>
       </table>
+      <div v-else class="flex items-center justify-start gap-2">
+        <Icon icon="lucide:info" />
+        Nenhum registro encontrado.
+      </div>
     </div>
 
     <Pagination
@@ -114,6 +151,8 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
           :all-columns="props.columns"
           @update-visible-columns="(columns) => (tableVisibleColumns = columns)"
         />
+
+        <slot v-for="slotName in props.extraSlots" :key="slotName" :name="slotName" />
       </div>
     </Modal>
   </div>

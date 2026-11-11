@@ -23,7 +23,7 @@ const {
       @update-params="(params) => setNamespaceQueryParams(params)"
     >
       <template #registerActions="{ data }">
-        <Button label="Opções" icon="lucide:circle-ellipsis" @click="openActionsModal(data)" />
+        <Button label="Opções" icon="lucide:sparkles" @click="openActionsModal(data)" />
       </template>
     </Table>
 

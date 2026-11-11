@@ -19,30 +19,52 @@ export function useReportList() {
     sortable_fields: [],
   })
 
+  const actionsModalIsVisible = ref<boolean>(false)
+
+  const selectedReport = ref<ReportListRow | null>(null)
+
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
-    onNamespaceQueryParamsChange: async () => {
-      const { data, statusCode } = await reportStore.fetchReports(
-        currentNamespaceQueryParams.value,
-        {},
-      )
-
-      if (statusCode.value === 200 && data.value) {
-        reports.value = data.value.data
-
-        pagination.value = {
-          ...data.value.meta,
-          sortable_fields: ['id', 'categoria', 'createdAt', 'id_review'],
-        }
-      }
-    },
+    onNamespaceQueryParamsChange: loadReports,
     immediate: true,
   })
+
+  function openActionsModal(data: ReportListRow) {
+    selectedReport.value = data
+
+    actionsModalIsVisible.value = true
+  }
+
+  async function loadReports() {
+    const { data, statusCode } = await reportStore.fetchReports(
+      currentNamespaceQueryParams.value,
+      {},
+    )
+
+    if (statusCode.value === 200 && data.value) {
+      reports.value = data.value.data
+
+      pagination.value = {
+        ...data.value.meta,
+        sortable_fields: ['id', 'categoria', 'createdAt', 'id_review'],
+      }
+    }
+  }
+
+  async function forceReportsListingReload() {
+    actionsModalIsVisible.value = false
+
+    await loadReports()
+  }
 
   return {
     namespace,
     reports,
     pagination,
+    actionsModalIsVisible,
+    selectedReport,
+    openActionsModal,
+    forceReportsListingReload,
     setNamespaceQueryParams,
   }
 }

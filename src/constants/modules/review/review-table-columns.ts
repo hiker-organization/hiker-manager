@@ -1,6 +1,6 @@
 import type { TableColumn } from '@/models/components/table/table-model'
 
-export const REVIEW_TABLE_COLUMNS: Array<TableColumn> = [
+export const REVIEW_TABLE_COLUMNS = [
   { label: 'ID', value: 'id', type: 'text' },
   { label: 'Descrição', value: 'descricao', type: 'text' },
   { label: 'Data de Criação', value: 'createdAt', type: 'date' },
@@ -9,4 +9,4 @@ export const REVIEW_TABLE_COLUMNS: Array<TableColumn> = [
   { label: 'Local', value: 'lugar.nome', type: 'text' },
   { label: 'Cidade', value: 'lugar.cidade', type: 'text' },
   { label: 'Estado (UF)', value: 'lugar.sigla_estado', type: 'text' },
-]
+] as const satisfies ReadonlyArray<TableColumn>

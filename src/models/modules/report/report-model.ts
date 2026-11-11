@@ -22,3 +22,11 @@ export interface ReportListRow {
   id_review: number
   review: ReviewApiDTO
 }
+
+export type ReportModerationStats = 'AUTORIZADA' | 'OFENSIVA' | 'ANALISE'
+
+export type ReportFilterStats = 'ATIVA' | 'FECHADA'
+
+export interface ReportModerationParameters {
+  status: Omit<ReportModerationStats, 'ANALISE'>
+}
