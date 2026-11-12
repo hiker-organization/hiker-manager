@@ -32,32 +32,54 @@ export function useReviewReportList() {
     sortable_fields: [],
   })
 
+  const actionsModalIsVisible = ref<boolean>(false)
+
+  const selectedReviewReport = ref<ReviewReportListRow | null>(null)
+
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
-    onNamespaceQueryParamsChange: async () => {
-      const { data, statusCode } = await reviewReportStore.fetchReviewReports(
-        currentNamespaceQueryParams.value,
-        {
-          reviewCode: reviewCode.value,
-        },
-      )
-
-      if (statusCode.value === 200 && data.value) {
-        reviewReports.value = data.value.data
-
-        pagination.value = {
-          ...data.value.meta,
-          sortable_fields: ['id', 'categoria', 'createdAt', 'id_review'],
-        }
-      }
-    },
+    onNamespaceQueryParamsChange: loadReviewReports,
     immediate: true,
   })
+
+  function openActionsModal(data: ReviewReportListRow) {
+    selectedReviewReport.value = data
+
+    actionsModalIsVisible.value = true
+  }
+
+  async function loadReviewReports() {
+    const { data, statusCode } = await reviewReportStore.fetchReviewReports(
+      currentNamespaceQueryParams.value,
+      {
+        reviewCode: reviewCode.value,
+      },
+    )
+
+    if (statusCode.value === 200 && data.value) {
+      reviewReports.value = data.value.data
+
+      pagination.value = {
+        ...data.value.meta,
+        sortable_fields: ['id', 'categoria', 'createdAt', 'id_review'],
+      }
+    }
+  }
+
+  async function forceReviewReportsListingReload() {
+    actionsModalIsVisible.value = false
+
+    await loadReviewReports()
+  }
 
   return {
     namespace,
     reviewReports,
     pagination,
+    actionsModalIsVisible,
+    selectedReviewReport,
+    openActionsModal,
+    forceReviewReportsListingReload,
     setNamespaceQueryParams,
   }
 }
