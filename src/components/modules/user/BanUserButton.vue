@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { User } from '@/models/modules/user/user-model'
+import type { UserListRow } from '@/models/modules/user/user-model'
 import { useUserStore } from '@/stores/modules/user/user-store'
 import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
-  user: User
+  user: UserListRow
 }>()
 
 const emits = defineEmits<{

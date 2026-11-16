@@ -7,7 +7,7 @@ type SortOption = { value: string; label: string }
 
 const props = defineProps<{
   namespace: string
-  allColumns: Array<TableColumn>
+  allColumns: ReadonlyArray<TableColumn>
   sortableFields: Array<string>
 }>()
 
@@ -59,11 +59,7 @@ watch(
   (newSortOptions: Array<SortOption>, oldSortOptions: Array<SortOption>) => {
     // Aplica a primeira opção como padrão, caso ainda não esteja definido.
 
-    if (currentNamespaceQueryParams.value.sortBy) {
-      return
-    }
-
-    if (oldSortOptions.length > 0) {
+    if (currentNamespaceQueryParams.value.sortBy || oldSortOptions.length > 0) {
       return
     }
 

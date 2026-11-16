@@ -31,5 +31,5 @@ const userLayoutTabs = computed<Array<RouteTab>>(() => [
 </script>
 
 <template>
-  <RoutesTabMenu :tabs="userLayoutTabs" />
+  <RoutesTabMenu :tabs="userLayoutTabs" title="Usuários" icon="lucide:user-2" />
 </template>

@@ -10,14 +10,16 @@ import { useApiConnection } from '@/composables/api/api-connection'
 import { generateFullEndpoint } from '@/utils/api/api-params-utils'
 
 export const useUserStore = defineStore('UserStore', () => {
-  async function fetchAdmins(queryParams: QueryParams, routeParams: RouteParams) {
+  async function fetchUsers(queryParams: QueryParams, routeParams: RouteParams) {
     return await useApiConnection(generateFullEndpoint('/admin/users', queryParams, routeParams))
       .get()
       .json<PaginatedResponse<User>>()
   }
 
   async function getUser(queryParams: QueryParams, routeParams: RouteParams) {
-    return await useApiConnection(generateFullEndpoint('/admin/:user', queryParams, routeParams))
+    return await useApiConnection(
+      generateFullEndpoint('/admin/user/:user', queryParams, routeParams),
+    )
       .get()
       .json<ApiReponse<User>>()
   }
@@ -51,7 +53,7 @@ export const useUserStore = defineStore('UserStore', () => {
   }
 
   return {
-    fetchAdmins,
+    fetchUsers,
     getUser,
     blockUser,
     unblockUser,

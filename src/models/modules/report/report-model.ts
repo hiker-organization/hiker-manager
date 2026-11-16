@@ -1,0 +1,32 @@
+interface AutorApiDTO {
+  nome_usuario: string
+}
+
+interface ReviewApiDTO {
+  descricao: string
+  createdAt: string
+  autor: {
+    id: number
+    nome_usuario: string
+  }
+}
+
+export interface ReportListRow {
+  id?: number
+  categoria: string
+  descricao: string
+  createdAt: string
+  status: 'ATIVA' | 'FECHADA'
+  id_usuario: number
+  autor: AutorApiDTO
+  id_review: number
+  review: ReviewApiDTO
+}
+
+export type ReportModerationStats = 'AUTORIZADA' | 'OFENSIVA' | 'ANALISE'
+
+export type ReportFilterStats = 'ATIVA' | 'FECHADA'
+
+export interface ReportModerationParameters {
+  status: Omit<ReportModerationStats, 'ANALISE'>
+}

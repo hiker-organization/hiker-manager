@@ -21,4 +21,14 @@ export const items: Array<MenuSection | MenuItem> = [
     label: 'Usuários',
     routeName: 'users',
   },
+  {
+    icon: 'lucide:pencil-line',
+    label: 'Postagens',
+    routeName: 'reviews',
+  },
+  {
+    icon: 'lucide:message-circle-warning',
+    label: 'Denúncias',
+    routeName: 'reports',
+  },
 ]
