@@ -1,6 +1,6 @@
 import type { TableColumn } from '@/models/components/table/table-model'
 
-export const USER_TABLE_COLUMNS: Array<TableColumn> = [
+export const USER_TABLE_COLUMNS = [
   { label: 'ID', value: 'id', type: 'text' },
   { label: 'Cargo', value: 'cargo', type: 'text' },
   { label: 'Usuário', value: 'nome_usuario', type: 'text' },
@@ -13,4 +13,4 @@ export const USER_TABLE_COLUMNS: Array<TableColumn> = [
   { label: 'Banido', value: 'banido', type: 'text' },
   { label: 'Bloqueado', value: 'bloqueado', type: 'text' },
   { label: 'Expiração do Bloqueio', value: 'bloqueado_ate', type: 'date' },
-]
+] as const satisfies ReadonlyArray<TableColumn>

@@ -43,6 +43,54 @@ export const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
+      {
+        path: 'reviews',
+        name: 'reviews',
+        redirect: { name: 'reviewsListing' },
+        component: () => import('@/views/modules/review/ReviewLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reviewsListing',
+            component: () => import('@/views/modules/review/ReviewListing.vue'),
+            meta: { title: 'Listagem de Postagens' },
+          },
+          {
+            path: ':reviewCode',
+            name: 'reviewForm',
+            component: () => import('@/views/modules/review/ReviewForm.vue'),
+            meta: { title: 'Detalhes da Postagem' },
+          },
+        ],
+      },
+      {
+        path: 'reports',
+        name: 'reports',
+        redirect: { name: 'reportsListing' },
+        component: () => import('@/views/modules/report/ReportLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reportsListing',
+            component: () => import('@/views/modules/report/ReportsListing.vue'),
+            meta: { title: 'Listagem de Denúncias' },
+          },
+        ],
+      },
+      {
+        path: 'reviews/:reviewCode/reports',
+        name: 'reviewReports',
+        redirect: { name: 'reviewReportsListing' },
+        component: () => import('@/views/modules/review-reports/ReviewReportLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'reviewReportsListing',
+            component: () => import('@/views/modules/review-reports/ReviewReportsListing.vue'),
+            meta: { title: 'Listagem de Denúncias da Postagem' },
+          },
+        ],
+      },
     ],
   },
   {

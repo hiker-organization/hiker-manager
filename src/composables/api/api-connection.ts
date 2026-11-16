@@ -49,7 +49,7 @@ export const useApiConnection = createFetch({
 
       const { statusCode } = await authStore.refresh()
 
-      if (statusCode.value !== 200) {
+      if (statusCode.value !== 201) {
         router.push({
           name: 'login',
           query: {
@@ -60,7 +60,7 @@ export const useApiConnection = createFetch({
         return context
       }
 
-      return execute()
+      return await execute()
     },
   },
   fetchOptions: {

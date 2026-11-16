@@ -6,7 +6,7 @@ import { useToast } from '@/composables/notify/toastify'
 
 const props = defineProps<{
   namespace: string
-  allColumns: Array<TableColumn>
+  allColumns: ReadonlyArray<TableColumn>
 }>()
 
 const emits = defineEmits<{
