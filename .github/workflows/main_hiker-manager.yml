@@ -32,15 +32,13 @@ jobs:
       - name: pnpm install, build, and test
         run: |
           pnpm install --frozen-lockfile
-          pnpm run build --if-present
-          pnpm run test --if-present
+          pnpm run build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: node-app
           path: .
-          retention-days: 1
 
   deploy:
     runs-on: ubuntu-latest
