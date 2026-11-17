@@ -1,14 +1,32 @@
 import type { QueryParams, RouteParams } from '@/models/api/api-model'
 
 function generateEndpointWithQueryParams(endpoint: string, queryParams: QueryParams) {
-  return `${endpoint}?${new URLSearchParams(queryParams)}`
+  const normalizedQueryParams = Object.entries(queryParams).reduce<Record<string, string>>(
+    (accumulator, [key, value]) => {
+      accumulator[key] = String(value)
+
+      return accumulator
+    },
+    {},
+  )
+
+  return `${endpoint}?${new URLSearchParams(normalizedQueryParams)}`
 }
 
 function generateEndpointWithRouteParams(endpoint: string, routeParams: RouteParams) {
   let fullEndpoint = endpoint
 
-  Object.entries(routeParams).forEach(([param, value]) => {
-    fullEndpoint = fullEndpoint.replace(`:${param}`, value)
+  const normalizedRouteParams = Object.entries(routeParams).reduce<Record<string, string>>(
+    (accumulator, [key, value]) => {
+      accumulator[key] = String(value)
+
+      return accumulator
+    },
+    {},
+  )
+
+  Object.entries(normalizedRouteParams).forEach(([param, value]) => {
+    fullEndpoint = fullEndpoint.replace(`:${param}`, String(value))
   })
 
   return fullEndpoint
