@@ -21,7 +21,18 @@ export function useReviewForm() {
 
   const { formData: reviewFormData } = useCreateForm<Review>({
     initialFormData: {
-      //
+      descricao: '',
+      local: '',
+      qnt_likes: 0,
+      qnt_dislikes: 0,
+      qnt_denuncia: 0,
+      qnt_favoritos: 0,
+      nota: 0,
+      createdAt: '',
+      liked: false,
+      disliked: false,
+      reported: false,
+      favorited: false,
     },
   })
 
