@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ReportListRow } from '@/models/modules/report/report-model'
-import type { ReviewReportListRow } from '@/models/modules/review-report/review-report-model';
+import type { ReviewReportListRow } from '@/models/modules/review-report/review-report-model'
 import { useReportStore } from '@/stores/modules/report/report-store'
 import { useToast } from '@/composables/notify/toastify'
 

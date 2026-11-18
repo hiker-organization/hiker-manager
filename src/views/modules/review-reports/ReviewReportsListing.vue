@@ -10,7 +10,7 @@ const {
   selectedReviewReport,
   openActionsModal,
   forceReviewReportsListingReload,
-  setNamespaceQueryParams
+  setNamespaceQueryParams,
 } = useReviewReportList()
 </script>
 
