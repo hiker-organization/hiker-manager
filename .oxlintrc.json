@@ -7,6 +7,14 @@
   "categories": {
     "correctness": "error"
   },
+  "rules": {
+    "typescript/no-namespace": [
+      "error",
+      {
+        "allowDeclarations": true
+      }
+    ]
+  },
   "overrides": [
     {
       "files": ["cypress/**/*.ts", "cypress.config.ts"],

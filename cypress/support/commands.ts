@@ -35,3 +35,28 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      auth(): Chainable<void>
+    }
+  }
+}
+
+Cypress.Commands.add('auth', () => {
+  cy.env(['API_URL', 'AUTH_EMAIL', 'AUTH_PASSWORD']).then((env) => {
+    cy.session('cypress-user-auth', () => {
+      cy.request({
+        method: 'POST',
+        url: `${env.API_URL}/auth/web/login`,
+        body: {
+          email: env.AUTH_EMAIL,
+          password: env.AUTH_PASSWORD,
+        }
+      })
+    }).its('status').should('eq', 201)
+  })
+})
+
+export {}
