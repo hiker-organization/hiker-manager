@@ -8,6 +8,7 @@ const themeStore = useThemeStore()
 <template>
   <div>
     <button
+      data-cy="theme-button"
       class="fixed left-4 bottom-4 size-12 bg-base-content flex items-center justify-center rounded-full cursor-pointer"
       @click="themeStore.toggleTheme"
     >

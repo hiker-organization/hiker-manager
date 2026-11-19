@@ -9,6 +9,7 @@ import { createPinia } from 'pinia'
 import { plugin, defaultConfig } from '@formkit/vue'
 
 import Vue3Toastify from 'vue3-toastify'
+import VueApexCharts from 'vue3-apexcharts'
 
 import App from './App.vue'
 import router from './router'
@@ -24,4 +25,5 @@ createApp(App) // Arquivo Raíz (Vue).
     limit: 5,
     clearOnUrlChange: false,
   } as ToastContainerOptions) // Vue3 Toastify (Alertas).
+  .use(VueApexCharts) // Vue3 ApexCharts (Gráficos).
   .mount('#app') // Container de Carregamento (index.html).

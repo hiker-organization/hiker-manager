@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useReviewReportList } from '@/composables/modules/review-report/use-review-report-list'
+import { useReviewReportList } from '@/composables/modules/review-report/review-report-list'
 import { REVIEW_REPORT_TABLE_COLUMNS } from '@/constants/modules/review-report/review-report-table-columns'
 
 const {
@@ -10,7 +10,7 @@ const {
   selectedReviewReport,
   openActionsModal,
   forceReviewReportsListingReload,
-  setNamespaceQueryParams
+  setNamespaceQueryParams,
 } = useReviewReportList()
 </script>
 
