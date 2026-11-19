@@ -30,7 +30,7 @@ export const useUserStore = defineStore('UserStore', () => {
     routeParams: RouteParams,
   ) {
     return await useApiConnection(
-      generateFullEndpoint('/admin/:user/block', queryParams, routeParams),
+      generateFullEndpoint('/admin/user/:user/block', queryParams, routeParams),
     )
       .put(payload)
       .json()
@@ -38,7 +38,7 @@ export const useUserStore = defineStore('UserStore', () => {
 
   async function unblockUser(queryParams: QueryParams, routeParams: RouteParams) {
     return await useApiConnection(
-      generateFullEndpoint('/admin/:user/block', queryParams, routeParams),
+      generateFullEndpoint('/admin/user/:user/block', queryParams, routeParams),
     )
       .delete()
       .json()
@@ -46,7 +46,7 @@ export const useUserStore = defineStore('UserStore', () => {
 
   async function banUser(queryParams: QueryParams, routeParams: RouteParams) {
     return await useApiConnection(
-      generateFullEndpoint('/admin/:user/ban', queryParams, routeParams),
+      generateFullEndpoint('/admin/user/:user/ban', queryParams, routeParams),
     )
       .put()
       .json()

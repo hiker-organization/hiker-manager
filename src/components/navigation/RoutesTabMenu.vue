@@ -23,7 +23,7 @@ function openTab(tab: RouteTab) {
 </script>
 
 <template>
-  <div class="flex flex-col items-start justify-start gap-4">
+  <div class="size-full flex flex-col items-start justify-start gap-4">
     <div
       class="w-full min-h-24 bg-base-300 flex flex-col items-center justify-center gap-2 border border-base-content rounded-lg p-4"
     >
