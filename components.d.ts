@@ -12,6 +12,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionButton: typeof import('./src/components/formkit/ActionButton.vue')['default']
+    ApexChart: typeof import('./src/components/interface/ApexChart.vue')['default']
     Badge: typeof import('./src/components/daisyui/Badge.vue')['default']
     BanUserButton: typeof import('./src/components/modules/user/BanUserButton.vue')['default']
     BlockUserModal: typeof import('./src/components/modules/user/BlockUserModal.vue')['default']
@@ -26,6 +27,7 @@ declare module 'vue' {
     Modal: typeof import('./src/components/interface/Modal.vue')['default']
     Pagination: typeof import('./src/components/table/Pagination.vue')['default']
     ReportStatsFilter: typeof import('./src/components/modules/report/ReportStatsFilter.vue')['default']
+    ReviewsModuleSummaryChart: typeof import('./src/components/modules/dashboard/ReviewsModuleSummaryChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RoutesTabMenu: typeof import('./src/components/navigation/RoutesTabMenu.vue')['default']
@@ -41,5 +43,6 @@ declare module 'vue' {
     Toggle: typeof import('./src/components/daisyui/Toggle.vue')['default']
     ToggleFieldsContainer: typeof import('./src/components/forms/ToggleFieldsContainer.vue')['default']
     UnblockUserButton: typeof import('./src/components/modules/user/UnblockUserButton.vue')['default']
+    UsersModuleSummaryChart: typeof import('./src/components/modules/dashboard/UsersModuleSummaryChart.vue')['default']
   }
 }

@@ -20,8 +20,28 @@ export const routes: Array<RouteRecordRaw> = [
       {
         path: '',
         name: 'home',
-        component: () => import('@/views/HomePage.vue'),
+        redirect: { name: 'dashboard' },
         meta: { title: 'Hiker Manager' },
+      },
+      {
+        path: 'dashboard',
+        name: 'dashboard',
+        redirect: { name: 'usersDashboard' },
+        component: () => import('@/views/modules/dashboard/DashboardLayout.vue'),
+        children: [
+          {
+            path: 'users',
+            name: 'usersDashboard',
+            component: () => import('@/views/modules/dashboard/UsersDashboard.vue'),
+            meta: { title: 'Dashboard de Usuários' },
+          },
+          {
+            path: 'reviews',
+            name: 'reviewsDashboard',
+            component: () => import('@/views/modules/dashboard/ReviewsDashboard.vue'),
+            meta: { title: 'Dashboard de Postagens' },
+          },
+        ],
       },
       {
         path: 'users',

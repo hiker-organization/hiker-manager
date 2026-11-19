@@ -2,7 +2,7 @@ import type { ReviewReportListRow } from '@/models/modules/review-report/review-
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useReviewReportStore } from '@/stores/modules/review-report/use-review-report-store'
+import { useReviewReportStore } from '@/stores/modules/review-report/review-report-store'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
 export function useReviewReportList() {
