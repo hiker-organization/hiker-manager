@@ -2,6 +2,7 @@ import type { ApexOptions } from 'apexcharts'
 import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
 import { computed, onMounted, ref } from 'vue'
 import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
 
 export function useUsersModuleSummaryChartResources() {
   const dashboardStore = useDashboardStore()
@@ -22,6 +23,24 @@ export function useUsersModuleSummaryChartResources() {
     },
   })
 
+  const usersModuleSummaryChartPercentages = computed<{
+    common: number
+    blocked: number
+    banned: number
+  }>(() => {
+    const percentages = generateNormalizedPercentsGroup([
+      usersModuleSummaryResponse.value.common.percentage,
+      usersModuleSummaryResponse.value.blocked.percentage,
+      usersModuleSummaryResponse.value.banned.percentage,
+    ])
+
+    return {
+      common: percentages[0] || 0,
+      blocked: percentages[1] || 0,
+      banned: percentages[2] || 0,
+    }
+  })
+
   const usersModuleSummaryChartSeries = computed<Array<number>>(() => [
     usersModuleSummaryResponse.value.common.count,
     usersModuleSummaryResponse.value.blocked.count,
@@ -30,56 +49,43 @@ export function useUsersModuleSummaryChartResources() {
 
   const usersModuleSummaryChartOptions = computed<ApexOptions>(() => ({
     chart: {
-      type: 'donut',
+      type: 'pie',
       width: '100%',
       height: '100%',
       background: 'var(--color-base-200)',
       foreColor: 'var(--color-base-content)',
     },
-    labels: [
-      `Comuns (${usersModuleSummaryResponse.value.common.percentage}%)`,
-      `Bloqueados (${usersModuleSummaryResponse.value.blocked.percentage}%)`,
-      `Banidos (${usersModuleSummaryResponse.value.banned.percentage}%)`,
-    ],
-    colors: ['var(--color-info)', 'var(--color-warning)', 'var(--color-error)'],
-    plotOptions: {
-      pie: {
-        borderRadius: 2,
-        spacing: 5,
-        donut: {
-          size: '70%',
-          labels: {
-            show: true,
-            total: {
-              show: true,
-              label: 'Total',
-              fontSize: '24px',
-              color: 'var(--color-primary)',
-            },
-            value: {
-              fontSize: '24px',
-              fontWeight: '800',
-            },
-          },
-        },
+    title: {
+      text: 'Distribuição de Usuários',
+      align: 'center',
+      style: {
+        fontSize: '20px',
       },
     },
     stroke: {
       width: 2,
     },
+    legend: {
+      show: false,
+    },
+    labels: [
+      `Válidos (${usersModuleSummaryChartPercentages.value.common}%)`,
+      `Bloqueados (${usersModuleSummaryChartPercentages.value.blocked}%)`,
+      `Banidos (${usersModuleSummaryChartPercentages.value.banned}%)`,
+    ],
+    colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          external: {
+            show: true,
+            fontSize: '16px',
+          },
+        },
+      },
+    },
     dataLabels: {
       enabled: false,
-    },
-    legend: {
-      position: 'bottom',
-      fontSize: '16px',
-    },
-    title: {
-      text: 'Índice de Usuários',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-      },
     },
   }))
 

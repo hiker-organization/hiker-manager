@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useReviewsModuleSummaryChartResources } from '@/composables/modules/dashboard/use-reviews-module-summary-chart-resources'
+import { useReviewsModuleSummaryChartResources } from '@/composables/modules/dashboard/review/use-reviews-module-summary-chart-resources'
 
 const { reviewsModuleSummaryChartSeries, reviewsModuleSummaryChartOptions } =
   useReviewsModuleSummaryChartResources()

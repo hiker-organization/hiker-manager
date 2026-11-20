@@ -2,6 +2,7 @@ import type { ApexOptions } from 'apexcharts'
 import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
 import { computed, onMounted, ref } from 'vue'
 import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
 
 export function useReviewsModuleSummaryChartResources() {
   const dashboardStore = useDashboardStore()
@@ -22,6 +23,24 @@ export function useReviewsModuleSummaryChartResources() {
     },
   })
 
+  const reviewsModuleSummaryChartPercentages = computed<{
+    common: number
+    blocked: number
+    reported: number
+  }>(() => {
+    const percentages = generateNormalizedPercentsGroup([
+      reviewsModuleSummaryResponse.value.common.percentage,
+      reviewsModuleSummaryResponse.value.blocked.percentage,
+      reviewsModuleSummaryResponse.value.reported.percentage,
+    ])
+
+    return {
+      common: percentages[0] || 0,
+      blocked: percentages[1] || 0,
+      reported: percentages[2] || 0,
+    }
+  })
+
   const reviewsModuleSummaryChartSeries = computed<Array<number>>(() => [
     reviewsModuleSummaryResponse.value.common.count,
     reviewsModuleSummaryResponse.value.blocked.count,
@@ -30,56 +49,43 @@ export function useReviewsModuleSummaryChartResources() {
 
   const reviewsModuleSummaryChartOptions = computed<ApexOptions>(() => ({
     chart: {
-      type: 'donut',
+      type: 'pie',
       width: '100%',
       height: '100%',
       background: 'var(--color-base-200)',
       foreColor: 'var(--color-base-content)',
     },
-    labels: [
-      `Comuns (${reviewsModuleSummaryResponse.value.common.percentage}%)`,
-      `Bloqueadas (${reviewsModuleSummaryResponse.value.blocked.percentage}%)`,
-      `Reportadas (${reviewsModuleSummaryResponse.value.reported.percentage}%)`,
-    ],
-    colors: ['var(--color-info)', 'var(--color-warning)', 'var(--color-error)'],
-    plotOptions: {
-      pie: {
-        borderRadius: 2,
-        spacing: 5,
-        donut: {
-          size: '70%',
-          labels: {
-            show: true,
-            total: {
-              show: true,
-              label: 'Total',
-              fontSize: '24px',
-              color: 'var(--color-primary)',
-            },
-            value: {
-              fontSize: '24px',
-              fontWeight: '800',
-            },
-          },
-        },
+    title: {
+      text: 'Distribuição de Postagens',
+      align: 'center',
+      style: {
+        fontSize: '20px',
       },
     },
     stroke: {
       width: 2,
     },
+    legend: {
+      show: false,
+    },
+    labels: [
+      `Válidas (${reviewsModuleSummaryChartPercentages.value.common}%)`,
+      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
+      `Reportadas (${reviewsModuleSummaryChartPercentages.value.reported}%)`,
+    ],
+    colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
+    plotOptions: {
+      pie: {
+        dataLabels: {
+          external: {
+            show: true,
+            fontSize: '16px',
+          },
+        },
+      },
+    },
     dataLabels: {
       enabled: false,
-    },
-    legend: {
-      position: 'bottom',
-      fontSize: '16px',
-    },
-    title: {
-      text: 'Índice de Postagens',
-      align: 'center',
-      style: {
-        fontSize: '20px',
-      },
     },
   }))
 
