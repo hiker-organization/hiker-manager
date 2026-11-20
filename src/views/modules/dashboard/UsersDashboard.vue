@@ -1,5 +1,11 @@
 <template>
-  <div class="size-full grid grid-cols-2 grid-rows-1 gap-4">
-    <UsersModuleSummaryChart />
+  <div class="size-full grid grid-cols-2 gap-4">
+    <div>
+      <UsersModuleSummaryCardsContainer />
+    </div>
+
+    <div>
+      <UsersModuleSummaryChart />
+    </div>
   </div>
 </template>
