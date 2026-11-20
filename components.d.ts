@@ -25,9 +25,11 @@ declare module 'vue' {
     FormSection: typeof import('./src/components/forms/FormSection.vue')['default']
     Input: typeof import('./src/components/formkit/Input.vue')['default']
     Modal: typeof import('./src/components/interface/Modal.vue')['default']
+    ModuleSummaryCard: typeof import('./src/components/modules/dashboard/ModuleSummaryCard.vue')['default']
     Pagination: typeof import('./src/components/table/Pagination.vue')['default']
     ReportStatsFilter: typeof import('./src/components/modules/report/ReportStatsFilter.vue')['default']
-    ReviewsModuleSummaryChart: typeof import('./src/components/modules/dashboard/ReviewsModuleSummaryChart.vue')['default']
+    ReviewsModuleSummaryCardsContainer: typeof import('./src/components/modules/dashboard/review/ReviewsModuleSummaryCardsContainer.vue')['default']
+    ReviewsModuleSummaryChart: typeof import('./src/components/modules/dashboard/review/ReviewsModuleSummaryChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RoutesTabMenu: typeof import('./src/components/navigation/RoutesTabMenu.vue')['default']
@@ -43,6 +45,7 @@ declare module 'vue' {
     Toggle: typeof import('./src/components/daisyui/Toggle.vue')['default']
     ToggleFieldsContainer: typeof import('./src/components/forms/ToggleFieldsContainer.vue')['default']
     UnblockUserButton: typeof import('./src/components/modules/user/UnblockUserButton.vue')['default']
-    UsersModuleSummaryChart: typeof import('./src/components/modules/dashboard/UsersModuleSummaryChart.vue')['default']
+    UsersModuleSummaryCardsContainer: typeof import('./src/components/modules/dashboard/user/UsersModuleSummaryCardsContainer.vue')['default']
+    UsersModuleSummaryChart: typeof import('./src/components/modules/dashboard/user/UsersModuleSummaryChart.vue')['default']
   }
 }
