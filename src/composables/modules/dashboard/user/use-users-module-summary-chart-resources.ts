@@ -3,9 +3,17 @@ import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/user
 import { computed, onMounted, ref } from 'vue'
 import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
+import { defineVariableBasedOnBreakpoints } from '@/utils/data/dynamic/use-define-variable-based-on-breakpoints'
 
 export function useUsersModuleSummaryChartResources() {
   const usersDashboardStore = useUsersDashboardStore()
+
+  const chartVisualResourcesScale = defineVariableBasedOnBreakpoints<number>({
+    minValue: 0.7,
+    values: {
+      lg: 1,
+    },
+  })
 
   const usersModuleSummaryResponse = ref<UsersModuleSummaryResponse>({
     totalUsers: 0,
@@ -58,19 +66,22 @@ export function useUsersModuleSummaryChartResources() {
       text: 'Distribuição de Usuários',
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     stroke: {
       width: 2,
     },
     legend: {
-      show: false,
+      show: true,
+      position: 'bottom',
+      customLegendItems: ['Válidos', 'Bloqueados', 'Banidos'],
+      fontSize: `${16 * chartVisualResourcesScale.value}px`,
     },
     labels: [
-      `Válidos (${usersModuleSummaryChartPercentages.value.common}%)`,
-      `Bloqueados (${usersModuleSummaryChartPercentages.value.blocked}%)`,
-      `Banidos (${usersModuleSummaryChartPercentages.value.banned}%)`,
+      `${usersModuleSummaryChartPercentages.value.common}%`,
+      `${usersModuleSummaryChartPercentages.value.blocked}%`,
+      `${usersModuleSummaryChartPercentages.value.banned}%`,
     ],
     colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
     plotOptions: {
@@ -78,7 +89,10 @@ export function useUsersModuleSummaryChartResources() {
         dataLabels: {
           external: {
             show: true,
-            fontSize: '16px',
+            fontSize: `${16 * chartVisualResourcesScale.value}px`,
+            connector: {
+              gap: 30 * chartVisualResourcesScale.value,
+            },
           },
         },
       },

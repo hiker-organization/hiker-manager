@@ -1,5 +1,7 @@
 <template>
-  <div class="size-full grid grid-cols-2 grid-row-1 gap-4">
+  <div
+    class="size-full grid grid-cols-1 grid-row-[auto_auto] gap-4 md:grid-cols-2 md:grid-row-[auto]"
+  >
     <ReviewsModuleSummaryCardsContainer />
 
     <ReviewsModuleSummaryChart />
