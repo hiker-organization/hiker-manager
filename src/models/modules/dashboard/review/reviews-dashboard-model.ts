@@ -4,11 +4,11 @@ export interface ReviewsModuleSummaryResponse {
     percentage: number
     count: number
   }
-  blocked: {
+  reported: {
     percentage: number
     count: number
   }
-  reported: {
+  blocked: {
     percentage: number
     count: number
   }

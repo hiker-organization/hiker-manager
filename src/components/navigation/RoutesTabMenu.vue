@@ -44,8 +44,8 @@ function openTab(tab: RouteTab) {
           :class="[
             'btn-primary flex items-center justify-center gap-2 p-4',
             isCurrentTab(tab)
-              ? 'bg-primary pointer-events-none'
-              : 'bg-primary/25 hover:bg-primary/75',
+              ? 'bg-primary text-white pointer-events-none'
+              : 'bg-primary/25 text-base-content hover:bg-primary/75',
           ]"
           :label="tab.label"
           :icon="tab.icon"

@@ -11,11 +11,11 @@ export function useReviewsModuleSumaryCardsResources() {
       percentage: 0,
       count: 0,
     },
-    blocked: {
+    reported: {
       percentage: 0,
       count: 0,
     },
-    reported: {
+    blocked: {
       percentage: 0,
       count: 0,
     },

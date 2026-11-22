@@ -46,10 +46,14 @@ watch(
       'absolute top-0 left-0 bottom-0 z-10 border-r-2 border-r-base-100',
       sidebarWidth,
     ]"
-    @click="isOpen = true"
   >
     <div class="min-w-max flex items-center justify-start gap-4">
-      <img class="size-12" src="/icons/favicon.png" alt="logo" />
+      <img
+        class="size-12 cursor-pointer"
+        src="/icons/favicon.png"
+        alt="logo"
+        @click="isOpen = true"
+      />
       <h1 class="text-xl font-extrabold">Hiker Manager</h1>
     </div>
 
@@ -57,7 +61,7 @@ watch(
       <div
         v-if="!isOpen"
         :class="[
-          'w-full flex items-center justify-center p-2 cursor-pointer',
+          'w-full flex items-center justify-center p-2',
           route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
         ]"
       >

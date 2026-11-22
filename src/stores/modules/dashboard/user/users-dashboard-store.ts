@@ -1,6 +1,7 @@
 import type { ApiResponse, QueryParams, RouteParams } from '@/models/api/api-model'
 import type {
   UsersModuleSummaryResponse,
+  UserMostReported,
   UserWithBlockedReviews,
 } from '@/models/modules/dashboard/user/users-dashboard-model'
 import { defineStore } from 'pinia'
@@ -27,8 +28,17 @@ export const useUsersDashboardStore = defineStore('UsersDashboardStore', () => {
       .json<ApiResponse<Array<UserWithBlockedReviews>>>()
   }
 
+  async function getUsersMostReported(queryParams: QueryParams, routeParams: RouteParams) {
+    return await useApiConnection(
+      generateFullEndpoint('/admin/users/top-by-reports-received', queryParams, routeParams),
+    )
+      .get()
+      .json<ApiResponse<Array<UserMostReported>>>()
+  }
+
   return {
     getUsersModuleSummary,
     getUsersWithMostBlockedReviews,
+    getUsersMostReported,
   }
 })

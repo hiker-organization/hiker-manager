@@ -13,11 +13,11 @@ export function useReviewsModuleSummaryChartResources() {
       percentage: 0,
       count: 0,
     },
-    blocked: {
+    reported: {
       percentage: 0,
       count: 0,
     },
-    reported: {
+    blocked: {
       percentage: 0,
       count: 0,
     },
@@ -30,21 +30,21 @@ export function useReviewsModuleSummaryChartResources() {
   }>(() => {
     const percentages = generateNormalizedPercentsGroup([
       reviewsModuleSummaryResponse.value.common.percentage,
-      reviewsModuleSummaryResponse.value.blocked.percentage,
       reviewsModuleSummaryResponse.value.reported.percentage,
+      reviewsModuleSummaryResponse.value.blocked.percentage,
     ])
 
     return {
       common: percentages[0] || 0,
-      blocked: percentages[1] || 0,
-      reported: percentages[2] || 0,
+      reported: percentages[1] || 0,
+      blocked: percentages[2] || 0,
     }
   })
 
   const reviewsModuleSummaryChartSeries = computed<Array<number>>(() => [
     reviewsModuleSummaryResponse.value.common.count,
-    reviewsModuleSummaryResponse.value.blocked.count,
     reviewsModuleSummaryResponse.value.reported.count,
+    reviewsModuleSummaryResponse.value.blocked.count,
   ])
 
   const reviewsModuleSummaryChartOptions = computed<ApexOptions>(() => ({
@@ -69,8 +69,8 @@ export function useReviewsModuleSummaryChartResources() {
     },
     labels: [
       `Válidas (${reviewsModuleSummaryChartPercentages.value.common}%)`,
-      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
       `Reportadas (${reviewsModuleSummaryChartPercentages.value.reported}%)`,
+      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
     ],
     colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
     plotOptions: {

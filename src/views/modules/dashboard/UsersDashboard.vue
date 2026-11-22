@@ -1,15 +1,11 @@
 <template>
-  <div class="size-full grid grid-cols-2 grid-rows-[auto_1fr] place-content-stretch gap-4">
-    <div class="col-span-full">
-      <UsersModuleSummaryCardsContainer />
-    </div>
+  <div class="size-full grid grid-cols-2 grid-rows-2 gap-4">
+    <UsersModuleSummaryCardsContainer />
 
-    <div>
-      <UsersModuleSummaryChart />
-    </div>
+    <UsersModuleSummaryChart />
 
-    <div>
-      <UsersWithMostBlockedReviewsChart />
-    </div>
+    <UsersMostReportedChart />
+
+    <UsersWithMostBlockedReviewsChart />
   </div>
 </template>

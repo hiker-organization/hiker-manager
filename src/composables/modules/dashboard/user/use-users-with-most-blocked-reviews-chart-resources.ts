@@ -47,7 +47,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
     },
     xaxis: {
       categories: usersWithMostBlockedReviewsChartCategories.value,
-      min: 1,
+      min: 0,
       tickAmount: Math.max(...usersWithMostBlockedReviewsChartSeriesData.value) + 1,
       axisBorder: {
         color: 'var(--color-base-content)',

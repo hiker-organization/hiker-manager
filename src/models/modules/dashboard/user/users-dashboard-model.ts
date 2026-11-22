@@ -25,3 +25,15 @@ export interface UserWithBlockedReviews {
   banido: boolean
   blocked_reviews: number
 }
+
+export interface UserMostReported {
+  id?: number
+  nome_usuario: string
+  nome_exibicao: string
+  email: string
+  reputacao: number
+  createdAt: string
+  bloqueado: boolean
+  banido: boolean
+  denuncias: number
+}

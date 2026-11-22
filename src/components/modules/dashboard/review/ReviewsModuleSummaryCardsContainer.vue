@@ -19,14 +19,14 @@ const { reviewsModuleSummaryResponse } = useReviewsModuleSumaryCardsResources()
     />
 
     <ModuleSummaryCard
-      :label="String(reviewsModuleSummaryResponse.blocked.count)"
-      description="Bloqueadas"
+      :label="String(reviewsModuleSummaryResponse.reported.count)"
+      description="Reportadas"
       custom-class="bg-warning/20 border-warning text-base-content"
     />
 
     <ModuleSummaryCard
-      :label="String(reviewsModuleSummaryResponse.reported.count)"
-      description="Reportadas"
+      :label="String(reviewsModuleSummaryResponse.blocked.count)"
+      description="Bloqueadas"
       custom-class="bg-error/20 border-error text-base-content"
     />
   </div>
