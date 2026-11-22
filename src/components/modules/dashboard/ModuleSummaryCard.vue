@@ -11,7 +11,7 @@ const props = defineProps<{
 <template>
   <div
     :class="[
-      'flex flex-col items-center justify-center gap-2 border rounded-md p-2',
+      'flex flex-col items-center justify-center gap-2 border rounded-md p-4',
       props.customClass,
     ]"
   >

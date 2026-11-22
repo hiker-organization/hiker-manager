@@ -1,9 +1,9 @@
-import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
+import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/user/users-dashboard-model'
 import { onMounted, ref } from 'vue'
-import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 
 export function useUsersModuleSummaryCardsResources() {
-  const dashboardStore = useDashboardStore()
+  const usersDashboardStore = useUsersDashboardStore()
 
   const usersModuleSummaryResponse = ref<UsersModuleSummaryResponse>({
     totalUsers: 0,
@@ -22,7 +22,7 @@ export function useUsersModuleSummaryCardsResources() {
   })
 
   onMounted(async () => {
-    const { data, statusCode } = await dashboardStore.getUsersModuleSummary({}, {})
+    const { data, statusCode } = await usersDashboardStore.getUsersModuleSummary({}, {})
 
     if (statusCode.value === 200 && data.value) {
       usersModuleSummaryResponse.value = data.value

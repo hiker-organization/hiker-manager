@@ -1,9 +1,9 @@
-import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
+import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/review/reviews-dashboard-model'
 import { onMounted, ref } from 'vue'
-import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { useReviewsDashboardStore } from '@/stores/modules/dashboard/review/reviews-dashboard-store'
 
 export function useReviewsModuleSumaryCardsResources() {
-  const dashboardStore = useDashboardStore()
+  const reviewsDashboardStore = useReviewsDashboardStore()
 
   const reviewsModuleSummaryResponse = ref<ReviewsModuleSummaryResponse>({
     totalReviews: 0,
@@ -22,7 +22,7 @@ export function useReviewsModuleSumaryCardsResources() {
   })
 
   onMounted(async () => {
-    const { data, statusCode } = await dashboardStore.getReviewsModuleSummary({}, {})
+    const { data, statusCode } = await reviewsDashboardStore.getReviewsModuleSummary({}, {})
 
     if (statusCode.value === 200 && data.value) {
       reviewsModuleSummaryResponse.value = data.value

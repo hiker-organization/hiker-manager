@@ -1,11 +1,11 @@
 import type { ApexOptions } from 'apexcharts'
-import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
+import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/user/users-dashboard-model'
 import { computed, onMounted, ref } from 'vue'
-import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
 
 export function useUsersModuleSummaryChartResources() {
-  const dashboardStore = useDashboardStore()
+  const usersDashboardStore = useUsersDashboardStore()
 
   const usersModuleSummaryResponse = ref<UsersModuleSummaryResponse>({
     totalUsers: 0,
@@ -52,7 +52,6 @@ export function useUsersModuleSummaryChartResources() {
       type: 'pie',
       width: '100%',
       height: '100%',
-      background: 'var(--color-base-200)',
       foreColor: 'var(--color-base-content)',
     },
     title: {
@@ -90,7 +89,7 @@ export function useUsersModuleSummaryChartResources() {
   }))
 
   onMounted(async () => {
-    const { data, statusCode } = await dashboardStore.getUsersModuleSummary({}, {})
+    const { data, statusCode } = await usersDashboardStore.getUsersModuleSummary({}, {})
 
     if (statusCode.value === 200 && data.value) {
       usersModuleSummaryResponse.value = data.value

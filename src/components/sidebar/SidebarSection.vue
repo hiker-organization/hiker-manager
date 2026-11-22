@@ -2,6 +2,15 @@
 import { Icon } from '@iconify/vue'
 import { ref } from 'vue'
 
+const props = withDefaults(
+  defineProps<{
+    isCurrentSelection?: boolean
+  }>(),
+  {
+    isCurrentSelection: false,
+  },
+)
+
 const isOpen = ref<boolean>(false)
 </script>
 
@@ -9,8 +18,8 @@ const isOpen = ref<boolean>(false)
   <div class="w-full flex flex-col items-start justify-stretch">
     <div
       :class="[
-        'w-full bg-base-100 flex items-center justify-between gap-2 p-2 cursor-pointer transition-all duration-150',
-        isOpen ? 'bg-primary/50' : 'bg-base-100 hover:bg-primary/50',
+        'w-full bg-base-100 flex items-center justify-between gap-2 p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
+        props.isCurrentSelection ? 'bg-primary/75 text-white' : 'bg-base-100',
       ]"
       @click="isOpen = !isOpen"
     >

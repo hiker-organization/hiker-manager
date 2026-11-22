@@ -47,5 +47,6 @@ declare module 'vue' {
     UnblockUserButton: typeof import('./src/components/modules/user/UnblockUserButton.vue')['default']
     UsersModuleSummaryCardsContainer: typeof import('./src/components/modules/dashboard/user/UsersModuleSummaryCardsContainer.vue')['default']
     UsersModuleSummaryChart: typeof import('./src/components/modules/dashboard/user/UsersModuleSummaryChart.vue')['default']
+    UsersWithMostBlockedReviewsChart: typeof import('./src/components/modules/dashboard/user/UsersWithMostBlockedReviewsChart.vue')['default']
   }
 }

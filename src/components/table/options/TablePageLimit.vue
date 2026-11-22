@@ -43,7 +43,6 @@ watch(
     <Input
       v-model="currentLimit"
       :options="[
-        { value: 1, label: '1 Item' },
         { value: 10, label: '10 Itens' },
         { value: 20, label: '20 Itens' },
         { value: 50, label: '50 Itens' },
