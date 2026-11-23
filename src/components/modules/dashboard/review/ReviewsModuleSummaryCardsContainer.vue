@@ -5,7 +5,7 @@ const { reviewsModuleSummaryResponse } = useReviewsModuleSumaryCardsResources()
 </script>
 
 <template>
-  <div class="size-full bg-base-300 grid grid-cols-1 gap-4 rounded-md p-4 md:grid-cols-2">
+  <div class="size-full bg-base-300 grid grid-cols-1 gap-4 rounded-md p-4 lg:grid-cols-2">
     <ModuleSummaryCard
       :label="String(reviewsModuleSummaryResponse.totalReviews)"
       description="Total"
