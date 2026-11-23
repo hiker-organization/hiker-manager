@@ -45,8 +45,17 @@ const {
         />
       </template>
 
+      <template #cardTitle="{ data }">
+        <span class="font-extrabold truncate">#{{ data.id }} | {{ data.nome_usuario }}</span>
+      </template>
+
       <template #registerActions="{ data }">
-        <Button label="Opções" icon="lucide:sparkles" @click="openActionsModal(data)" />
+        <Button
+          custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
+          label="Opções"
+          icon="lucide:sparkles"
+          @click="openActionsModal(data)"
+        />
       </template>
     </Table>
 
@@ -56,7 +65,7 @@ const {
       :title="`Ações (#${selectedUser.id})`"
       icon="lucide:user-2"
     >
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <RouterLink
           :to="{
             name: 'userForm',
@@ -74,12 +83,13 @@ const {
         </RouterLink>
 
         <BlockUserModal
-          v-if="!selectedUser.bloqueado"
+          v-if="!selectedUser.bloqueado && !selectedUser.banido"
           :user="selectedUser"
           @block-processed="forceUsersListingReload"
         />
+
         <UnblockUserButton
-          v-else
+          v-if="selectedUser.bloqueado && !selectedUser.banido"
           :user="selectedUser"
           @unblock-processed="forceUsersListingReload"
         />

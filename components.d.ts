@@ -36,6 +36,7 @@ declare module 'vue' {
     Sidebar: typeof import('./src/components/sidebar/Sidebar.vue')['default']
     SidebarSection: typeof import('./src/components/sidebar/SidebarSection.vue')['default']
     Table: typeof import('./src/components/table/Table.vue')['default']
+    TableCard: typeof import('./src/components/table/TableCard.vue')['default']
     TableColumnSelector: typeof import('./src/components/table/options/TableColumnSelector.vue')['default']
     TableOptionContainer: typeof import('./src/components/table/options/TableOptionContainer.vue')['default']
     TablePageLimit: typeof import('./src/components/table/options/TablePageLimit.vue')['default']
