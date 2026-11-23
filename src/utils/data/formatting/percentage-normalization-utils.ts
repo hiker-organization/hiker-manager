@@ -9,11 +9,13 @@ export function generateNormalizedPercentsGroup(percentages: Array<number>) {
 
   const rest = 100 - fixedPercentagesSum
 
+  const greaterPercentage = Math.max(...fixedPercentages)
+
   const greaterPercentageIndex = fixedPercentages.findIndex(
-    (fixedPercentage) => fixedPercentage === Math.max(...fixedPercentages),
+    (fixedPercentage) => fixedPercentage === greaterPercentage,
   )
 
-  if (fixedPercentages[greaterPercentageIndex]) {
+  if (greaterPercentageIndex !== -1 && fixedPercentages[greaterPercentageIndex]) {
     fixedPercentages[greaterPercentageIndex] += rest
   }
 

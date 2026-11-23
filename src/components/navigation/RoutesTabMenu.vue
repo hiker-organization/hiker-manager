@@ -41,9 +41,14 @@ function openTab(tab: RouteTab) {
       <span v-for="tab in props.tabs" :key="tab.label">
         <Button
           v-if="tab.isVisible"
+          :class="[
+            'btn-primary flex items-center justify-center gap-2 p-4',
+            isCurrentTab(tab)
+              ? 'bg-primary text-white pointer-events-none'
+              : 'bg-primary/25 text-base-content hover:bg-primary/75',
+          ]"
           :label="tab.label"
           :icon="tab.icon"
-          :disabled="isCurrentTab(tab)"
           @click="openTab(tab)"
         />
       </span>

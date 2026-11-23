@@ -1,11 +1,11 @@
 import type { ApexOptions } from 'apexcharts'
-import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
+import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/review/reviews-dashboard-model'
 import { computed, onMounted, ref } from 'vue'
-import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { useReviewsDashboardStore } from '@/stores/modules/dashboard/review/reviews-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
 
 export function useReviewsModuleSummaryChartResources() {
-  const dashboardStore = useDashboardStore()
+  const reviewsDashboardStore = useReviewsDashboardStore()
 
   const reviewsModuleSummaryResponse = ref<ReviewsModuleSummaryResponse>({
     totalReviews: 0,
@@ -13,11 +13,11 @@ export function useReviewsModuleSummaryChartResources() {
       percentage: 0,
       count: 0,
     },
-    blocked: {
+    reported: {
       percentage: 0,
       count: 0,
     },
-    reported: {
+    blocked: {
       percentage: 0,
       count: 0,
     },
@@ -30,21 +30,21 @@ export function useReviewsModuleSummaryChartResources() {
   }>(() => {
     const percentages = generateNormalizedPercentsGroup([
       reviewsModuleSummaryResponse.value.common.percentage,
-      reviewsModuleSummaryResponse.value.blocked.percentage,
       reviewsModuleSummaryResponse.value.reported.percentage,
+      reviewsModuleSummaryResponse.value.blocked.percentage,
     ])
 
     return {
       common: percentages[0] || 0,
-      blocked: percentages[1] || 0,
-      reported: percentages[2] || 0,
+      reported: percentages[1] || 0,
+      blocked: percentages[2] || 0,
     }
   })
 
   const reviewsModuleSummaryChartSeries = computed<Array<number>>(() => [
     reviewsModuleSummaryResponse.value.common.count,
-    reviewsModuleSummaryResponse.value.blocked.count,
     reviewsModuleSummaryResponse.value.reported.count,
+    reviewsModuleSummaryResponse.value.blocked.count,
   ])
 
   const reviewsModuleSummaryChartOptions = computed<ApexOptions>(() => ({
@@ -52,7 +52,6 @@ export function useReviewsModuleSummaryChartResources() {
       type: 'pie',
       width: '100%',
       height: '100%',
-      background: 'var(--color-base-200)',
       foreColor: 'var(--color-base-content)',
     },
     title: {
@@ -70,8 +69,8 @@ export function useReviewsModuleSummaryChartResources() {
     },
     labels: [
       `Válidas (${reviewsModuleSummaryChartPercentages.value.common}%)`,
-      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
       `Reportadas (${reviewsModuleSummaryChartPercentages.value.reported}%)`,
+      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
     ],
     colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
     plotOptions: {
@@ -90,7 +89,7 @@ export function useReviewsModuleSummaryChartResources() {
   }))
 
   onMounted(async () => {
-    const { data, statusCode } = await dashboardStore.getReviewsModuleSummary({}, {})
+    const { data, statusCode } = await reviewsDashboardStore.getReviewsModuleSummary({}, {})
 
     if (statusCode.value === 200 && data.value) {
       reviewsModuleSummaryResponse.value = data.value

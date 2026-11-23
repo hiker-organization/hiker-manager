@@ -1,5 +1,5 @@
 import type {
-  ApiReponse,
+  ApiResponse,
   PaginatedResponse,
   QueryParams,
   RouteParams,
@@ -21,7 +21,7 @@ export const useReviewStore = defineStore('ReviewStore', () => {
       generateFullEndpoint('/review/:reviewCode', queryParams, routeParams),
     )
       .get()
-      .json<ApiReponse<Review>>()
+      .json<ApiResponse<Review>>()
   }
 
   return {

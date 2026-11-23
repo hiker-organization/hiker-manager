@@ -4,7 +4,7 @@ export type QueryParams = Record<string, unknown>
 
 export type RouteParams = Record<string, unknown>
 
-export interface ApiReponse<T> {
+export interface ApiResponse<T> {
   data: T
 }
 

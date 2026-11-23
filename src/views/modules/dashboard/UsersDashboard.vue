@@ -1,11 +1,11 @@
 <template>
-  <div class="size-full grid grid-cols-2 gap-4">
-    <div>
-      <UsersModuleSummaryCardsContainer />
-    </div>
+  <div class="size-full grid grid-cols-2 grid-rows-2 gap-4">
+    <UsersModuleSummaryCardsContainer />
 
-    <div>
-      <UsersModuleSummaryChart />
-    </div>
+    <UsersModuleSummaryChart />
+
+    <UsersMostReportedChart />
+
+    <UsersWithMostBlockedReviewsChart />
   </div>
 </template>
