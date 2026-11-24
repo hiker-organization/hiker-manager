@@ -41,9 +41,14 @@ const {
         />
       </template>
 
+      <template #cardTitle="{ data }">
+        <span class="font-extrabold truncate">#{{ data.id }}</span>
+      </template>
+
       <template #registerActions="{ data }">
         <Button
           :disabled="data.status === 'FECHADA'"
+          custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
           label="Opções"
           icon="lucide:sparkles"
           @click="openActionsModal(data)"
@@ -57,7 +62,7 @@ const {
       :title="`Ações (#${selectedReport.id})`"
       icon="lucide:message-circle-warning"
     >
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <DiscardReportButton
           :report="selectedReport"
           @discard-processed="forceReportsListingReload"

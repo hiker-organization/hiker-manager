@@ -22,8 +22,17 @@ const {
       :pagination="pagination"
       @update-params="(params) => setNamespaceQueryParams(params)"
     >
+      <template #cardTitle="{ data }">
+        <span class="font-extrabold truncate">#{{ data.id }}</span>
+      </template>
+
       <template #registerActions="{ data }">
-        <Button label="Opções" icon="lucide:sparkles" @click="openActionsModal(data)" />
+        <Button
+          custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
+          label="Opções"
+          icon="lucide:sparkles"
+          @click="openActionsModal(data)"
+        />
       </template>
     </Table>
 
@@ -33,7 +42,7 @@ const {
       :title="`Ações (#${selectedReview.id})`"
       icon="lucide:pencil-line"
     >
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <RouterLink
           :to="{
             name: 'reviewForm',

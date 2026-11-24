@@ -1,11 +1,19 @@
 import type { ApexOptions } from 'apexcharts'
-import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/dashboard-model'
+import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/user/users-dashboard-model'
 import { computed, onMounted, ref } from 'vue'
-import { useDashboardStore } from '@/stores/modules/dashboard/dashboard-store'
+import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
+import { defineVariableBasedOnBreakpoints } from '@/utils/data/dynamic/use-define-variable-based-on-breakpoints'
 
 export function useUsersModuleSummaryChartResources() {
-  const dashboardStore = useDashboardStore()
+  const usersDashboardStore = useUsersDashboardStore()
+
+  const chartVisualResourcesScale = defineVariableBasedOnBreakpoints<number>({
+    minValue: 0.7,
+    values: {
+      lg: 1,
+    },
+  })
 
   const usersModuleSummaryResponse = ref<UsersModuleSummaryResponse>({
     totalUsers: 0,
@@ -52,26 +60,28 @@ export function useUsersModuleSummaryChartResources() {
       type: 'pie',
       width: '100%',
       height: '100%',
-      background: 'var(--color-base-200)',
       foreColor: 'var(--color-base-content)',
     },
     title: {
       text: 'Distribuição de Usuários',
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     stroke: {
       width: 2,
     },
     legend: {
-      show: false,
+      show: true,
+      position: 'bottom',
+      customLegendItems: ['Válidos', 'Bloqueados', 'Banidos'],
+      fontSize: `${16 * chartVisualResourcesScale.value}px`,
     },
     labels: [
-      `Válidos (${usersModuleSummaryChartPercentages.value.common}%)`,
-      `Bloqueados (${usersModuleSummaryChartPercentages.value.blocked}%)`,
-      `Banidos (${usersModuleSummaryChartPercentages.value.banned}%)`,
+      `${usersModuleSummaryChartPercentages.value.common}%`,
+      `${usersModuleSummaryChartPercentages.value.blocked}%`,
+      `${usersModuleSummaryChartPercentages.value.banned}%`,
     ],
     colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
     plotOptions: {
@@ -79,7 +89,10 @@ export function useUsersModuleSummaryChartResources() {
         dataLabels: {
           external: {
             show: true,
-            fontSize: '16px',
+            fontSize: `${16 * chartVisualResourcesScale.value}px`,
+            connector: {
+              gap: 30 * chartVisualResourcesScale.value,
+            },
           },
         },
       },
@@ -90,7 +103,7 @@ export function useUsersModuleSummaryChartResources() {
   }))
 
   onMounted(async () => {
-    const { data, statusCode } = await dashboardStore.getUsersModuleSummary({}, {})
+    const { data, statusCode } = await usersDashboardStore.getUsersModuleSummary({}, {})
 
     if (statusCode.value === 200 && data.value) {
       usersModuleSummaryResponse.value = data.value

@@ -1,5 +1,5 @@
 import type {
-  ApiReponse,
+  ApiResponse,
   PaginatedResponse,
   QueryParams,
   RouteParams,
@@ -21,7 +21,7 @@ export const useUserStore = defineStore('UserStore', () => {
       generateFullEndpoint('/admin/user/:user', queryParams, routeParams),
     )
       .get()
-      .json<ApiReponse<User>>()
+      .json<ApiResponse<User>>()
   }
 
   async function blockUser(

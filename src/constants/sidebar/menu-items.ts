@@ -1,34 +1,52 @@
-interface MenuItem {
+export interface MenuItem {
   icon: string
   label: string
-  routeName: string
+  route: {
+    path: string
+    name: string
+  }
 }
 
-interface MenuSection {
+export interface MenuSection {
   icon: string
   label: string
+  route: {
+    path: string
+  }
   children: Array<MenuItem>
 }
 
 export const items: Array<MenuSection | MenuItem> = [
   {
-    icon: 'lucide:home',
-    label: 'Home',
-    routeName: 'home',
+    icon: 'lucide:layout-dashboard',
+    label: 'Dashboard',
+    route: {
+      path: '/dashboard',
+      name: 'dashboard',
+    },
   },
   {
     icon: 'lucide:users',
     label: 'Usuários',
-    routeName: 'users',
+    route: {
+      path: '/users',
+      name: 'users',
+    },
   },
   {
     icon: 'lucide:pencil-line',
     label: 'Postagens',
-    routeName: 'reviews',
+    route: {
+      path: '/reviews',
+      name: 'reviews',
+    },
   },
   {
     icon: 'lucide:message-circle-warning',
     label: 'Denúncias',
-    routeName: 'reports',
+    route: {
+      path: '/reports',
+      name: 'reports',
+    },
   },
 ]

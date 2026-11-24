@@ -5,7 +5,7 @@ const { usersModuleSummaryResponse } = useUsersModuleSummaryCardsResources()
 </script>
 
 <template>
-  <div class="size-full bg-base-200 grid grid-cols-2 gap-4 p-4">
+  <div class="size-full bg-base-300 grid grid-cols-1 gap-4 rounded-md p-4 lg:grid-cols-2">
     <ModuleSummaryCard
       :label="String(usersModuleSummaryResponse.totalUsers)"
       description="Total"
