@@ -3,11 +3,19 @@ import type { UserWithBlockedReviews } from '@/models/modules/dashboard/user/use
 import { computed, onMounted, ref } from 'vue'
 import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { useThemeStore } from '@/stores/core/theme-store'
+import { defineVariableBasedOnBreakpoints } from '@/utils/data/dynamic/use-define-variable-based-on-breakpoints'
 
 export function useUsersWithMostBlockedReviewsChartResources() {
   const usersDashboardStore = useUsersDashboardStore()
 
   const themeStore = useThemeStore()
+
+  const chartVisualResourcesScale = defineVariableBasedOnBreakpoints<number>({
+    minValue: 0.7,
+    values: {
+      lg: 1,
+    },
+  })
 
   const usersWithMostBlockedReviewsResponse = ref<Array<UserWithBlockedReviews>>([])
 
@@ -39,13 +47,20 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
     },
     title: {
-      text: 'Usuários com Mais Postagens Bloqueadas',
+      text: 'Usuários com Mais Bloqueios',
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     xaxis: {
+      title: {
+        text: 'Postagens Bloqueadas',
+        offsetY: 5,
+        style: {
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
+        },
+      },
       categories: usersWithMostBlockedReviewsChartCategories.value,
       min: 0,
       tickAmount: Math.max(...usersWithMostBlockedReviewsChartSeriesData.value) + 1,
@@ -57,7 +72,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
       labels: {
         style: {
-          fontSize: '16px',
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
         },
         formatter: (value: number) => {
           return String(Math.round(value))
@@ -73,7 +88,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
       labels: {
         style: {
-          fontSize: '16px',
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
         },
       },
     },
@@ -86,7 +101,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
     colors: ['var(--color-primary)'],
     plotOptions: {
       bar: {
-        barHeight: '55%',
+        barHeight: '65%',
         borderRadius: 4,
         borderRadiusApplication: 'end',
         horizontal: true,
@@ -101,7 +116,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       offsetX: 10,
       style: {
         colors: ['var(--color-base-content)'],
-        fontSize: '16px',
+        fontSize: `${16 * chartVisualResourcesScale.value}px`,
         fontWeight: 600,
       },
     },

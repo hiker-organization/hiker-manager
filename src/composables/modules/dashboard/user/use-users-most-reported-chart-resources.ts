@@ -3,11 +3,19 @@ import type { UserMostReported } from '@/models/modules/dashboard/user/users-das
 import { computed, onMounted, ref } from 'vue'
 import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { useThemeStore } from '@/stores/core/theme-store'
+import { defineVariableBasedOnBreakpoints } from '@/utils/data/dynamic/use-define-variable-based-on-breakpoints'
 
 export function useUsersMostReportedChartResources() {
   const usersDashboardStore = useUsersDashboardStore()
 
   const themeStore = useThemeStore()
+
+  const chartVisualResourcesScale = defineVariableBasedOnBreakpoints<number>({
+    minValue: 0.7,
+    values: {
+      lg: 1,
+    },
+  })
 
   const usersMostReportedResponse = ref<Array<UserMostReported>>([])
 
@@ -39,13 +47,20 @@ export function useUsersMostReportedChartResources() {
       },
     },
     title: {
-      text: 'Usuários com Mais Postagens Denunciadas',
+      text: 'Usuários com Mais Denúncias',
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     xaxis: {
+      title: {
+        text: 'Postagens Denunciadas',
+        offsetY: 5,
+        style: {
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
+        },
+      },
       categories: usersMostReportedChartCategories.value,
       min: 0,
       tickAmount: Math.max(...usersMostReportedChartSeriesData.value) + 1,
@@ -57,7 +72,7 @@ export function useUsersMostReportedChartResources() {
       },
       labels: {
         style: {
-          fontSize: '16px',
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
         },
         formatter: (value: number) => {
           return String(Math.round(value))
@@ -73,7 +88,7 @@ export function useUsersMostReportedChartResources() {
       },
       labels: {
         style: {
-          fontSize: '16px',
+          fontSize: `${16 * chartVisualResourcesScale.value}px`,
         },
       },
     },
@@ -86,7 +101,7 @@ export function useUsersMostReportedChartResources() {
     colors: ['var(--color-primary)'],
     plotOptions: {
       bar: {
-        barHeight: '55%',
+        barHeight: '65%',
         borderRadius: 4,
         borderRadiusApplication: 'end',
         horizontal: true,
@@ -101,7 +116,7 @@ export function useUsersMostReportedChartResources() {
       offsetX: 10,
       style: {
         colors: ['var(--color-base-content)'],
-        fontSize: '16px',
+        fontSize: `${16 * chartVisualResourcesScale.value}px`,
         fontWeight: 600,
       },
     },

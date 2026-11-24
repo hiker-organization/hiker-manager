@@ -3,9 +3,17 @@ import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/re
 import { computed, onMounted, ref } from 'vue'
 import { useReviewsDashboardStore } from '@/stores/modules/dashboard/review/reviews-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
+import { defineVariableBasedOnBreakpoints } from '@/utils/data/dynamic/use-define-variable-based-on-breakpoints'
 
 export function useReviewsModuleSummaryChartResources() {
   const reviewsDashboardStore = useReviewsDashboardStore()
+
+  const chartVisualResourcesScale = defineVariableBasedOnBreakpoints<number>({
+    minValue: 0.7,
+    values: {
+      lg: 1,
+    },
+  })
 
   const reviewsModuleSummaryResponse = ref<ReviewsModuleSummaryResponse>({
     totalReviews: 0,
@@ -58,19 +66,24 @@ export function useReviewsModuleSummaryChartResources() {
       text: 'Distribuição de Postagens',
       align: 'center',
       style: {
-        fontSize: '20px',
+        fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     stroke: {
       width: 2,
     },
     legend: {
-      show: false,
+      show: true,
+      position: 'bottom',
+      customLegendItems: ['Válidas', 'Em Análise', 'Bloqueadas'],
+      style: {
+        fontSize: `${16 * chartVisualResourcesScale.value}px`,
+      },
     },
     labels: [
-      `Válidas (${reviewsModuleSummaryChartPercentages.value.common}%)`,
-      `Reportadas (${reviewsModuleSummaryChartPercentages.value.reported}%)`,
-      `Bloqueadas (${reviewsModuleSummaryChartPercentages.value.blocked}%)`,
+      `${reviewsModuleSummaryChartPercentages.value.common}%`,
+      `${reviewsModuleSummaryChartPercentages.value.reported}%`,
+      `${reviewsModuleSummaryChartPercentages.value.blocked}%`,
     ],
     colors: ['var(--color-success)', 'var(--color-warning)', 'var(--color-error)'],
     plotOptions: {
@@ -78,7 +91,10 @@ export function useReviewsModuleSummaryChartResources() {
         dataLabels: {
           external: {
             show: true,
-            fontSize: '16px',
+            fontSize: `${16 * chartVisualResourcesScale.value}px`,
+            connector: {
+              gap: 30 * chartVisualResourcesScale.value,
+            },
           },
         },
       },
