@@ -14,11 +14,14 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="min-h-120 size-full bg-base-300 rounded-md p-4">
-    <!-- Exibido enquanto os dados do gráfico carregam. -->
+  <div class="relative min-h-120 size-full bg-base-300 rounded-md p-4">
+    <!--
+      O gráfico é montado desde o início, pois o ApexCharts calcula a altura ("100%")
+      ao ser criado. O skeleton fica por cima dele enquanto os dados carregam.
+    -->
 
-    <div v-if="props.isLoading" class="skeleton size-full min-h-112"></div>
+    <apexchart v-bind="$attrs" />
 
-    <apexchart v-else v-bind="$attrs" />
+    <div v-if="props.isLoading" class="skeleton absolute inset-4"></div>
   </div>
 </template>
