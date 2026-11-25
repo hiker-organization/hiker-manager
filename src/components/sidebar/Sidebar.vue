@@ -135,7 +135,12 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
 
     <!-- Troca o tema da aplicação e encerra a sessão. -->
 
-    <div :class="['w-full flex gap-2 overflow-hidden', isOpen ? 'flex-row' : 'flex-col']">
+    <div
+      :class="[
+        'w-full flex justify-between gap-2 overflow-hidden',
+        isOpen ? 'flex-row' : 'flex-col',
+      ]"
+    >
       <ThemeButton />
 
       <LogoutButton :show-label="isOpen" />
