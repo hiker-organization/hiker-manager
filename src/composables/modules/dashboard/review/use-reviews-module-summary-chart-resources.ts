@@ -1,5 +1,6 @@
 import type { ApexOptions } from 'apexcharts'
 import type { ReviewsModuleSummaryResponse } from '@/models/modules/dashboard/review/reviews-dashboard-model'
+import Decimal from 'decimal.js'
 import { computed, onMounted, ref } from 'vue'
 import { useReviewsDashboardStore } from '@/stores/modules/dashboard/review/reviews-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
@@ -32,9 +33,9 @@ export function useReviewsModuleSummaryChartResources() {
   })
 
   const reviewsModuleSummaryChartPercentages = computed<{
-    common: number
-    blocked: number
-    reported: number
+    common: Decimal
+    blocked: Decimal
+    reported: Decimal
   }>(() => {
     const percentages = generateNormalizedPercentsGroup([
       reviewsModuleSummaryResponse.value.common.percentage,
@@ -43,9 +44,9 @@ export function useReviewsModuleSummaryChartResources() {
     ])
 
     return {
-      common: percentages[0] || 0,
-      reported: percentages[1] || 0,
-      blocked: percentages[2] || 0,
+      common: percentages[0] || Decimal('0'),
+      reported: percentages[1] || Decimal('0'),
+      blocked: percentages[2] || Decimal('0'),
     }
   })
 
