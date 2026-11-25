@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { Icon } from '@iconify/vue'
+import { useLogout } from '@/composables/auth/use-logout'
+
+const { handleLogout } = useLogout()
 </script>
 
 <template>
@@ -10,12 +13,23 @@ import { Icon } from '@iconify/vue'
       Você não tem acesso aos recursos exigidos pela aplicação.
     </h2>
 
-    <RouterLink
-      :to="{
-        name: 'home',
-      }"
-    >
-      <Button label="Home" icon="lucide:home" />
-    </RouterLink>
+    <div class="flex items-center justify-center gap-4">
+      <RouterLink
+        :to="{
+          name: 'home',
+        }"
+      >
+        <Button label="Home" icon="lucide:home" />
+      </RouterLink>
+
+      <!-- Permite entrar com outra conta, já que a Home volta para cá sem permissão. -->
+
+      <Button
+        label="Sair"
+        icon="lucide:log-out"
+        custom-class="btn-error flex items-center justify-center gap-2 p-4"
+        @click="handleLogout"
+      />
+    </div>
   </div>
 </template>
