@@ -52,26 +52,60 @@ watch(
     <!-- Estrutura do menu. -->
 
     <div class="w-full flex flex-col items-start justify-stretch gap-4 overflow-hidden">
-      <div class="min-w-max flex items-center justify-start gap-4">
-        <img
-          class="size-11 cursor-pointer"
-          src="/icons/favicon.png"
-          alt="logo"
-          @click="isOpen = !isOpen"
-        />
+      <RouterLink
+        :to="{ name: 'home' }"
+        class="min-w-max flex items-center justify-start gap-4 cursor-pointer"
+        title="Página inicial"
+      >
+        <img class="size-11" src="/icons/favicon.png" alt="logo" />
         <h1 class="text-xl font-extrabold">Hiker Manager</h1>
-      </div>
+      </RouterLink>
+
+      <!-- Abre e fecha o menu no modo desktop. -->
+
+      <button
+        type="button"
+        :title="isOpen ? 'Recolher menu' : 'Expandir menu'"
+        :class="[
+          'hidden items-center gap-2 p-2 bg-base-100 cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex',
+          isOpen ? 'w-full justify-start' : 'w-11 justify-center',
+        ]"
+        @click="isOpen = !isOpen"
+      >
+        <Icon :icon="isOpen ? 'lucide:panel-left-close' : 'lucide:panel-left-open'" />
+        <span v-if="isOpen">Recolher menu</span>
+      </button>
 
       <div v-for="(item, index) in items" :key="index" class="w-full">
-        <div
-          v-if="!isOpen"
-          :class="[
-            'w-11 flex items-center justify-center p-2',
-            route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
-          ]"
-        >
-          <Icon :icon="item.icon" />
-        </div>
+        <template v-if="!isOpen">
+          <RouterLink
+            v-if="isMenuItem(item)"
+            :to="{
+              name: item.route.name,
+            }"
+            :title="item.label"
+            :class="[
+              'w-11 flex items-center justify-center p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
+              route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
+            ]"
+          >
+            <Icon :icon="item.icon" />
+          </RouterLink>
+
+          <!-- Seções têm subitens, então o clique abre o menu para exibi-los. -->
+
+          <div
+            v-else
+            :title="item.label"
+            :class="[
+              'w-11 flex items-center justify-center p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
+              route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
+            ]"
+            @click="isOpen = true"
+          >
+            <Icon :icon="item.icon" />
+          </div>
+        </template>
 
         <RouterLink
           v-else-if="isMenuItem(item)"
