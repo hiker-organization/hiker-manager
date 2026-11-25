@@ -149,10 +149,12 @@ watch(
       </div>
     </div>
 
-    <!-- Troca o tema da aplicação. -->
+    <!-- Troca o tema da aplicação e encerra a sessão. -->
 
-    <div class="w-full overflow-hidden">
+    <div :class="['w-full flex gap-2 overflow-hidden', isOpen ? 'flex-row' : 'flex-col']">
       <ThemeButton />
+
+      <LogoutButton />
     </div>
 
     <!-- Abre e fecha o menu no modo mobile. -->
