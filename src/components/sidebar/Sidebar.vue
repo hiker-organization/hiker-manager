@@ -36,28 +36,39 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
     <!-- Estrutura do menu. -->
 
     <div class="w-full flex flex-col items-start justify-stretch gap-4 overflow-hidden">
-      <RouterLink
-        :to="{ name: 'home' }"
-        class="min-w-max flex items-center justify-start gap-4 cursor-pointer"
-        title="Página inicial"
-      >
-        <img class="size-11" src="/icons/favicon.png" alt="logo" />
-        <h1 class="text-xl font-extrabold">Hiker Manager</h1>
-      </RouterLink>
+      <div class="w-full flex items-center justify-between gap-2">
+        <RouterLink
+          :to="{ name: 'home' }"
+          class="min-w-max flex items-center justify-start gap-4 cursor-pointer"
+          title="Página inicial"
+        >
+          <img class="size-11" src="/icons/favicon.png" alt="logo" />
+          <h1 class="text-xl font-extrabold">Hiker Manager</h1>
+        </RouterLink>
 
-      <!-- Abre e fecha o menu no modo desktop. -->
+        <!-- Recolhe o menu no modo desktop (no mobile, a seta lateral faz isso). -->
+
+        <button
+          v-if="isOpen"
+          type="button"
+          title="Recolher menu"
+          class="hidden size-8 items-center justify-center rounded-md cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex"
+          @click="sidebarStore.toggleSidebar"
+        >
+          <Icon icon="lucide:chevrons-left" class="size-5" />
+        </button>
+      </div>
+
+      <!-- Expande o menu no modo desktop: a mesma seta, abaixo do logo por falta de espaço. -->
 
       <button
+        v-if="!isOpen"
         type="button"
-        :title="isOpen ? 'Recolher menu' : 'Expandir menu'"
-        :class="[
-          'hidden items-center gap-2 p-2 bg-base-100 cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex',
-          isOpen ? 'w-full justify-start' : 'w-11 justify-center',
-        ]"
+        title="Expandir menu"
+        class="hidden w-11 items-center justify-center p-2 bg-base-100 cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex"
         @click="sidebarStore.toggleSidebar"
       >
-        <Icon :icon="isOpen ? 'lucide:panel-left-close' : 'lucide:panel-left-open'" />
-        <span v-if="isOpen">Recolher menu</span>
+        <Icon icon="lucide:chevrons-right" />
       </button>
 
       <div v-for="(item, index) in items" :key="index" class="w-full">
