@@ -7,6 +7,7 @@ export const AUTO_BLOCKED_REVIEW_TABLE_COLUMNS = [
   { label: 'Probabilidade', value: 'classificacao.probabilidade', type: 'percentage' },
   { label: 'Situação', value: 'classificacao.decisao_admin', type: 'text' },
   { label: 'Revisado em', value: 'classificacao.revisado_em', type: 'date' },
+  { label: 'Revisado por', value: 'classificacao.revisor.nome_usuario', type: 'text' },
   { label: 'Autor', value: 'autor.nome_usuario', type: 'text' },
   { label: 'Local', value: 'lugar.nome', type: 'text' },
   { label: 'Cidade', value: 'lugar.cidade', type: 'text' },

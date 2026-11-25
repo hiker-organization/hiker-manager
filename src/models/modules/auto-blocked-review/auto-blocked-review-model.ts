@@ -13,12 +13,13 @@ interface ClassificationApiDTO {
   modelo_versao: string
   revisado_em: string | null
   decisao_admin: AutoBlockModerationStats | null
+  revisor: AutorApiDTO | null
 }
 
 export interface AutoBlockedReviewListRow {
   id?: number
   descricao: string
-  status: 'OFENSIVA'
+  status: AutoBlockModerationStats
   createdAt: string
   autor: AutorApiDTO
   lugar: LocaleApiDTO
@@ -28,6 +29,7 @@ export interface AutoBlockedReviewListRow {
 export type AutoBlockModerationStats = 'AUTORIZADA' | 'OFENSIVA'
 
 // Valores do filtro "pendentes" da API, em string porque vêm da URL.
+// 'true' lista as pendentes e 'false' as já revisadas (liberadas ou mantidas).
 export type AutoBlockedReviewFilterStats = 'true' | 'false'
 
 export interface AutoBlockModerationParameters {

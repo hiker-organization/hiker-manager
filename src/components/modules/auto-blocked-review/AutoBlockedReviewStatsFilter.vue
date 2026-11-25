@@ -54,7 +54,7 @@ onMounted(() => {
       v-model="currentStatsFilter"
       :options="[
         { value: 'true', label: 'Pendentes' },
-        { value: 'false', label: 'Todas' },
+        { value: 'false', label: 'Revisadas' },
       ]"
       :classes="{
         wrapper: 'w-full bg-base-300 rounded-md p-2',

@@ -5,6 +5,13 @@ import { AUTO_BLOCKED_REVIEW_TABLE_COLUMNS } from '@/constants/modules/auto-bloc
 // Nome do slot da coluna com ponto, só pode ser usado como argumento dinâmico.
 const situationSlot = 'classificacao.decisao_admin'
 
+// Sem decisão do admin, o bloqueio ainda está pendente.
+const SITUATION_BADGES = {
+  PENDENTE: { text: 'PENDENTE', class: 'badge-warning' },
+  AUTORIZADA: { text: 'LIBERADA', class: 'badge-success' },
+  OFENSIVA: { text: 'BLOQUEIO MANTIDO', class: 'badge-error' },
+}
+
 const {
   namespace,
   autoBlockedReviews,
@@ -35,12 +42,12 @@ const {
       </template>
 
       <template #[situationSlot]="{ data }">
-        <ConditionBadge
-          :value="data.classificacao.decisao_admin === null"
-          active-text="Pendente"
-          inactive-text="Confirmada"
-          activeClass="badge-warning"
-          inactiveClass="badge-error"
+        <Badge
+          :text="SITUATION_BADGES[data.classificacao.decisao_admin ?? 'PENDENTE'].text"
+          :custom-class="[
+            'badge-soft rounded-sm font-bold p-4',
+            SITUATION_BADGES[data.classificacao.decisao_admin ?? 'PENDENTE'].class,
+          ]"
         />
       </template>
 
