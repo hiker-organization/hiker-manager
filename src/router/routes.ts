@@ -76,6 +76,12 @@ export const routes: Array<RouteRecordRaw> = [
             meta: { title: 'Listagem de Postagens' },
           },
           {
+            path: 'auto-blocked',
+            name: 'autoBlockedReviewsListing',
+            component: () => import('@/views/modules/review/AutoBlockedReviewsListing.vue'),
+            meta: { title: 'Postagens Bloqueadas pelo Modelo' },
+          },
+          {
             path: ':reviewCode',
             name: 'reviewForm',
             component: () => import('@/views/modules/review/ReviewForm.vue'),

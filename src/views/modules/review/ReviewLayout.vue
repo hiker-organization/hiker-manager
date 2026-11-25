@@ -17,6 +17,14 @@ const reviewLayoutTabs = computed<Array<RouteTab>>(() => [
     isVisible: true,
   },
   {
+    label: 'Bloqueadas pelo Modelo',
+    icon: 'lucide:shield-alert',
+    route: {
+      name: 'autoBlockedReviewsListing',
+    },
+    isVisible: true,
+  },
+  {
     label: 'Detalhes',
     icon: 'lucide:form',
     route: {

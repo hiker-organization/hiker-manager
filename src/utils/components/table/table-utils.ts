@@ -9,6 +9,9 @@ export function formatCellValue(value: unknown, type: string) {
     case 'date':
       return getNormalizedDate(String(value))
 
+    case 'percentage':
+      return `${(Number(value) * 100).toFixed(2)}%`
+
     default:
       return value
   }
