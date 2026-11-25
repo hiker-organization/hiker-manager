@@ -1,11 +1,17 @@
-import { breakpointsTailwind } from '@vueuse/core'
+import { breakpointsTailwind, useLocalStorage } from '@vueuse/core'
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
 
 export const useSidebarStore = defineStore('SidebarStore', () => {
-  // Expandida por padrão em telas grandes. Depois disso, só muda pelo botão.
+  /*
+    Guarda a última escolha feita pelo botão. Sem escolha salva, vem expandida em telas
+    grandes e contraída nas menores (o padrão não é gravado, só a escolha do usuário).
+  */
 
-  const isOpen = ref<boolean>(window.matchMedia(`(min-width: ${breakpointsTailwind.lg}px)`).matches)
+  const isOpen = useLocalStorage<boolean>(
+    'hiker-manager-sidebar-open',
+    window.matchMedia(`(min-width: ${breakpointsTailwind.lg}px)`).matches,
+    { writeDefaults: false },
+  )
 
   function toggleSidebar() {
     isOpen.value = !isOpen.value
