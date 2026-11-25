@@ -1,78 +1,146 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
 import { useReviewReportList } from '@/composables/modules/review-report/review-report-list'
-import { REVIEW_REPORT_TABLE_COLUMNS } from '@/constants/modules/review-report/review-report-table-columns'
+import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
+import {
+  REVIEW_REPORT_ACTIVE_TABLE_COLUMNS,
+  REVIEW_REPORT_CLOSED_TABLE_COLUMNS,
+} from '@/constants/modules/review-report/review-report-table-columns'
+
+/*
+  Os namespaces não podem estar contidos uns nos outros (o gerenciador da URL usa
+  includes), por isso "review-report" no singular, diferente da página de denúncias.
+*/
+
+const situationNamespace: string = 'review-report-situation'
 
 const {
-  namespace,
-  reviewReports,
-  pagination,
-  isLoading,
+  currentNamespaceQueryParams: currentSituationQueryParams,
+  setNamespaceQueryParams: setSituationQueryParams,
+} = useUrlParamsManager({
+  namespace: situationNamespace,
+})
+
+const currentSituation = computed<string>(() =>
+  String(currentSituationQueryParams.value.situacao ?? 'TODAS'),
+)
+
+const {
+  namespace: activeNamespace,
+  reviewReports: activeReviewReports,
+  pagination: activePagination,
+  isLoading: activeIsLoading,
   actionsModalIsVisible,
   selectedReviewReport,
   openActionsModal,
-  forceReviewReportsListingReload,
-  setNamespaceQueryParams,
-} = useReviewReportList()
+  forceReviewReportsListingReload: forceActiveListingReload,
+  setNamespaceQueryParams: setActiveQueryParams,
+} = useReviewReportList('review-report-active-list', 'ATIVA')
+
+const {
+  namespace: closedNamespace,
+  reviewReports: closedReviewReports,
+  pagination: closedPagination,
+  isLoading: closedIsLoading,
+  forceReviewReportsListingReload: forceClosedListingReload,
+  setNamespaceQueryParams: setClosedQueryParams,
+} = useReviewReportList('review-report-closed-list', 'FECHADA')
+
+// Uma decisão tira a denúncia das ativas e a coloca nas fechadas.
+async function forceReviewReportsListingsReload() {
+  await Promise.all([forceActiveListingReload(), forceClosedListingReload()])
+}
 </script>
 
 <template>
-  <div class="w-full">
-    <Table
-      :namespace="namespace"
-      :columns="REVIEW_REPORT_TABLE_COLUMNS"
-      :rows="reviewReports"
-      :pagination="pagination"
-      :is-loading="isLoading"
-      :extra-slots="['statsFilter']"
-      @update-params="(params) => setNamespaceQueryParams(params)"
-    >
-      <template #statsFilter>
-        <ReportStatsFilter
-          :namespace="namespace"
-          @update-params="(params) => setNamespaceQueryParams(params)"
-        />
-      </template>
+  <div class="w-full flex flex-col gap-6">
+    <div class="w-full md:w-64">
+      <ReportStatsFilter
+        :namespace="situationNamespace"
+        @update-params="(params) => setSituationQueryParams(params)"
+      />
+    </div>
 
-      <template #status="{ data }">
-        <ConditionBadge
-          :value="data.status === 'ATIVA'"
-          :active-text="data.status"
-          :inactive-text="data.status"
-          activeClass="badge-success"
-          inactiveClass="badge-warning"
-        />
-      </template>
+    <section v-if="currentSituation !== 'FECHADAS'" class="w-full flex flex-col gap-2">
+      <span class="flex items-center justify-start gap-2 text-lg font-extrabold">
+        <Icon icon="lucide:clock" />
+        Ativas
+      </span>
 
-      <template #cardTitle="{ data }">
-        <span class="font-extrabold truncate">#{{ data.id }}</span>
-      </template>
+      <Table
+        :namespace="activeNamespace"
+        :columns="REVIEW_REPORT_ACTIVE_TABLE_COLUMNS"
+        :rows="activeReviewReports"
+        :pagination="activePagination"
+        :is-loading="activeIsLoading"
+        @update-params="(params) => setActiveQueryParams(params)"
+      >
+        <template #cardTitle="{ data }">
+          <span class="font-extrabold truncate">#{{ data.id }}</span>
+        </template>
 
-      <template #registerActions="{ data }">
-        <Button
-          :disabled="data.status === 'FECHADA'"
-          custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
-          label="Opções"
-          icon="lucide:sparkles"
-          @click="openActionsModal(data)"
-        />
-      </template>
-    </Table>
+        <template #registerActions="{ data }">
+          <Button
+            custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
+            label="Opções"
+            icon="lucide:sparkles"
+            @click="openActionsModal(data)"
+          />
+        </template>
+      </Table>
+    </section>
+
+    <section v-if="currentSituation !== 'ATIVAS'" class="w-full flex flex-col gap-2">
+      <span class="flex items-center justify-start gap-2 text-lg font-extrabold">
+        <Icon icon="lucide:circle-check" />
+        Fechadas
+      </span>
+
+      <Table
+        :namespace="closedNamespace"
+        :columns="REVIEW_REPORT_CLOSED_TABLE_COLUMNS"
+        :rows="closedReviewReports"
+        :pagination="closedPagination"
+        :is-loading="closedIsLoading"
+        @update-params="(params) => setClosedQueryParams(params)"
+      >
+        <template #decisao="{ data }">
+          <ConditionBadge
+            v-if="data.decisao"
+            :value="data.decisao === 'AUTORIZADA'"
+            active-text="Descartada"
+            inactive-text="Bloqueada"
+            activeClass="badge-success"
+            inactiveClass="badge-error"
+          />
+
+          <!-- Fechadas antes de a decisão ser registrada. -->
+
+          <span v-else class="truncate">Não Definido(a)</span>
+        </template>
+
+        <template #cardTitle="{ data }">
+          <span class="font-extrabold truncate">#{{ data.id }}</span>
+        </template>
+      </Table>
+    </section>
 
     <Modal
       v-if="selectedReviewReport"
       v-model:is-visible="actionsModalIsVisible"
-      :title="`Ações (${selectedReviewReport.id})`"
+      :title="`Ações (#${selectedReviewReport.id})`"
       icon="lucide:message-circle-warning"
     >
       <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <DiscardReportButton
           :report="selectedReviewReport"
-          @discard-processed="forceReviewReportsListingReload"
+          @discard-processed="forceReviewReportsListingsReload"
         />
 
         <ConfirmReportButton
           :report="selectedReviewReport"
-          @confirm-processes="forceReviewReportsListingReload"
+          @confirm-processes="forceReviewReportsListingsReload"
         />
       </div>
     </Modal>

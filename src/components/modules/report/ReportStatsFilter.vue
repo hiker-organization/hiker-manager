@@ -13,8 +13,6 @@ const emits = defineEmits<{
 
 const currentStatsFilter = ref<ReportFilterStats | null>(null)
 
-const didInitialSync = ref<boolean>(false)
-
 const { currentNamespaceQueryParams } = useUrlParamsManager({
   namespace: props.namespace,
 })
@@ -22,39 +20,27 @@ const { currentNamespaceQueryParams } = useUrlParamsManager({
 watch(
   () => currentStatsFilter.value,
   (newStatsFilter: ReportFilterStats | null) => {
-    // Se não for a primeira execução, reseta a página.
-
-    if (didInitialSync.value) {
-      emits('updateParams', {
-        status: newStatsFilter,
-        page: 1,
-      })
-
-      return
-    }
-
     emits('updateParams', {
-      status: newStatsFilter,
+      situacao: newStatsFilter,
     })
-
-    didInitialSync.value = true
   },
 )
 
 onMounted(() => {
-  currentStatsFilter.value = currentNamespaceQueryParams.value.status
-    ? (String(currentNamespaceQueryParams.value.status) as ReportFilterStats)
-    : 'ATIVA'
+  currentStatsFilter.value = currentNamespaceQueryParams.value.situacao
+    ? (String(currentNamespaceQueryParams.value.situacao) as ReportFilterStats)
+    : 'TODAS'
 })
 </script>
 
 <template>
-  <TableOptionContainer label="Status" icon="lucide:info">
+  <TableOptionContainer label="Situação" icon="lucide:info">
     <Input
       v-model="currentStatsFilter"
       :options="[
-        { value: 'ATIVA', label: 'Ativas' },
-        { value: 'FECHADA', label: 'Fechadas' },
+        { value: 'TODAS', label: 'Todas' },
+        { value: 'ATIVAS', label: 'Ativas' },
+        { value: 'FECHADAS', label: 'Fechadas' },
       ]"
       :classes="{
         wrapper: 'w-full bg-base-300 rounded-md p-2',

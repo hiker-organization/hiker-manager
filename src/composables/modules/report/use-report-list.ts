@@ -1,13 +1,12 @@
-import type { ReportListRow } from '@/models/modules/report/report-model'
+import type { ReportListRow, ReportStatus } from '@/models/modules/report/report-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { ref } from 'vue'
 import { useReportStore } from '@/stores/modules/report/report-store'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-export function useReportList() {
+// status: ATIVA lista as denúncias em aberto, FECHADA as já revisadas.
+export function useReportList(namespace: string, status: ReportStatus) {
   const reportStore = useReportStore()
-
-  const namespace: string = 'reports-list'
 
   const reports = ref<Array<ReportListRow>>([])
 
@@ -43,7 +42,10 @@ export function useReportList() {
     isLoading.value = true
 
     const { data, statusCode } = await reportStore.fetchReports(
-      currentNamespaceQueryParams.value,
+      {
+        ...currentNamespaceQueryParams.value,
+        status,
+      },
       {},
     )
 
