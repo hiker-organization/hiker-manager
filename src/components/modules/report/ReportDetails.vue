@@ -48,26 +48,19 @@ const reportFields = computed<Array<{ label: string; value: string }>>(() => {
 </script>
 
 <template>
-  <dl class="flex flex-col gap-2">
-    <div v-for="field in reportFields" :key="field.label" class="bg-base-200 rounded-md p-2">
-      <dt class="font-bold">{{ field.label }}</dt>
-      <dd class="whitespace-normal break-words">{{ field.value }}</dd>
-    </div>
+  <DetailsList :fields="reportFields">
+    <DetailsItem v-if="props.report.status === 'FECHADA'" label="Decisão">
+      <ConditionBadge
+        v-if="props.report.decisao"
+        :value="props.report.decisao === 'AUTORIZADA'"
+        active-text="Descartada"
+        inactive-text="Bloqueada"
+        activeClass="badge-success"
+        inactiveClass="badge-error"
+        custom-class="badge-soft rounded-sm font-bold p-4 mt-1"
+      />
 
-    <div v-if="props.report.status === 'FECHADA'" class="bg-base-200 rounded-md p-2">
-      <dt class="font-bold">Decisão</dt>
-      <dd class="mt-1">
-        <ConditionBadge
-          v-if="props.report.decisao"
-          :value="props.report.decisao === 'AUTORIZADA'"
-          active-text="Descartada"
-          inactive-text="Bloqueada"
-          activeClass="badge-success"
-          inactiveClass="badge-error"
-        />
-
-        <span v-else>{{ NOT_DEFINED }}</span>
-      </dd>
-    </div>
-  </dl>
+      <span v-else>{{ NOT_DEFINED }}</span>
+    </DetailsItem>
+  </DetailsList>
 </template>

@@ -25,6 +25,10 @@ export function useReviewList() {
 
   const actionsModalIsVisible = ref<boolean>(false)
 
+  // Dados completos do registro selecionado, abertos a partir do modal de ações.
+
+  const detailsModalIsVisible = ref<boolean>(false)
+
   const selectedReview = ref<ReviewListRow | null>(null)
 
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
@@ -57,14 +61,22 @@ export function useReviewList() {
     actionsModalIsVisible.value = true
   }
 
+  function openDetailsModal() {
+    actionsModalIsVisible.value = false
+
+    detailsModalIsVisible.value = true
+  }
+
   return {
     namespace,
     reviews,
     pagination,
     isLoading,
     actionsModalIsVisible,
+    detailsModalIsVisible,
     selectedReview,
     openActionsModal,
+    openDetailsModal,
     setNamespaceQueryParams,
   }
 }

@@ -8,8 +8,10 @@ const {
   pagination,
   isLoading,
   actionsModalIsVisible,
+  detailsModalIsVisible,
   selectedReview,
   openActionsModal,
+  openDetailsModal,
   setNamespaceQueryParams,
 } = useReviewList()
 </script>
@@ -53,21 +55,12 @@ const {
       icon="lucide:pencil-line"
     >
       <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-        <RouterLink
-          :to="{
-            name: 'reviewForm',
-            params: {
-              reviewCode: selectedReview.id,
-            },
-          }"
-          class="w-full"
-        >
-          <Button
-            label="Dados Completos"
-            icon="lucide:form"
-            custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
-          />
-        </RouterLink>
+        <Button
+          label="Dados Completos"
+          icon="lucide:form"
+          custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
+          @click="openDetailsModal"
+        />
 
         <RouterLink
           :to="{
@@ -85,6 +78,17 @@ const {
           />
         </RouterLink>
       </div>
+    </Modal>
+
+    <Modal
+      v-if="selectedReview"
+      v-model:is-visible="detailsModalIsVisible"
+      :title="`Postagem (#${selectedReview.id})`"
+      icon="lucide:pencil-line"
+    >
+      <!-- Montado só com o modal aberto, pois busca as estatísticas na API. -->
+
+      <ReviewDetails v-if="detailsModalIsVisible" :review="selectedReview" />
     </Modal>
   </div>
 </template>

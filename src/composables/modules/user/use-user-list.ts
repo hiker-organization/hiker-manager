@@ -25,6 +25,10 @@ export function useUserList() {
 
   const actionsModalIsVisible = ref<boolean>(false)
 
+  // Dados completos do registro selecionado, abertos a partir do modal de ações.
+
+  const detailsModalIsVisible = ref<boolean>(false)
+
   const selectedUser = ref<UserListRow | null>(null)
 
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
@@ -37,6 +41,12 @@ export function useUserList() {
     selectedUser.value = data
 
     actionsModalIsVisible.value = true
+  }
+
+  function openDetailsModal() {
+    actionsModalIsVisible.value = false
+
+    detailsModalIsVisible.value = true
   }
 
   async function loadUsers() {
@@ -68,8 +78,10 @@ export function useUserList() {
     pagination,
     isLoading,
     actionsModalIsVisible,
+    detailsModalIsVisible,
     selectedUser,
     openActionsModal,
+    openDetailsModal,
     forceUsersListingReload,
     setNamespaceQueryParams,
   }

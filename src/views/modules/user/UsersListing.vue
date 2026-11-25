@@ -9,8 +9,10 @@ const {
   pagination,
   isLoading,
   actionsModalIsVisible,
+  detailsModalIsVisible,
   selectedUser,
   openActionsModal,
+  openDetailsModal,
   forceUsersListingReload,
   setNamespaceQueryParams,
 } = useUserList()
@@ -69,21 +71,12 @@ const {
       icon="lucide:user-2"
     >
       <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-        <RouterLink
-          :to="{
-            name: 'userForm',
-            params: {
-              user: selectedUser.nome_usuario,
-            },
-          }"
-          class="w-full"
-        >
-          <Button
-            label="Dados Completos"
-            icon="lucide:form"
-            custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
-          />
-        </RouterLink>
+        <Button
+          label="Dados Completos"
+          icon="lucide:form"
+          custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
+          @click="openDetailsModal"
+        />
 
         <BlockUserModal
           v-if="!selectedUser.bloqueado && !selectedUser.banido"
@@ -103,6 +96,15 @@ const {
           @ban-processed="forceUsersListingReload"
         />
       </div>
+    </Modal>
+
+    <Modal
+      v-if="selectedUser"
+      v-model:is-visible="detailsModalIsVisible"
+      :title="`Usuário (#${selectedUser.id})`"
+      icon="lucide:user-2"
+    >
+      <UserDetails :user="selectedUser" />
     </Modal>
   </div>
 </template>
