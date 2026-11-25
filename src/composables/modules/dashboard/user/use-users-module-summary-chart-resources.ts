@@ -1,5 +1,6 @@
 import type { ApexOptions } from 'apexcharts'
 import type { UsersModuleSummaryResponse } from '@/models/modules/dashboard/user/users-dashboard-model'
+import Decimal from 'decimal.js'
 import { computed, onMounted, ref } from 'vue'
 import { useUsersDashboardStore } from '@/stores/modules/dashboard/user/users-dashboard-store'
 import { generateNormalizedPercentsGroup } from '@/utils/data/formatting/percentage-normalization-utils'
@@ -32,9 +33,9 @@ export function useUsersModuleSummaryChartResources() {
   })
 
   const usersModuleSummaryChartPercentages = computed<{
-    common: number
-    blocked: number
-    banned: number
+    common: Decimal
+    blocked: Decimal
+    banned: Decimal
   }>(() => {
     const percentages = generateNormalizedPercentsGroup([
       usersModuleSummaryResponse.value.common.percentage,
@@ -43,9 +44,9 @@ export function useUsersModuleSummaryChartResources() {
     ])
 
     return {
-      common: percentages[0] || 0,
-      blocked: percentages[1] || 0,
-      banned: percentages[2] || 0,
+      common: percentages[0] || Decimal('0'),
+      blocked: percentages[1] || Decimal('0'),
+      banned: percentages[2] || Decimal('0'),
     }
   })
 

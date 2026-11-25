@@ -47,23 +47,14 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
     },
     title: {
-      text: 'Usuários com Mais Bloqueios',
+      text: 'Usuários com mais Bloqueios',
       align: 'center',
       style: {
         fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     xaxis: {
-      title: {
-        text: 'Postagens Bloqueadas',
-        offsetY: 5,
-        style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        },
-      },
       categories: usersWithMostBlockedReviewsChartCategories.value,
-      min: 0,
-      tickAmount: Math.max(...usersWithMostBlockedReviewsChartSeriesData.value) + 1,
       axisBorder: {
         color: 'var(--color-base-content)',
       },
@@ -72,14 +63,13 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
       labels: {
         style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        },
-        formatter: (value: number) => {
-          return String(Math.round(value))
+          fontSize: `${12 * chartVisualResourcesScale.value}px`,
         },
       },
     },
     yaxis: {
+      min: 0,
+      tickAmount: Math.max(...usersWithMostBlockedReviewsChartSeriesData.value),
       axisBorder: {
         color: 'var(--color-base-content)',
       },
@@ -88,7 +78,10 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
       labels: {
         style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
+          fontSize: `${12 * chartVisualResourcesScale.value}px`,
+        },
+        formatter: (value: number) => {
+          return String(Math.round(value))
         },
       },
     },
@@ -104,7 +97,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
         barHeight: '65%',
         borderRadius: 4,
         borderRadiusApplication: 'end',
-        horizontal: true,
+        horizontal: false,
         dataLabels: {
           position: 'top',
         },
@@ -113,18 +106,21 @@ export function useUsersWithMostBlockedReviewsChartResources() {
     dataLabels: {
       enabled: true,
       textAnchor: 'start',
-      offsetX: 10,
       style: {
         colors: ['var(--color-base-content)'],
-        fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        fontWeight: 600,
+        fontSize: `${12 * chartVisualResourcesScale.value}px`,
+        fontWeight: 800,
       },
     },
     tooltip: {
       theme: themeStore.currentTheme,
     },
     grid: {
-      show: false,
+      show: true,
+      padding: {
+        left: 60,
+        right: 30,
+      },
     },
   }))
 

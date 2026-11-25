@@ -5,7 +5,7 @@ defineOptions({
 </script>
 
 <template>
-  <div class="size-full bg-base-300 rounded-md p-4">
+  <div class="min-h-120 size-full bg-base-300 rounded-md p-4">
     <apexchart v-bind="$attrs" />
   </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useUserList } from '@/composables/modules/user/use-user-list'
 import { USER_TABLE_COLUMNS } from '@/constants/modules/user/user-table-columns'
+import Decimal from 'decimal.js'
 
 const {
   namespace,
@@ -23,7 +24,7 @@ const {
       :pagination="pagination"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
-      <template #reputacao="{ data }">{{ data.reputacao }}%</template>
+      <template #reputacao="{ data }">{{ Decimal(data.reputacao.toFixed(2)) }}%</template>
 
       <template #banido="{ data }">
         <ConditionBadge

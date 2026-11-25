@@ -47,23 +47,14 @@ export function useUsersMostReportedChartResources() {
       },
     },
     title: {
-      text: 'Usuários com Mais Denúncias',
+      text: 'Usuários com mais Denúncias',
       align: 'center',
       style: {
         fontSize: `${20 * chartVisualResourcesScale.value}px`,
       },
     },
     xaxis: {
-      title: {
-        text: 'Postagens Denunciadas',
-        offsetY: 5,
-        style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        },
-      },
       categories: usersMostReportedChartCategories.value,
-      min: 0,
-      tickAmount: Math.max(...usersMostReportedChartSeriesData.value) + 1,
       axisBorder: {
         color: 'var(--color-base-content)',
       },
@@ -72,14 +63,13 @@ export function useUsersMostReportedChartResources() {
       },
       labels: {
         style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        },
-        formatter: (value: number) => {
-          return String(Math.round(value))
+          fontSize: `${12 * chartVisualResourcesScale.value}px`,
         },
       },
     },
     yaxis: {
+      min: 0,
+      tickAmount: Math.max(...usersMostReportedChartSeriesData.value),
       axisBorder: {
         color: 'var(--color-base-content)',
       },
@@ -88,7 +78,10 @@ export function useUsersMostReportedChartResources() {
       },
       labels: {
         style: {
-          fontSize: `${16 * chartVisualResourcesScale.value}px`,
+          fontSize: `${12 * chartVisualResourcesScale.value}px`,
+        },
+        formatter: (value: number) => {
+          return String(Math.round(value))
         },
       },
     },
@@ -104,7 +97,7 @@ export function useUsersMostReportedChartResources() {
         barHeight: '65%',
         borderRadius: 4,
         borderRadiusApplication: 'end',
-        horizontal: true,
+        horizontal: false,
         dataLabels: {
           position: 'top',
         },
@@ -112,19 +105,22 @@ export function useUsersMostReportedChartResources() {
     },
     dataLabels: {
       enabled: true,
-      textAnchor: 'start',
-      offsetX: 10,
+      textAnchor: 'middle',
       style: {
         colors: ['var(--color-base-content)'],
-        fontSize: `${16 * chartVisualResourcesScale.value}px`,
-        fontWeight: 600,
+        fontSize: `${12 * chartVisualResourcesScale.value}px`,
+        fontWeight: 800,
       },
     },
     tooltip: {
       theme: themeStore.currentTheme,
     },
     grid: {
-      show: false,
+      show: true,
+      padding: {
+        left: 60,
+        right: 30,
+      },
     },
   }))
 

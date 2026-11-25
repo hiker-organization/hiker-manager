@@ -1,22 +1,29 @@
+import Decimal from 'decimal.js'
+
 export function generateNormalizedPercentsGroup(percentages: Array<number>) {
-  const fixedPercentages = percentages.map((percentage) => Number(percentage.toFixed(2)))
+  const fixedPercentages: Array<Decimal> = percentages.map<Decimal>((percentage) =>
+    Decimal(percentage.toFixed(2)),
+  )
 
-  const fixedPercentagesSum = fixedPercentages.reduce<number>((accumulator, fixedPercentage) => {
-    accumulator += fixedPercentage
+  const fixedPercentagesSum: Decimal = fixedPercentages.reduce<Decimal>(
+    (accumulator, fixedPercentage) => {
+      accumulator = accumulator.plus(fixedPercentage)
 
-    return accumulator
-  }, 0)
+      return accumulator
+    },
+    Decimal('0'),
+  )
 
-  const rest = 100 - fixedPercentagesSum
+  const rest: Decimal = Decimal('100').minus(fixedPercentagesSum)
 
-  const greaterPercentage = Math.max(...fixedPercentages)
+  const greaterPercentage: Decimal = Decimal.max(...fixedPercentages)
 
-  const greaterPercentageIndex = fixedPercentages.findIndex(
-    (fixedPercentage) => fixedPercentage === greaterPercentage,
+  const greaterPercentageIndex: number = fixedPercentages.findIndex((fixedPercentage) =>
+    fixedPercentage.eq(greaterPercentage),
   )
 
   if (greaterPercentageIndex !== -1 && fixedPercentages[greaterPercentageIndex]) {
-    fixedPercentages[greaterPercentageIndex] += rest
+    fixedPercentages[greaterPercentageIndex] = fixedPercentages[greaterPercentageIndex].plus(rest)
   }
 
   return fixedPercentages
