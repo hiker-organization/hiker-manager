@@ -19,6 +19,10 @@ export function useReviewList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedReview = ref<ReviewListRow | null>(null)
@@ -26,10 +30,14 @@ export function useReviewList() {
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
     onNamespaceQueryParamsChange: async () => {
+      isLoading.value = true
+
       const { data, statusCode } = await reviewStore.fetchReviews(
         currentNamespaceQueryParams.value,
         {},
       )
+
+      isLoading.value = false
 
       if (statusCode.value === 200 && data.value) {
         reviews.value = data.value.data
@@ -53,6 +61,7 @@ export function useReviewList() {
     namespace,
     reviews,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedReview,
     openActionsModal,

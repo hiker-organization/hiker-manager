@@ -7,6 +7,7 @@ const {
   namespace,
   users,
   pagination,
+  isLoading,
   actionsModalIsVisible,
   selectedUser,
   openActionsModal,
@@ -22,6 +23,7 @@ const {
       :columns="USER_TABLE_COLUMNS"
       :rows="users"
       :pagination="pagination"
+      :is-loading="isLoading"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
       <template #reputacao="{ data }">{{ Decimal(data.reputacao.toFixed(2)) }}%</template>

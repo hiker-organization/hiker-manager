@@ -6,6 +6,7 @@ const {
   namespace,
   reviews,
   pagination,
+  isLoading,
   actionsModalIsVisible,
   selectedReview,
   openActionsModal,
@@ -20,6 +21,7 @@ const {
       :columns="REVIEW_TABLE_COLUMNS"
       :rows="reviews"
       :pagination="pagination"
+      :is-loading="isLoading"
       @update-params="(params) => setNamespaceQueryParams(params)"
     >
       <template #cardTitle="{ data }">

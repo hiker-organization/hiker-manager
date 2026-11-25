@@ -28,6 +28,7 @@ const {
   namespace: pendingNamespace,
   autoBlockedReviews: pendingReviews,
   pagination: pendingPagination,
+  isLoading: pendingIsLoading,
   actionsModalIsVisible,
   selectedAutoBlockedReview,
   openActionsModal,
@@ -39,6 +40,7 @@ const {
   namespace: reviewedNamespace,
   autoBlockedReviews: reviewedReviews,
   pagination: reviewedPagination,
+  isLoading: reviewedIsLoading,
   forceAutoBlockedReviewsListingReload: forceReviewedListingReload,
   setNamespaceQueryParams: setReviewedQueryParams,
 } = useAutoBlockedReviewList('auto-blocked-reviewed-list', false)
@@ -69,6 +71,7 @@ async function forceAutoBlockedReviewsListingsReload() {
         :columns="AUTO_BLOCKED_REVIEW_PENDING_TABLE_COLUMNS"
         :rows="pendingReviews"
         :pagination="pendingPagination"
+        :is-loading="pendingIsLoading"
         @update-params="(params) => setPendingQueryParams(params)"
       >
         <template #cardTitle="{ data }">
@@ -97,6 +100,7 @@ async function forceAutoBlockedReviewsListingsReload() {
         :columns="AUTO_BLOCKED_REVIEW_REVIEWED_TABLE_COLUMNS"
         :rows="reviewedReviews"
         :pagination="reviewedPagination"
+        :is-loading="reviewedIsLoading"
         @update-params="(params) => setReviewedQueryParams(params)"
       >
         <template #[decisionSlot]="{ data }">

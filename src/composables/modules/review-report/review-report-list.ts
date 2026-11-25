@@ -32,6 +32,10 @@ export function useReviewReportList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedReviewReport = ref<ReviewReportListRow | null>(null)
@@ -49,12 +53,16 @@ export function useReviewReportList() {
   }
 
   async function loadReviewReports() {
+    isLoading.value = true
+
     const { data, statusCode } = await reviewReportStore.fetchReviewReports(
       currentNamespaceQueryParams.value,
       {
         reviewCode: reviewCode.value,
       },
     )
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reviewReports.value = data.value.data
@@ -76,6 +84,7 @@ export function useReviewReportList() {
     namespace,
     reviewReports,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedReviewReport,
     openActionsModal,

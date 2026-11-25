@@ -19,6 +19,10 @@ export function useUserList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedUser = ref<UserListRow | null>(null)
@@ -36,7 +40,11 @@ export function useUserList() {
   }
 
   async function loadUsers() {
+    isLoading.value = true
+
     const { data, statusCode } = await userStore.fetchUsers(currentNamespaceQueryParams.value, {})
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       users.value = data.value.data
@@ -58,6 +66,7 @@ export function useUserList() {
     namespace,
     users,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedUser,
     openActionsModal,

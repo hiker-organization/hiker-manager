@@ -18,6 +18,7 @@ interface TableProps {
   rows: Array<TRow>
   pagination?: Pagination
   extraSlots?: Array<string>
+  isLoading?: boolean
 }
 
 // Extraindo o valor da propriedade "value" de cada coluna.
@@ -51,6 +52,12 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
 
 const tableVisibleColumns = ref<Array<string>>([])
 
+// Quantidade de linhas e cards exibidos enquanto os dados carregam.
+
+const SKELETON_ROWS: number = 5
+
+const SKELETON_CARDS: number = 3
+
 // Funções.
 
 function prepareCellValue(row: TRow, column: TableColumn): unknown {
@@ -72,7 +79,7 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
       class="hidden w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:block"
     >
       <table
-        v-if="props.rows.length > 0"
+        v-if="props.isLoading || props.rows.length > 0"
         class="table table-zebra max-w-full border rounded-md overflow-hidden"
       >
         <thead>
@@ -89,7 +96,23 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
           </tr>
         </thead>
 
-        <tbody>
+        <tbody v-if="props.isLoading">
+          <tr v-for="skeletonRow in SKELETON_ROWS" :key="skeletonRow">
+            <td
+              v-for="column in props.columns"
+              v-show="tableVisibleColumns.includes(column.value)"
+              :key="column.value"
+            >
+              <div class="skeleton h-4 w-full min-w-16"></div>
+            </td>
+
+            <td>
+              <div v-if="$slots['registerActions']" class="skeleton h-10 w-24"></div>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody v-else>
           <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex">
             <td
               v-for="column in props.columns"
@@ -115,7 +138,17 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
 
     <div
-      v-if="props.rows.length > 0"
+      v-if="props.isLoading"
+      class="w-full flex flex-col items-stretch justify-start gap-4 md:hidden"
+    >
+      <div
+        v-for="skeletonCard in SKELETON_CARDS"
+        :key="skeletonCard"
+        class="skeleton h-40 w-full rounded-xl"
+      ></div>
+    </div>
+    <div
+      v-else-if="props.rows.length > 0"
       class="w-full bg-transparent flex flex-col items-stretch justify-start gap-4 rounded-xl md:hidden"
     >
       <TableCard

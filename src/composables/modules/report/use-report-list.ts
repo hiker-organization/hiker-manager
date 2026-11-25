@@ -19,6 +19,10 @@ export function useReportList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedReport = ref<ReportListRow | null>(null)
@@ -36,10 +40,14 @@ export function useReportList() {
   }
 
   async function loadReports() {
+    isLoading.value = true
+
     const { data, statusCode } = await reportStore.fetchReports(
       currentNamespaceQueryParams.value,
       {},
     )
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reports.value = data.value.data
@@ -61,6 +69,7 @@ export function useReportList() {
     namespace,
     reports,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedReport,
     openActionsModal,

@@ -6,6 +6,7 @@ const {
   namespace,
   reports,
   pagination,
+  isLoading,
   actionsModalIsVisible,
   selectedReport,
   openActionsModal,
@@ -21,6 +22,7 @@ const {
       :columns="REPORT_TABLE_COLUMNS"
       :rows="reports"
       :pagination="pagination"
+      :is-loading="isLoading"
       :extra-slots="['statsFilter']"
       @update-params="(params) => setNamespaceQueryParams(params)"
     >

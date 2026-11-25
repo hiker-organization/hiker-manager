@@ -18,6 +18,10 @@ export function useAutoBlockedReviewList(namespace: string, pendentes: boolean) 
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedAutoBlockedReview = ref<AutoBlockedReviewListRow | null>(null)
@@ -35,6 +39,8 @@ export function useAutoBlockedReviewList(namespace: string, pendentes: boolean) 
   }
 
   async function loadAutoBlockedReviews() {
+    isLoading.value = true
+
     const { data, statusCode } = await autoBlockedReviewStore.fetchAutoBlockedReviews(
       {
         ...currentNamespaceQueryParams.value,
@@ -42,6 +48,8 @@ export function useAutoBlockedReviewList(namespace: string, pendentes: boolean) 
       },
       {},
     )
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       autoBlockedReviews.value = data.value.data
@@ -63,6 +71,7 @@ export function useAutoBlockedReviewList(namespace: string, pendentes: boolean) 
     namespace,
     autoBlockedReviews,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedAutoBlockedReview,
     openActionsModal,
