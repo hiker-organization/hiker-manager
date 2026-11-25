@@ -1,47 +1,31 @@
 <script setup lang="ts">
 import type { MenuItem, MenuSection } from '@/constants/sidebar/menu-items'
 import { Icon } from '@iconify/vue'
-import { onClickOutside, useDebounceFn } from '@vueuse/core'
-import { computed, ref, useTemplateRef, watch } from 'vue'
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { items } from '@/constants/sidebar/menu-items'
+import { useSidebarStore } from '@/stores/core/sidebar-store'
 
 const route = useRoute()
 
-const componentAnchor = useTemplateRef('anchor')
+const sidebarStore = useSidebarStore()
 
-const isOpen = ref<boolean>(false)
+// O estado fica no store para o layout acompanhar a largura; só muda pelos botões.
+
+const { isOpen } = storeToRefs(sidebarStore)
 
 const sidebarWidth = computed<string>(() =>
   isOpen.value ? 'w-72 p-4' : 'min-w-0 w-0 p-0 md:min-w-20 md:w-20 md:p-4',
 )
 
-onClickOutside(componentAnchor, () => {
-  isOpen.value = false
-})
-
 function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
   return 'name' in item.route
 }
-
-watch(
-  () => route.path,
-  () => {
-    /*
-      Impede travamentos devido a concorrência de execução, exigindo um intervalo
-      mínimo entre cada uma para então aplicar o callback.
-    */
-
-    useDebounceFn(() => {
-      isOpen.value = false
-    }, 100)()
-  },
-)
 </script>
 
 <template>
   <div
-    ref="anchor"
     :class="[
       'h-full bg-base-300 transition-all duration-200',
       'flex flex-col items-stretch justify-between gap-4',
@@ -70,7 +54,7 @@ watch(
           'hidden items-center gap-2 p-2 bg-base-100 cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex',
           isOpen ? 'w-full justify-start' : 'w-11 justify-center',
         ]"
-        @click="isOpen = !isOpen"
+        @click="sidebarStore.toggleSidebar"
       >
         <Icon :icon="isOpen ? 'lucide:panel-left-close' : 'lucide:panel-left-open'" />
         <span v-if="isOpen">Recolher menu</span>
@@ -101,7 +85,7 @@ watch(
               'w-11 flex items-center justify-center p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
               route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
             ]"
-            @click="isOpen = true"
+            @click="sidebarStore.openSidebar"
           >
             <Icon :icon="item.icon" />
           </div>
@@ -165,7 +149,7 @@ watch(
         'z-10 absolute bottom-0 left-full md:hidden',
         'btn-primary rounded-l-none rounded-r-full',
       ]"
-      @click="isOpen = !isOpen"
+      @click="sidebarStore.toggleSidebar"
     >
       <Icon
         :class="['transition-all duration-200', { 'rotate-180': isOpen }]"
