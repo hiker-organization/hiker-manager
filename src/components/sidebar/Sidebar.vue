@@ -154,7 +154,7 @@ watch(
     <div :class="['w-full flex gap-2 overflow-hidden', isOpen ? 'flex-row' : 'flex-col']">
       <ThemeButton />
 
-      <LogoutButton />
+      <LogoutButton :show-label="isOpen" />
     </div>
 
     <!-- Abre e fecha o menu no modo mobile. -->
