@@ -8,6 +8,10 @@ import {
   REPORT_CLOSED_TABLE_COLUMNS,
 } from '@/constants/modules/report/report-table-columns'
 
+// Nome do slot da coluna com ponto, só pode ser usado como argumento dinâmico.
+// A postagem fica em uma linha, com o texto completo no title.
+const reviewSlot = 'review.descricao'
+
 // Os namespaces não podem estar contidos uns nos outros (o gerenciador da URL usa includes).
 
 const situationNamespace: string = 'reports-situation'
@@ -73,6 +77,12 @@ async function forceReportsListingsReload() {
         :is-loading="activeIsLoading"
         @update-params="(params) => setActiveQueryParams(params)"
       >
+        <template #[reviewSlot]="{ data }">
+          <span class="block max-w-xs truncate" :title="data.review.descricao">
+            {{ data.review.descricao }}
+          </span>
+        </template>
+
         <template #cardTitle="{ data }">
           <span class="font-extrabold truncate">#{{ data.id }}</span>
         </template>
@@ -115,6 +125,12 @@ async function forceReportsListingsReload() {
           <!-- Fechadas antes de a decisão ser registrada. -->
 
           <span v-else class="truncate">Não Definido(a)</span>
+        </template>
+
+        <template #[reviewSlot]="{ data }">
+          <span class="block max-w-xs truncate" :title="data.review.descricao">
+            {{ data.review.descricao }}
+          </span>
         </template>
 
         <template #cardTitle="{ data }">

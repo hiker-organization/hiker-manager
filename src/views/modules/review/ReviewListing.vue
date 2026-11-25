@@ -24,6 +24,14 @@ const {
       :is-loading="isLoading"
       @update-params="(params) => setNamespaceQueryParams(params)"
     >
+      <!-- A descrição tem até 150 caracteres: quebra em poucas linhas, sem cortar o texto. -->
+
+      <template #descricao="{ data }">
+        <span class="block max-w-sm whitespace-normal break-words md:min-w-64">{{
+          data.descricao
+        }}</span>
+      </template>
+
       <template #cardTitle="{ data }">
         <span class="font-extrabold truncate">#{{ data.id }}</span>
       </template>

@@ -74,6 +74,14 @@ async function forceAutoBlockedReviewsListingsReload() {
         :is-loading="pendingIsLoading"
         @update-params="(params) => setPendingQueryParams(params)"
       >
+        <!-- A descrição tem até 150 caracteres: quebra em poucas linhas, sem cortar o texto. -->
+
+        <template #descricao="{ data }">
+          <span class="block max-w-sm whitespace-normal break-words md:min-w-64">{{
+            data.descricao
+          }}</span>
+        </template>
+
         <template #cardTitle="{ data }">
           <span class="font-extrabold truncate">#{{ data.id }}</span>
         </template>
@@ -111,6 +119,14 @@ async function forceAutoBlockedReviewsListingsReload() {
             activeClass="badge-success"
             inactiveClass="badge-error"
           />
+        </template>
+
+        <!-- A descrição tem até 150 caracteres: quebra em poucas linhas, sem cortar o texto. -->
+
+        <template #descricao="{ data }">
+          <span class="block max-w-sm whitespace-normal break-words md:min-w-64">{{
+            data.descricao
+          }}</span>
         </template>
 
         <template #cardTitle="{ data }">
