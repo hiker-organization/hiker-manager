@@ -28,9 +28,8 @@ export interface AutoBlockedReviewListRow {
 
 export type AutoBlockModerationStats = 'AUTORIZADA' | 'OFENSIVA'
 
-// Valores do filtro "pendentes" da API, em string porque vêm da URL.
-// 'true' lista as pendentes e 'false' as já revisadas (liberadas ou mantidas).
-export type AutoBlockedReviewFilterStats = 'true' | 'false'
+// Tabelas exibidas na aba: pendentes, revisadas (liberadas ou mantidas) ou as duas.
+export type AutoBlockedReviewFilterStats = 'TODAS' | 'PENDENTES' | 'REVISADAS'
 
 export interface AutoBlockModerationParameters {
   status: AutoBlockModerationStats

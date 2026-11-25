@@ -1,70 +1,119 @@
 <script setup lang="ts">
+import { Icon } from '@iconify/vue'
+import { computed } from 'vue'
 import { useAutoBlockedReviewList } from '@/composables/modules/auto-blocked-review/use-auto-blocked-review-list'
-import { AUTO_BLOCKED_REVIEW_TABLE_COLUMNS } from '@/constants/modules/auto-blocked-review/auto-blocked-review-table-columns'
+import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
+import {
+  AUTO_BLOCKED_REVIEW_PENDING_TABLE_COLUMNS,
+  AUTO_BLOCKED_REVIEW_REVIEWED_TABLE_COLUMNS,
+} from '@/constants/modules/auto-blocked-review/auto-blocked-review-table-columns'
 
 // Nome do slot da coluna com ponto, só pode ser usado como argumento dinâmico.
-const situationSlot = 'classificacao.decisao_admin'
+const decisionSlot = 'classificacao.decisao_admin'
 
-// Sem decisão do admin, o bloqueio ainda está pendente.
-const SITUATION_BADGES = {
-  PENDENTE: { text: 'PENDENTE', class: 'badge-warning' },
-  AUTORIZADA: { text: 'LIBERADA', class: 'badge-success' },
-  OFENSIVA: { text: 'BLOQUEIO MANTIDO', class: 'badge-error' },
-}
+const situationNamespace: string = 'auto-blocked-situation'
 
 const {
-  namespace,
-  autoBlockedReviews,
-  pagination,
+  currentNamespaceQueryParams: currentSituationQueryParams,
+  setNamespaceQueryParams: setSituationQueryParams,
+} = useUrlParamsManager({
+  namespace: situationNamespace,
+})
+
+const currentSituation = computed<string>(() =>
+  String(currentSituationQueryParams.value.situacao ?? 'TODAS'),
+)
+
+const {
+  namespace: pendingNamespace,
+  autoBlockedReviews: pendingReviews,
+  pagination: pendingPagination,
   actionsModalIsVisible,
   selectedAutoBlockedReview,
   openActionsModal,
-  forceAutoBlockedReviewsListingReload,
-  setNamespaceQueryParams,
-} = useAutoBlockedReviewList()
+  forceAutoBlockedReviewsListingReload: forcePendingListingReload,
+  setNamespaceQueryParams: setPendingQueryParams,
+} = useAutoBlockedReviewList('auto-blocked-pending-list', true)
+
+const {
+  namespace: reviewedNamespace,
+  autoBlockedReviews: reviewedReviews,
+  pagination: reviewedPagination,
+  forceAutoBlockedReviewsListingReload: forceReviewedListingReload,
+  setNamespaceQueryParams: setReviewedQueryParams,
+} = useAutoBlockedReviewList('auto-blocked-reviewed-list', false)
+
+// Uma decisão tira a review das pendentes e a coloca nas revisadas.
+async function forceAutoBlockedReviewsListingsReload() {
+  await Promise.all([forcePendingListingReload(), forceReviewedListingReload()])
+}
 </script>
 
 <template>
-  <div class="w-full">
-    <Table
-      :namespace="namespace"
-      :columns="AUTO_BLOCKED_REVIEW_TABLE_COLUMNS"
-      :rows="autoBlockedReviews"
-      :pagination="pagination"
-      :extra-slots="['statsFilter']"
-      @update-params="(params) => setNamespaceQueryParams(params)"
-    >
-      <template #statsFilter>
-        <AutoBlockedReviewStatsFilter
-          :namespace="namespace"
-          @update-params="(params) => setNamespaceQueryParams(params)"
-        />
-      </template>
+  <div class="w-full flex flex-col gap-6">
+    <div class="w-full md:w-64">
+      <AutoBlockedReviewStatsFilter
+        :namespace="situationNamespace"
+        @update-params="(params) => setSituationQueryParams(params)"
+      />
+    </div>
 
-      <template #[situationSlot]="{ data }">
-        <Badge
-          :text="SITUATION_BADGES[data.classificacao.decisao_admin ?? 'PENDENTE'].text"
-          :custom-class="[
-            'badge-soft rounded-sm font-bold p-4',
-            SITUATION_BADGES[data.classificacao.decisao_admin ?? 'PENDENTE'].class,
-          ]"
-        />
-      </template>
+    <section v-if="currentSituation !== 'REVISADAS'" class="w-full flex flex-col gap-2">
+      <span class="flex items-center justify-start gap-2 text-lg font-extrabold">
+        <Icon icon="lucide:clock" />
+        Pendentes
+      </span>
 
-      <template #cardTitle="{ data }">
-        <span class="font-extrabold truncate">#{{ data.id }}</span>
-      </template>
+      <Table
+        :namespace="pendingNamespace"
+        :columns="AUTO_BLOCKED_REVIEW_PENDING_TABLE_COLUMNS"
+        :rows="pendingReviews"
+        :pagination="pendingPagination"
+        @update-params="(params) => setPendingQueryParams(params)"
+      >
+        <template #cardTitle="{ data }">
+          <span class="font-extrabold truncate">#{{ data.id }}</span>
+        </template>
 
-      <template #registerActions="{ data }">
-        <Button
-          :disabled="data.classificacao.revisado_em !== null"
-          custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
-          label="Opções"
-          icon="lucide:sparkles"
-          @click="openActionsModal(data)"
-        />
-      </template>
-    </Table>
+        <template #registerActions="{ data }">
+          <Button
+            custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
+            label="Opções"
+            icon="lucide:sparkles"
+            @click="openActionsModal(data)"
+          />
+        </template>
+      </Table>
+    </section>
+
+    <section v-if="currentSituation !== 'PENDENTES'" class="w-full flex flex-col gap-2">
+      <span class="flex items-center justify-start gap-2 text-lg font-extrabold">
+        <Icon icon="lucide:circle-check" />
+        Revisadas
+      </span>
+
+      <Table
+        :namespace="reviewedNamespace"
+        :columns="AUTO_BLOCKED_REVIEW_REVIEWED_TABLE_COLUMNS"
+        :rows="reviewedReviews"
+        :pagination="reviewedPagination"
+        @update-params="(params) => setReviewedQueryParams(params)"
+      >
+        <template #[decisionSlot]="{ data }">
+          <ConditionBadge
+            :value="data.classificacao.decisao_admin === 'AUTORIZADA'"
+            active-text="Liberada"
+            inactive-text="Bloqueio Mantido"
+            activeClass="badge-success"
+            inactiveClass="badge-error"
+          />
+        </template>
+
+        <template #cardTitle="{ data }">
+          <span class="font-extrabold truncate">#{{ data.id }}</span>
+        </template>
+      </Table>
+    </section>
 
     <Modal
       v-if="selectedAutoBlockedReview"
@@ -75,12 +124,12 @@ const {
       <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <RevertAutoBlockButton
           :review="selectedAutoBlockedReview"
-          @revert-processed="forceAutoBlockedReviewsListingReload"
+          @revert-processed="forceAutoBlockedReviewsListingsReload"
         />
 
         <ConfirmAutoBlockButton
           :review="selectedAutoBlockedReview"
-          @confirm-processed="forceAutoBlockedReviewsListingReload"
+          @confirm-processed="forceAutoBlockedReviewsListingsReload"
         />
       </div>
     </Modal>

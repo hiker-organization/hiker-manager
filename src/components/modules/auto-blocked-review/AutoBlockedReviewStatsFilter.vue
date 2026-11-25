@@ -13,8 +13,6 @@ const emits = defineEmits<{
 
 const currentStatsFilter = ref<AutoBlockedReviewFilterStats | null>(null)
 
-const didInitialSync = ref<boolean>(false)
-
 const { currentNamespaceQueryParams } = useUrlParamsManager({
   namespace: props.namespace,
 })
@@ -22,29 +20,16 @@ const { currentNamespaceQueryParams } = useUrlParamsManager({
 watch(
   () => currentStatsFilter.value,
   (newStatsFilter: AutoBlockedReviewFilterStats | null) => {
-    // Se não for a primeira execução, reseta a página.
-
-    if (didInitialSync.value) {
-      emits('updateParams', {
-        pendentes: newStatsFilter,
-        page: 1,
-      })
-
-      return
-    }
-
     emits('updateParams', {
-      pendentes: newStatsFilter,
+      situacao: newStatsFilter,
     })
-
-    didInitialSync.value = true
   },
 )
 
 onMounted(() => {
-  currentStatsFilter.value = currentNamespaceQueryParams.value.pendentes
-    ? (String(currentNamespaceQueryParams.value.pendentes) as AutoBlockedReviewFilterStats)
-    : 'true'
+  currentStatsFilter.value = currentNamespaceQueryParams.value.situacao
+    ? (String(currentNamespaceQueryParams.value.situacao) as AutoBlockedReviewFilterStats)
+    : 'TODAS'
 })
 </script>
 
@@ -53,8 +38,9 @@ onMounted(() => {
     <Input
       v-model="currentStatsFilter"
       :options="[
-        { value: 'true', label: 'Pendentes' },
-        { value: 'false', label: 'Revisadas' },
+        { value: 'TODAS', label: 'Todas' },
+        { value: 'PENDENTES', label: 'Pendentes' },
+        { value: 'REVISADAS', label: 'Revisadas' },
       ]"
       :classes="{
         wrapper: 'w-full bg-base-300 rounded-md p-2',

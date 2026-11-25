@@ -4,10 +4,9 @@ import { ref } from 'vue'
 import { useAutoBlockedReviewStore } from '@/stores/modules/auto-blocked-review/auto-blocked-review-store'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-export function useAutoBlockedReviewList() {
+// pendentes: true lista os bloqueios ainda não revisados, false os já revisados.
+export function useAutoBlockedReviewList(namespace: string, pendentes: boolean) {
   const autoBlockedReviewStore = useAutoBlockedReviewStore()
-
-  const namespace: string = 'auto-blocked-reviews-list'
 
   const autoBlockedReviews = ref<Array<AutoBlockedReviewListRow>>([])
 
@@ -37,7 +36,10 @@ export function useAutoBlockedReviewList() {
 
   async function loadAutoBlockedReviews() {
     const { data, statusCode } = await autoBlockedReviewStore.fetchAutoBlockedReviews(
-      currentNamespaceQueryParams.value,
+      {
+        ...currentNamespaceQueryParams.value,
+        pendentes,
+      },
       {},
     )
 
