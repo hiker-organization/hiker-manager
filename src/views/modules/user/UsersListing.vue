@@ -30,6 +30,17 @@ const {
     >
       <template #reputacao="{ data }">{{ Decimal(data.reputacao.toFixed(2)) }}%</template>
 
+      <template #foto_url="{ data }">
+        <img
+          v-if="data.foto_url"
+          :src="data.foto_url"
+          :alt="`Foto de ${data.nome_usuario}`"
+          class="size-10 rounded-full object-cover"
+        />
+
+        <span v-else class="truncate">Não Definido(a)</span>
+      </template>
+
       <template #banido="{ data }">
         <ConditionBadge
           :value="data.banido === true"

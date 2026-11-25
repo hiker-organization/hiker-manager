@@ -27,7 +27,6 @@ const userFields = computed<Array<{ label: string; value: string }>>(() => {
       value: user.data_nascimento ? getNormalizedDate(user.data_nascimento) : NOT_DEFINED,
     },
     { label: 'Reputação', value: `${Decimal(user.reputacao.toFixed(2))}%` },
-    { label: 'Foto (URL)', value: user.foto_url ?? NOT_DEFINED },
     { label: 'Banido', value: user.banido ? 'Sim' : 'Não' },
     { label: 'Bloqueado', value: user.bloqueado ? 'Sim' : 'Não' },
   ]
@@ -41,5 +40,18 @@ const userFields = computed<Array<{ label: string; value: string }>>(() => {
 </script>
 
 <template>
-  <DetailsList :fields="userFields" />
+  <DetailsList :fields="userFields">
+    <!-- A API devolve a foto como URL assinada do Azure, válida por tempo limitado. -->
+
+    <DetailsItem label="Foto">
+      <img
+        v-if="props.user.foto_url"
+        :src="props.user.foto_url"
+        :alt="`Foto de ${props.user.nome_usuario}`"
+        class="size-24 rounded-full object-cover mt-1"
+      />
+
+      <span v-else>{{ NOT_DEFINED }}</span>
+    </DetailsItem>
+  </DetailsList>
 </template>
