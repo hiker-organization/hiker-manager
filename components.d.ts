@@ -31,6 +31,7 @@ declare module 'vue' {
     Modal: typeof import('./src/components/interface/Modal.vue')['default']
     ModuleSummaryCard: typeof import('./src/components/modules/dashboard/ModuleSummaryCard.vue')['default']
     Pagination: typeof import('./src/components/table/Pagination.vue')['default']
+    ReportDetails: typeof import('./src/components/modules/report/ReportDetails.vue')['default']
     ReportStatsFilter: typeof import('./src/components/modules/report/ReportStatsFilter.vue')['default']
     RevertAutoBlockButton: typeof import('./src/components/modules/auto-blocked-review/RevertAutoBlockButton.vue')['default']
     ReviewsModuleSummaryCardsContainer: typeof import('./src/components/modules/dashboard/review/ReviewsModuleSummaryCardsContainer.vue')['default']

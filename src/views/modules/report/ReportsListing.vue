@@ -83,8 +83,33 @@ async function forceReportsListingsReload() {
           </span>
         </template>
 
+        <!-- O ID e o "Opções" abrem a denúncia completa, já que a tabela corta os textos. -->
+
+        <template #id="{ data }">
+          <button
+            type="button"
+            class="link link-primary font-bold"
+            title="Ver denúncia completa"
+            @click="openActionsModal(data)"
+          >
+            {{ data.id }}
+          </button>
+        </template>
+
+        <template #descricao="{ data }">
+          <span class="block max-w-xs truncate" :title="data.descricao">
+            {{ data.descricao || 'Não Definido(a)' }}
+          </span>
+        </template>
+
         <template #cardTitle="{ data }">
-          <span class="font-extrabold truncate">#{{ data.id }}</span>
+          <button
+            type="button"
+            class="font-extrabold truncate cursor-pointer"
+            @click="openActionsModal(data)"
+          >
+            #{{ data.id }}
+          </button>
         </template>
 
         <template #registerActions="{ data }">
@@ -133,8 +158,42 @@ async function forceReportsListingsReload() {
           </span>
         </template>
 
+        <!-- O ID e o "Opções" abrem a denúncia completa, já que a tabela corta os textos. -->
+
+        <template #id="{ data }">
+          <button
+            type="button"
+            class="link link-primary font-bold"
+            title="Ver denúncia completa"
+            @click="openActionsModal(data)"
+          >
+            {{ data.id }}
+          </button>
+        </template>
+
+        <template #descricao="{ data }">
+          <span class="block max-w-xs truncate" :title="data.descricao">
+            {{ data.descricao || 'Não Definido(a)' }}
+          </span>
+        </template>
+
         <template #cardTitle="{ data }">
-          <span class="font-extrabold truncate">#{{ data.id }}</span>
+          <button
+            type="button"
+            class="font-extrabold truncate cursor-pointer"
+            @click="openActionsModal(data)"
+          >
+            #{{ data.id }}
+          </button>
+        </template>
+
+        <template #registerActions="{ data }">
+          <Button
+            custom-class="btn-primary w-full flex items-center justify-center gap-2 p-4 md:w-auto"
+            label="Opções"
+            icon="lucide:sparkles"
+            @click="openActionsModal(data)"
+          />
         </template>
       </Table>
     </section>
@@ -142,10 +201,14 @@ async function forceReportsListingsReload() {
     <Modal
       v-if="selectedReport"
       v-model:is-visible="actionsModalIsVisible"
-      :title="`Ações (#${selectedReport.id})`"
+      :title="`Denúncia (#${selectedReport.id})`"
       icon="lucide:message-circle-warning"
     >
-      <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+      <ReportDetails :report="selectedReport" />
+
+      <!-- Só uma denúncia ativa pode ser moderada. -->
+
+      <div v-if="selectedReport.status === 'ATIVA'" class="grid grid-cols-1 gap-2 md:grid-cols-2">
         <DiscardReportButton
           :report="selectedReport"
           @discard-processed="forceReportsListingsReload"
