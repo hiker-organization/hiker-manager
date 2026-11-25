@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useUserForm } from '@/composables/modules/user/use-user-form'
 
-const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = useUserForm()
+const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoading } =
+  useUserForm()
 </script>
 
 <template>
+  <!-- Seção "Dados Básicos", com os 8 campos sempre visíveis. -->
+
+  <FormSkeleton v-if="isLoading" :sections="[8]" />
+
   <Form
+    v-else
     v-model:form="userFormData"
     :disabled="true"
     :classes="{

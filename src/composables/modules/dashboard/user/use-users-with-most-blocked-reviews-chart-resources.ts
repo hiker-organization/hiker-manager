@@ -124,8 +124,14 @@ export function useUsersWithMostBlockedReviewsChartResources() {
     },
   }))
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o componente.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     const { data, statusCode } = await usersDashboardStore.getUsersWithMostBlockedReviews({}, {})
+
+    isLoading.value = false
 
     if (statusCode.value && data.value) {
       usersWithMostBlockedReviewsResponse.value = data.value.data
@@ -133,6 +139,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
   })
 
   return {
+    isLoading,
     usersWithMostBlockedReviewsChartSeries,
     usersWithMostBlockedReviewsChartOptions,
   }

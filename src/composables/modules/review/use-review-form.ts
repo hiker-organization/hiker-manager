@@ -1,7 +1,7 @@
 import type { Review } from '@/models/modules/review/review-model'
 import { useRoute } from 'vue-router'
 import { useCreateForm } from '@/composables/forms/create-form'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useReviewStore } from '@/stores/modules/review/review-store'
 
 export function useReviewForm() {
@@ -36,8 +36,14 @@ export function useReviewForm() {
     },
   })
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o formulário.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     if (!reviewCode.value) {
+      isLoading.value = false
+
       return
     }
 
@@ -48,6 +54,8 @@ export function useReviewForm() {
       },
     )
 
+    isLoading.value = false
+
     if (data.value) {
       reviewFormData.value = data.value.data
     }
@@ -55,5 +63,6 @@ export function useReviewForm() {
 
   return {
     reviewFormData,
+    isLoading,
   }
 }

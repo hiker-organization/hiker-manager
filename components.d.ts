@@ -25,6 +25,7 @@ declare module 'vue' {
     FieldsContainer: typeof import('./src/components/forms/FieldsContainer.vue')['default']
     Form: typeof import('./src/components/formkit/Form.vue')['default']
     FormSection: typeof import('./src/components/forms/FormSection.vue')['default']
+    FormSkeleton: typeof import('./src/components/forms/FormSkeleton.vue')['default']
     Input: typeof import('./src/components/formkit/Input.vue')['default']
     LogoutButton: typeof import('./src/components/core/LogoutButton.vue')['default']
     Modal: typeof import('./src/components/interface/Modal.vue')['default']

@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { useReviewForm } from '@/composables/modules/review/use-review-form'
 
-const { reviewFormData } = useReviewForm()
+const { reviewFormData, isLoading } = useReviewForm()
 </script>
 
 <template>
+  <!-- Seções "Dados Básicos" e "Estatísticas", com 3 e 4 campos. -->
+
+  <FormSkeleton v-if="isLoading" :sections="[3, 4]" />
+
   <Form
+    v-else
     v-model:form="reviewFormData"
     :disabled="true"
     :classes="{

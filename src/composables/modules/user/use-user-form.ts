@@ -1,7 +1,7 @@
 import type { User } from '@/models/modules/user/user-model'
 import { useRoute } from 'vue-router'
 import { useCreateForm } from '@/composables/forms/create-form'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useUserStore } from '@/stores/modules/user/user-store'
 
 export function useUserForm() {
@@ -66,8 +66,14 @@ export function useUserForm() {
     },
   })
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o formulário.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     if (!user.value) {
+      isLoading.value = false
+
       return
     }
 
@@ -78,6 +84,8 @@ export function useUserForm() {
       },
     )
 
+    isLoading.value = false
+
     if (data.value) {
       userFormData.value = data.value.data
     }
@@ -87,5 +95,6 @@ export function useUserForm() {
     userFormData,
     normalizedBirthDate,
     normalizedBlockExpirationDate,
+    isLoading,
   }
 }

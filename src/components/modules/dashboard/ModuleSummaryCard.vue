@@ -5,6 +5,7 @@ const props = defineProps<{
   label: string
   description?: string
   customClass?: ClassValue
+  isLoading?: boolean
 }>()
 </script>
 
@@ -15,7 +16,11 @@ const props = defineProps<{
       props.customClass,
     ]"
   >
-    <span class="text-4xl font-extrabold">
+    <!-- Exibido no lugar do valor enquanto os dados carregam. -->
+
+    <div v-if="props.isLoading" class="skeleton h-10 w-16"></div>
+
+    <span v-else class="text-4xl font-extrabold">
       {{ props.label }}
     </span>
 
