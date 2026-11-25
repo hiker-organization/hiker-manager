@@ -37,6 +37,8 @@ export const useApiConnection = createFetch({
       }
 
       if (response.url.includes('/auth/web/refresh')) {
+        authStore.clearSession()
+
         router.push({
           name: 'login',
           query: {
@@ -50,6 +52,8 @@ export const useApiConnection = createFetch({
       const { statusCode } = await authStore.refresh()
 
       if (statusCode.value !== 201) {
+        authStore.clearSession()
+
         router.push({
           name: 'login',
           query: {

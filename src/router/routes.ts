@@ -16,6 +16,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/layouts/AppLayout.vue'),
+    meta: { requiresAuth: true }, // Vale para todas as rotas filhas.
     children: [
       {
         path: '',

@@ -55,6 +55,14 @@ Cypress.Commands.add('auth', () => {
           password: env.AUTH_PASSWORD,
         }
       })
+
+      // Indicador de sessão lido pelo guard de rotas (no uso normal, gravado pelo formulário de login).
+
+      cy.visit(Cypress.expose('APP_URL'))
+
+      cy.window().then((win) => {
+        win.localStorage.setItem('hiker-manager-session', 'true')
+      })
     }).its('status').should('eq', 201)
   })
 })
