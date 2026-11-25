@@ -140,7 +140,10 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
         </template>
       </TableCard>
     </div>
-    <div v-else class="flex items-center justify-start gap-2">
+    <div
+      v-else
+      class="w-full bg-base-300/50 flex items-center justify-start gap-2 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:hidden"
+    >
       <Icon icon="lucide:info" />
       Nenhum registro encontrado.
     </div>

@@ -30,6 +30,7 @@ declare module 'vue' {
     ReportStatsFilter: typeof import('./src/components/modules/report/ReportStatsFilter.vue')['default']
     ReviewsModuleSummaryCardsContainer: typeof import('./src/components/modules/dashboard/review/ReviewsModuleSummaryCardsContainer.vue')['default']
     ReviewsModuleSummaryChart: typeof import('./src/components/modules/dashboard/review/ReviewsModuleSummaryChart.vue')['default']
+    ReviewsMostReportedCurrentlyChart: typeof import('./src/components/modules/dashboard/review/ReviewsMostReportedCurrentlyChart.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     RoutesTabMenu: typeof import('./src/components/navigation/RoutesTabMenu.vue')['default']
