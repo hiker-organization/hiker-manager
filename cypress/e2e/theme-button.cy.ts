@@ -4,6 +4,10 @@ describe('Tema da Aplicação | Cypress', () => {
 
     let initialThemeOption: string | undefined = undefined
 
+    // Autenticando antes da visita, pois o botão de tema fica na sidebar, que exige sessão.
+
+    cy.auth()
+
     // Abrindo a página requisitada com base na rota especificada.
 
     cy.visit(Cypress.expose('APP_URL'))

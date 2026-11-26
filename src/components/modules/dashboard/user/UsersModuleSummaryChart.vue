@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useUsersModuleSummaryChartResources } from '@/composables/modules/dashboard/user/use-users-module-summary-chart-resources'
 
-const { usersModuleSummaryChartSeries, usersModuleSummaryChartOptions } =
+const { isLoading, usersModuleSummaryChartSeries, usersModuleSummaryChartOptions } =
   useUsersModuleSummaryChartResources()
 </script>
 
 <template>
-  <ApexChart :series="usersModuleSummaryChartSeries" :options="usersModuleSummaryChartOptions" />
+  <ApexChart
+    :is-loading="isLoading"
+    :series="usersModuleSummaryChartSeries"
+    :options="usersModuleSummaryChartOptions"
+  />
 </template>

@@ -124,8 +124,14 @@ export function useReviewsMostReportedCurrentlyResources() {
     },
   }))
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o componente.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     const { data, statusCode } = await reviewsDashboardStore.getReviewsMostReportedCurrently({}, {})
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reviewsMostReportedCurrentlyResponse.value = data.value.data
@@ -133,6 +139,7 @@ export function useReviewsMostReportedCurrentlyResources() {
   })
 
   return {
+    isLoading,
     reviewsMostReportedCurrentlyChartSeries,
     reviewsMostReportedCurrentlyChartOptions,
   }

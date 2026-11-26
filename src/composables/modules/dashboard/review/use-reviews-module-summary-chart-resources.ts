@@ -105,8 +105,14 @@ export function useReviewsModuleSummaryChartResources() {
     },
   }))
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o componente.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     const { data, statusCode } = await reviewsDashboardStore.getReviewsModuleSummary({}, {})
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reviewsModuleSummaryResponse.value = data.value
@@ -114,6 +120,7 @@ export function useReviewsModuleSummaryChartResources() {
   })
 
   return {
+    isLoading,
     reviewsModuleSummaryChartSeries,
     reviewsModuleSummaryChartOptions,
   }

@@ -33,8 +33,8 @@ defineSlots<
 </script>
 
 <template>
-  <div class="bg-base-300 flex flex-col items-stretch justify-start rounded-lg">
-    <header class="bg-primary flex items-center justify-center gap-2 rounded-t-lg p-2">
+  <div class="bg-base-100 flex flex-col items-stretch justify-start rounded-box">
+    <header class="bg-primary text-primary-content flex items-center justify-center gap-2 rounded-t-box p-2">
       <slot name="cardTitle" :data="props.register"> Título do Card </slot>
     </header>
     <main class="flex flex-col items-stretch justify-start gap-2 p-2">
@@ -42,7 +42,7 @@ defineSlots<
         v-for="column in props.columns"
         v-show="props.visibleColumns.includes(column.value)"
         :key="column.value"
-        class="w-full bg-base-200 flex items-center justify-start gap-2 border border-base-content/20 rounded-md p-2 whitespace-nowrap"
+        class="w-full bg-base-200 flex items-center justify-start gap-2 border border-base-300 rounded-md p-2 whitespace-nowrap"
       >
         <p class="font-bold">{{ column.label }}:</p>
 

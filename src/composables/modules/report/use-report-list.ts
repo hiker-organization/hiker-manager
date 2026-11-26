@@ -1,13 +1,12 @@
-import type { ReportListRow } from '@/models/modules/report/report-model'
+import type { ReportListRow, ReportStatus } from '@/models/modules/report/report-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { ref } from 'vue'
 import { useReportStore } from '@/stores/modules/report/report-store'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-export function useReportList() {
+// status: ATIVA lista as denúncias em aberto, FECHADA as já revisadas.
+export function useReportList(namespace: string, status: ReportStatus) {
   const reportStore = useReportStore()
-
-  const namespace: string = 'reports-list'
 
   const reports = ref<Array<ReportListRow>>([])
 
@@ -18,6 +17,10 @@ export function useReportList() {
     total_pages: 1,
     sortable_fields: [],
   })
+
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
 
   const actionsModalIsVisible = ref<boolean>(false)
 
@@ -36,10 +39,17 @@ export function useReportList() {
   }
 
   async function loadReports() {
+    isLoading.value = true
+
     const { data, statusCode } = await reportStore.fetchReports(
-      currentNamespaceQueryParams.value,
+      {
+        ...currentNamespaceQueryParams.value,
+        status,
+      },
       {},
     )
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reports.value = data.value.data
@@ -61,6 +71,7 @@ export function useReportList() {
     namespace,
     reports,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedReport,
     openActionsModal,

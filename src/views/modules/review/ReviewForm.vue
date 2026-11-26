@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { useReviewForm } from '@/composables/modules/review/use-review-form'
 
-const { reviewFormData } = useReviewForm()
+const { reviewFormData, isLoading } = useReviewForm()
 </script>
 
 <template>
+  <!-- Seções "Dados Básicos" e "Estatísticas", com 3 e 4 campos. -->
+
+  <FormSkeleton v-if="isLoading" :sections="[3, 4]" />
+
   <Form
+    v-else
     v-model:form="reviewFormData"
     :disabled="true"
     :classes="{
@@ -18,7 +23,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="descricao"
           type="text"
@@ -29,7 +34,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="local"
           type="text"
@@ -40,7 +45,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nota"
           type="number"
@@ -53,7 +58,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_likes"
           type="number"
@@ -64,7 +69,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_dislikes"
           type="number"
@@ -75,7 +80,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_denuncia"
           type="number"
@@ -86,7 +91,7 @@ const { reviewFormData } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_favoritos"
           type="number"

@@ -18,8 +18,10 @@ const isOpen = ref<boolean>(false)
   <div class="w-full flex flex-col items-start justify-stretch">
     <div
       :class="[
-        'w-full bg-base-100 flex items-center justify-between gap-2 p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
-        props.isCurrentSelection ? 'bg-primary/75 text-white' : 'bg-base-100',
+        'w-full flex items-center justify-between gap-2 rounded-lg p-2 cursor-pointer transition-all duration-150',
+        props.isCurrentSelection
+          ? 'bg-(--sidebar-active) text-white'
+          : 'text-white/85 hover:bg-white/10 hover:text-white',
       ]"
       @click="isOpen = !isOpen"
     >
@@ -35,7 +37,7 @@ const isOpen = ref<boolean>(false)
 
     <div
       v-show="isOpen"
-      class="w-full flex flex-col items-start justify-stretch transition-all duration-250"
+      class="w-full flex flex-col items-start justify-stretch gap-1 mt-1 transition-all duration-250"
     >
       <slot name="subItems" />
     </div>

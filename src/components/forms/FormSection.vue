@@ -19,7 +19,7 @@ const isOpen = ref<boolean>(props.openByDefault)
 <template>
   <div class="bg-base-200 rounded-md">
     <div
-      class="w-full bg-base-100 flex items-center justify-between gap-4 border border-base-content/25 rounded-md p-4 cursor-pointer hover:border-base-content/75"
+      class="w-full bg-base-200 flex items-center justify-between gap-4 border border-base-300 rounded-md p-4 cursor-pointer hover:border-base-content/75"
       @click="isOpen = !isOpen"
     >
       <span class="flex items-center justify-start gap-2 text-lg font-extrabold">

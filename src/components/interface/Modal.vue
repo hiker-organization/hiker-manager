@@ -16,12 +16,12 @@ const isVisible = defineModel('isVisible', {
     <!-- https://daisyui.com/components/modal/ -->
     <dialog :open="isVisible" class="modal" @click="isVisible = false">
       <div
-        class="modal-box bg-base-300 flex flex-col items-stretch justify-stretch gap-4 rounded-md p-4"
+        class="modal-box bg-base-100 flex flex-col items-stretch justify-stretch gap-4 rounded-box p-6"
         @click.stop
       >
         <div class="modal-action w-full flex items-center justify-between gap-4 m-0">
           <div class="flex items-center justify-start gap-2">
-            <div v-if="props.icon" class="bg-primary/50 rounded-md p-2">
+            <div v-if="props.icon" class="bg-(--icon-tile-bg) text-(--icon-tile-fg) rounded-lg p-2">
               <Icon :icon="props.icon" />
             </div>
             <span class="text-lg font-bold">{{ props.title }}</span>
