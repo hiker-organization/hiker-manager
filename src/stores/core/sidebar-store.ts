@@ -21,9 +21,14 @@ export const useSidebarStore = defineStore('SidebarStore', () => {
     isOpen.value = true
   }
 
+  function closeSidebar() {
+    isOpen.value = false
+  }
+
   return {
     isOpen,
     toggleSidebar,
     openSidebar,
+    closeSidebar,
   }
 })
