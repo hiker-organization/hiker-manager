@@ -4,6 +4,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/auth',
     component: () => import('@/layouts/AuthLayout.vue'),
+    meta: { guestOnly: true }, // Só acessível sem sessão.
     children: [
       {
         path: '',

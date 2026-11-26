@@ -13,11 +13,29 @@ export const router = createRouter({
 */
 
 router.beforeEach(async (to) => {
+  const authStore = useAuthStore()
+
+  // O login só é acessível sem sessão: com uma sessão válida, volta para o painel.
+
+  if (to.matched.some((record) => record.meta.guestOnly)) {
+    if (!authStore.hasSessionHint) {
+      return true
+    }
+
+    if (!authStore.sessionUser) {
+      await authStore.fetchSession()
+    }
+
+    if (!authStore.sessionUser) {
+      return true
+    }
+
+    return authStore.sessionUser.cargo === 'ADM' ? { name: 'home' } : { name: 'restrict' }
+  }
+
   if (!to.matched.some((record) => record.meta.requiresAuth)) {
     return true
   }
-
-  const authStore = useAuthStore()
 
   // Sem login neste navegador, vai direto ao login sem chamar a API.
 
