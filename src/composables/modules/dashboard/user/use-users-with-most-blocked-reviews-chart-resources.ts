@@ -47,7 +47,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
     },
     title: {
-      text: 'Usuários com mais Bloqueios',
+      text: 'Usuários com mais postagens bloqueadas',
       align: 'center',
       style: {
         fontSize: `${20 * chartVisualResourcesScale.value}px`,
