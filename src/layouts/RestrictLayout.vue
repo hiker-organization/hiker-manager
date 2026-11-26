@@ -14,15 +14,7 @@ const { handleLogout } = useLogout()
     </h2>
 
     <div class="flex items-center justify-center gap-4">
-      <RouterLink
-        :to="{
-          name: 'home',
-        }"
-      >
-        <Button label="Home" icon="lucide:home" />
-      </RouterLink>
-
-      <!-- Permite entrar com outra conta, já que a Home volta para cá sem permissão. -->
+      <!-- Permite entrar com outra conta, já que o painel volta para cá sem permissão. -->
 
       <Button
         label="Sair"
