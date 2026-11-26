@@ -22,14 +22,14 @@ const { handleLogout } = useLogout()
       data-cy="logout-button"
       title="Sair"
       :class="[
-        'h-11 bg-error flex items-center justify-center gap-2 rounded-full cursor-pointer',
+        'h-11 bg-white/10 flex items-center justify-center gap-2 rounded-full cursor-pointer transition-all duration-150 hover:bg-error',
         props.showLabel ? 'px-4' : 'w-11',
       ]"
       @click="handleLogout"
     >
-      <Icon icon="lucide:log-out" class="size-6 text-error-content" />
+      <Icon icon="lucide:log-out" class="size-6 text-white" />
 
-      <span v-if="props.showLabel" class="text-error-content font-bold">Sair</span>
+      <span v-if="props.showLabel" class="text-white font-bold">Sair</span>
     </button>
   </div>
 </template>

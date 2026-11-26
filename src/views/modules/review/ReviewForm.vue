@@ -23,7 +23,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="descricao"
           type="text"
@@ -34,7 +34,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="local"
           type="text"
@@ -45,7 +45,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nota"
           type="number"
@@ -58,7 +58,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_likes"
           type="number"
@@ -69,7 +69,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_dislikes"
           type="number"
@@ -80,7 +80,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_denuncia"
           type="number"
@@ -91,7 +91,7 @@ const { reviewFormData, isLoading } = useReviewForm()
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="qnt_favoritos"
           type="number"

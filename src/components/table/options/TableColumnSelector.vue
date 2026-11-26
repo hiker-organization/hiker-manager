@@ -71,7 +71,7 @@ watch(
 <template>
   <TableOptionContainer icon="lucide:columns-3" label="Exibição">
     <Button
-      :custom-class="['bg-base-300']"
+      :custom-class="['bg-base-100']"
       :label="`Colunas (${visibleColumns.length})`"
       @click="columnSelectorModalIsVisible = !columnSelectorModalIsVisible"
     />

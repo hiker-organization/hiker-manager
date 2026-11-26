@@ -24,7 +24,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="id"
           type="hidden"
@@ -35,7 +35,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nome_usuario"
           type="text"
@@ -46,7 +46,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nome_exibicao"
           type="text"
@@ -61,7 +61,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="cargo"
           type="select"
@@ -72,7 +72,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="email"
           type="email"
@@ -83,7 +83,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="numero_celular"
           type="text"
@@ -95,7 +95,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="data_nascimento"
           type="date"
@@ -106,7 +106,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="reputacao"
           type="number"
@@ -117,7 +117,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="foto_url"
           type="text"
@@ -130,7 +130,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoad
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="bloqueado_ate"
           type="date"

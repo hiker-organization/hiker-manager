@@ -9,12 +9,12 @@ const themeStore = useThemeStore()
   <div>
     <button
       data-cy="theme-button"
-      class="size-11 bg-base-content flex items-center justify-center rounded-full cursor-pointer"
+      class="size-11 bg-white/10 flex items-center justify-center rounded-full cursor-pointer transition-all duration-150 hover:bg-white/20"
       @click="themeStore.toggleTheme"
     >
       <Icon
         :icon="themeStore.isDarkTheme ? 'lucide:sun' : 'lucide:moon'"
-        class="size-6 text-base-100"
+        class="size-6 text-white"
       />
     </button>
   </div>

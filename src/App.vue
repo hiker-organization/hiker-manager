@@ -24,7 +24,7 @@ onMounted(() => {
 
     <div
       v-if="authStore.isCheckingSession"
-      class="size-full bg-base-100 flex flex-col items-center justify-center gap-4"
+      class="size-full bg-base-200 flex flex-col items-center justify-center gap-4"
     >
       <img class="size-16" src="/icons/favicon.png" alt="logo" />
 

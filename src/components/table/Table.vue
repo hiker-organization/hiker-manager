@@ -76,23 +76,23 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
 
     <div
-      class="hidden w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:block"
+      class="hidden w-full bg-base-100 rounded-box p-4 overflow-x-auto overflow-y-hidden md:block"
     >
       <table
         v-if="props.isLoading || props.rows.length > 0"
-        class="table table-zebra max-w-full border rounded-md overflow-hidden"
+        class="table max-w-full border border-base-300 rounded-box overflow-hidden"
       >
-        <thead>
+        <thead class="bg-base-300">
           <tr>
             <th
               v-for="column in props.columns"
               v-show="tableVisibleColumns.includes(column.value)"
               :key="column.value"
-              class="text-base-content font-bold"
+              class="text-base-content/70 font-semibold"
             >
               {{ column.label }}
             </th>
-            <th v-if="$slots['registerActions']" class="text-base-content font-bold">Ações</th>
+            <th v-if="$slots['registerActions']" class="text-base-content/70 font-semibold">Ações</th>
           </tr>
         </thead>
 
@@ -175,7 +175,7 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
     <div
       v-else
-      class="w-full bg-base-300/50 flex items-center justify-start gap-2 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:hidden"
+      class="w-full bg-base-100 flex items-center justify-start gap-2 rounded-box p-4 overflow-x-auto overflow-y-hidden md:hidden"
     >
       <Icon icon="lucide:info" />
       Nenhum registro encontrado.

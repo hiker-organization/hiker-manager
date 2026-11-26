@@ -14,7 +14,7 @@ const props = withDefaults(
 </script>
 
 <template>
-  <div class="relative min-h-120 size-full bg-base-300 rounded-md p-4">
+  <div class="relative min-h-120 size-full bg-base-100 rounded-box p-4">
     <!--
       O gráfico é montado desde o início, pois o ApexCharts calcula a altura ("100%")
       ao ser criado. O skeleton fica por cima dele enquanto os dados carregam.

@@ -27,9 +27,9 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
 <template>
   <div
     :class="[
-      'h-full bg-base-300 transition-all duration-200',
+      'h-full bg-(--sidebar-bg) text-white transition-all duration-200',
       'flex flex-col items-stretch justify-between gap-4',
-      'absolute top-0 left-0 bottom-0 z-10 border-r-2 border-r-base-100',
+      'absolute top-0 left-0 bottom-0 z-10',
       sidebarWidth,
     ]"
   >
@@ -43,7 +43,7 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
           title="Página inicial"
         >
           <img class="size-11" src="/icons/favicon.png" alt="logo" />
-          <h1 class="text-xl font-extrabold">Hiker Manager</h1>
+          <h1 class="text-xl font-extrabold text-white">Hiker Manager</h1>
         </RouterLink>
 
         <!-- Recolhe o menu no modo desktop (no mobile, a seta lateral faz isso). -->
@@ -52,7 +52,7 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
           v-if="isOpen"
           type="button"
           title="Recolher menu"
-          class="hidden size-8 items-center justify-center rounded-md cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex"
+          class="hidden size-8 items-center justify-center rounded-md text-white/85 cursor-pointer transition-all duration-150 hover:bg-white/10 hover:text-white md:flex"
           @click="sidebarStore.toggleSidebar"
         >
           <Icon icon="lucide:chevrons-left" class="size-5" />
@@ -65,7 +65,7 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
         v-if="!isOpen"
         type="button"
         title="Expandir menu"
-        class="hidden w-11 items-center justify-center p-2 bg-base-100 cursor-pointer transition-all duration-150 hover:bg-primary/50 md:flex"
+        class="hidden w-11 items-center justify-center rounded-lg p-2 text-white/85 cursor-pointer transition-all duration-150 hover:bg-white/10 hover:text-white md:flex"
         @click="sidebarStore.toggleSidebar"
       >
         <Icon icon="lucide:chevrons-right" />
@@ -80,8 +80,10 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
             }"
             :title="item.label"
             :class="[
-              'w-11 flex items-center justify-center p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
-              route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
+              'w-11 flex items-center justify-center rounded-lg p-2 cursor-pointer transition-all duration-150',
+              route.path.startsWith(item.route.path)
+                ? 'bg-(--sidebar-active) text-white'
+                : 'text-white/85 hover:bg-white/10 hover:text-white',
             ]"
           >
             <Icon :icon="item.icon" />
@@ -93,8 +95,10 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
             v-else
             :title="item.label"
             :class="[
-              'w-11 flex items-center justify-center p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
-              route.path.startsWith(item.route.path) ? 'bg-primary text-white' : 'bg-base-100',
+              'w-11 flex items-center justify-center rounded-lg p-2 cursor-pointer transition-all duration-150',
+              route.path.startsWith(item.route.path)
+                ? 'bg-(--sidebar-active) text-white'
+                : 'text-white/85 hover:bg-white/10 hover:text-white',
             ]"
             @click="sidebarStore.openSidebar"
           >
@@ -108,8 +112,10 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
             name: item.route.name,
           }"
           :class="[
-            'w-full flex items-center justify-start gap-2 p-2 cursor-pointer transition-all duration-150 hover:bg-primary/50',
-            route.path.startsWith(item.route.path) ? 'bg-primary/75 text-white' : 'bg-base-100',
+            'w-full flex items-center justify-start gap-2 rounded-lg p-2 cursor-pointer transition-all duration-150',
+            route.path.startsWith(item.route.path)
+              ? 'bg-(--sidebar-active) text-white'
+              : 'text-white/85 hover:bg-white/10 hover:text-white',
           ]"
         >
           <Icon :icon="item.icon" />
@@ -130,10 +136,10 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
                 name: subItem.route.name,
               }"
               :class="[
-                'w-full flex items-center justify-start gap-2 p-2 cursor-pointer transition-all duration-150 hover:bg-primary/25',
+                'w-full flex items-center justify-start gap-2 rounded-lg p-2 pl-8 cursor-pointer transition-all duration-150',
                 route.path.startsWith(subItem.route.path)
-                  ? 'bg-primary/50 text-white'
-                  : 'bg-base-200',
+                  ? 'bg-white/15 text-white'
+                  : 'text-white/75 hover:bg-white/10 hover:text-white',
               ]"
             >
               <Icon :icon="subItem.icon" />

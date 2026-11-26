@@ -39,13 +39,13 @@ function openTab(tab: RouteTab) {
 <template>
   <div class="size-full flex flex-col items-start justify-start gap-4">
     <div
-      class="w-full min-h-24 bg-base-300 flex flex-col items-center justify-center gap-2 border border-base-content rounded-lg p-4"
+      class="w-full flex flex-col items-start justify-center gap-2"
     >
-      <div class="flex items-center justify-center gap-2">
-        <div class="bg-primary/50 rounded-md p-2">
-          <Icon :icon="props.icon" class="size-6" />
+      <div class="flex items-center justify-start gap-4">
+        <div class="bg-(--icon-tile-bg) text-(--icon-tile-fg) rounded-2xl p-3">
+          <Icon :icon="props.icon" class="size-8" />
         </div>
-        <span class="text-3xl font-extrabold">{{ props.title }}</span>
+        <span class="text-3xl font-semibold">{{ props.title }}</span>
       </div>
 
       <slot name="description" />
@@ -59,8 +59,8 @@ function openTab(tab: RouteTab) {
             :custom-class="[
               'btn-primary flex items-center justify-center gap-2 p-4',
               isCurrentTab(tab)
-                ? 'bg-primary text-white pointer-events-none'
-                : 'bg-primary/25 text-base-content hover:bg-primary/75',
+                ? 'bg-primary text-primary-content pointer-events-none'
+                : 'bg-base-100 border-base-300 text-base-content hover:bg-base-300',
             ]"
             :label="tab.label"
             :icon="tab.icon"
@@ -72,7 +72,7 @@ function openTab(tab: RouteTab) {
       <div class="relative visible md:hidden">
         <div
           ref="currentTabSelectorAnchor"
-          class="bg-base-300 flex items-center justify-between gap-4 rounded-md p-4 cursor-pointer"
+          class="bg-base-100 flex items-center justify-between gap-4 rounded-box p-4 cursor-pointer"
           @click="tabSelectorIsOpen = !tabSelectorIsOpen"
         >
           <div class="flex items-center justify-start gap-2">
@@ -91,7 +91,7 @@ function openTab(tab: RouteTab) {
           v-show="tabSelectorIsOpen"
           :class="[
             'absolute top-full left-0 right-0',
-            'w-full bg-base-300 flex flex-col items-stretch justify-start border border-base-content/40 mt-2',
+            'w-full bg-base-100 flex flex-col items-stretch justify-start border border-base-300 rounded-box overflow-hidden mt-2',
           ]"
         >
           <span v-for="tab in props.tabs" :key="tab.label">

@@ -79,7 +79,7 @@ const {
             label: 'font-bold',
             outer: 'w-full',
             input:
-              'w-full bg-base-100 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-200 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="data"
           label="Expiração:"

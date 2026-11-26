@@ -15,7 +15,7 @@ const props = withDefaults(
 
 <template>
   <div
-    class="w-full bg-base-300 flex flex-col items-start justify-stretch gap-4 rounded-md p-4 lg:w-64"
+    class="w-full bg-base-100 flex flex-col items-start justify-stretch gap-4 rounded-md p-4 lg:w-64"
   >
     <h2 class="w-full flex items-center justify-center gap-2 text-lg text-center font-extrabold">
       <icon :icon="props.icon" />

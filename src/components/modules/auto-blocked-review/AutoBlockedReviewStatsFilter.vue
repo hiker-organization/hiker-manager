@@ -43,9 +43,9 @@ onMounted(() => {
         { value: 'REVISADAS', label: 'Revisadas' },
       ]"
       :classes="{
-        wrapper: 'w-full bg-base-300 rounded-md p-2',
+        wrapper: 'w-full bg-base-100 rounded-md p-2',
         input: 'w-full cursor-pointer',
-        option: 'bg-base-100',
+        option: 'bg-base-200',
       }"
       type="select"
     />
