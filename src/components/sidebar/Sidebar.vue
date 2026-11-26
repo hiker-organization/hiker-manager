@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import type { MenuItem, MenuSection } from '@/constants/sidebar/menu-items'
 import { Icon } from '@iconify/vue'
+import { breakpointsTailwind, onClickOutside, useBreakpoints } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 import { useRoute } from 'vue-router'
 import { items } from '@/constants/sidebar/menu-items'
 import { useSidebarStore } from '@/stores/core/sidebar-store'
@@ -11,13 +12,25 @@ const route = useRoute()
 
 const sidebarStore = useSidebarStore()
 
-// O estado fica no store para o layout acompanhar a largura; só muda pelos botões.
+// O estado fica no store para o layout acompanhar a largura; muda pelos botões e, no mobile, por um clique fora.
 
 const { isOpen } = storeToRefs(sidebarStore)
 
 const sidebarWidth = computed<string>(() =>
   isOpen.value ? 'w-72 p-4' : 'min-w-0 w-0 p-0 md:min-w-20 md:w-20 md:p-4',
 )
+
+// No mobile a sidebar cobre o conteúdo, então um clique fora dela a fecha.
+
+const sidebarElement = useTemplateRef<HTMLDivElement>('sidebar')
+
+const isMobile = useBreakpoints(breakpointsTailwind).smaller('md')
+
+onClickOutside(sidebarElement, () => {
+  if (isMobile.value && isOpen.value) {
+    sidebarStore.closeSidebar()
+  }
+})
 
 function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
   return 'name' in item.route
@@ -26,6 +39,7 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
 
 <template>
   <div
+    ref="sidebar"
     :class="[
       'h-full bg-(--sidebar-bg) text-white transition-all duration-200',
       'flex flex-col items-stretch justify-between gap-4',
@@ -163,12 +177,12 @@ function isMenuItem(item: MenuItem | MenuSection): item is MenuItem {
       <LogoutButton :show-label="isOpen" />
     </div>
 
-    <!-- Abre e fecha o menu no modo mobile. -->
+    <!-- Abre e fecha o menu no modo mobile, alinhado ao topo da página. -->
 
     <Button
       icon="lucide:arrow-right"
       :custom-class="[
-        'z-10 absolute bottom-0 left-full md:hidden',
+        'z-10 absolute top-3 left-full md:hidden',
         'btn-primary rounded-l-none rounded-r-full',
       ]"
       @click="sidebarStore.toggleSidebar"
