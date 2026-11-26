@@ -10,7 +10,12 @@
   </head>
 
   <body data-theme="corporate">
-    <div id="app"></div>
+    <!-- Logo exibido até o Vue montar a aplicação e substituir o conteúdo. -->
+    <div id="app">
+      <div style="height: 100vh; display: flex; align-items: center; justify-content: center">
+        <img src="/icons/favicon.png" alt="logo" style="width: 4rem; height: 4rem" />
+      </div>
+    </div>
 
     <script type="module" src="/src/main.ts"></script>
   </body>

@@ -47,7 +47,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
       },
     },
     title: {
-      text: 'Usuários com mais Bloqueios',
+      text: 'Usuários com mais postagens bloqueadas',
       align: 'center',
       style: {
         fontSize: `${20 * chartVisualResourcesScale.value}px`,
@@ -124,8 +124,14 @@ export function useUsersWithMostBlockedReviewsChartResources() {
     },
   }))
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o componente.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     const { data, statusCode } = await usersDashboardStore.getUsersWithMostBlockedReviews({}, {})
+
+    isLoading.value = false
 
     if (statusCode.value && data.value) {
       usersWithMostBlockedReviewsResponse.value = data.value.data
@@ -133,6 +139,7 @@ export function useUsersWithMostBlockedReviewsChartResources() {
   })
 
   return {
+    isLoading,
     usersWithMostBlockedReviewsChartSeries,
     usersWithMostBlockedReviewsChartOptions,
   }

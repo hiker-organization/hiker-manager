@@ -46,7 +46,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-96 bg-base-300 rounded-lg p-4">
+  <div class="w-96 bg-base-100 rounded-box p-6">
     <Form
       v-model:form="authFormData"
       :classes="{
@@ -59,7 +59,7 @@ onMounted(() => {
         :classes="{
           outer: 'w-full',
           label: 'font-bold',
-          input: 'w-full bg-base-100 rounded-sm mt-2 p-1',
+          input: 'w-full bg-base-200 rounded-sm mt-2 p-1',
         }"
         name="email"
         type="email"
@@ -70,7 +70,7 @@ onMounted(() => {
         :classes="{
           outer: 'w-full',
           label: 'font-bold',
-          input: 'w-full bg-base-100 rounded-sm mt-2 p-1',
+          input: 'w-full bg-base-200 rounded-sm mt-2 p-1',
         }"
         name="password"
         type="password"

@@ -9,7 +9,7 @@ export const USER_TABLE_COLUMNS = [
   { label: 'Data de Nascimento', value: 'data_nascimento', type: 'date' },
   { label: 'Celular', value: 'numero_celular', type: 'text' },
   { label: 'Reputação', value: 'reputacao', type: 'text' },
-  { label: 'Foto', value: 'foto_url', type: 'file' }, // Implementação futura.
+  { label: 'Foto', value: 'foto_url', type: 'file' }, // Miniatura pelo slot na listagem.
   { label: 'Banido', value: 'banido', type: 'text' },
   { label: 'Bloqueado', value: 'bloqueado', type: 'text' },
   { label: 'Expiração do Bloqueio', value: 'bloqueado_ate', type: 'date' },

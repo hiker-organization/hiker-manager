@@ -1,16 +1,16 @@
 import type { ReviewReportListRow } from '@/models/modules/review-report/review-report-model'
+import type { ReportStatus } from '@/models/modules/report/report-model'
 import type { Pagination } from '@/models/components/table/pagination-model'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useReviewReportStore } from '@/stores/modules/review-report/review-report-store'
 import { useUrlParamsManager } from '@/composables/navigation/use-url-params-manager'
 
-export function useReviewReportList() {
+// status: ATIVA lista as denúncias em aberto da postagem, FECHADA as já revisadas.
+export function useReviewReportList(namespace: string, status: ReportStatus) {
   const route = useRoute()
 
   const reviewReportStore = useReviewReportStore()
-
-  const namespace: string = 'review-reports-list'
 
   const reviewCode = computed<number | null>(() => {
     const param = route.params.reviewCode
@@ -32,6 +32,10 @@ export function useReviewReportList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
 
   const selectedReviewReport = ref<ReviewReportListRow | null>(null)
@@ -49,12 +53,19 @@ export function useReviewReportList() {
   }
 
   async function loadReviewReports() {
+    isLoading.value = true
+
     const { data, statusCode } = await reviewReportStore.fetchReviewReports(
-      currentNamespaceQueryParams.value,
+      {
+        ...currentNamespaceQueryParams.value,
+        status,
+      },
       {
         reviewCode: reviewCode.value,
       },
     )
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       reviewReports.value = data.value.data
@@ -76,6 +87,7 @@ export function useReviewReportList() {
     namespace,
     reviewReports,
     pagination,
+    isLoading,
     actionsModalIsVisible,
     selectedReviewReport,
     openActionsModal,

@@ -18,6 +18,7 @@ interface TableProps {
   rows: Array<TRow>
   pagination?: Pagination
   extraSlots?: Array<string>
+  isLoading?: boolean
 }
 
 // Extraindo o valor da propriedade "value" de cada coluna.
@@ -51,6 +52,12 @@ const tableOptionsModalIsVisible = ref<boolean>(false)
 
 const tableVisibleColumns = ref<Array<string>>([])
 
+// Quantidade de linhas e cards exibidos enquanto os dados carregam.
+
+const SKELETON_ROWS: number = 5
+
+const SKELETON_CARDS: number = 3
+
 // Funções.
 
 function prepareCellValue(row: TRow, column: TableColumn): unknown {
@@ -69,27 +76,43 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
 
     <div
-      class="hidden w-full bg-base-300/50 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:block"
+      class="hidden w-full bg-base-100 rounded-box p-4 overflow-x-auto overflow-y-hidden md:block"
     >
       <table
-        v-if="props.rows.length > 0"
-        class="table table-zebra max-w-full border rounded-md overflow-hidden"
+        v-if="props.isLoading || props.rows.length > 0"
+        class="table max-w-full border border-base-300 rounded-box overflow-hidden"
       >
-        <thead>
+        <thead class="bg-base-300">
           <tr>
             <th
               v-for="column in props.columns"
               v-show="tableVisibleColumns.includes(column.value)"
               :key="column.value"
-              class="text-base-content font-bold"
+              class="text-base-content/70 font-semibold"
             >
               {{ column.label }}
             </th>
-            <th v-if="$slots['registerActions']" class="text-base-content font-bold">Ações</th>
+            <th v-if="$slots['registerActions']" class="text-base-content/70 font-semibold">Ações</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody v-if="props.isLoading">
+          <tr v-for="skeletonRow in SKELETON_ROWS" :key="skeletonRow">
+            <td
+              v-for="column in props.columns"
+              v-show="tableVisibleColumns.includes(column.value)"
+              :key="column.value"
+            >
+              <div class="skeleton h-4 w-full min-w-16"></div>
+            </td>
+
+            <td>
+              <div v-if="$slots['registerActions']" class="skeleton h-10 w-24"></div>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody v-else>
           <tr v-for="(row, rowIndex) in props.rows" :key="rowIndex">
             <td
               v-for="column in props.columns"
@@ -115,7 +138,17 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
 
     <div
-      v-if="props.rows.length > 0"
+      v-if="props.isLoading"
+      class="w-full flex flex-col items-stretch justify-start gap-4 md:hidden"
+    >
+      <div
+        v-for="skeletonCard in SKELETON_CARDS"
+        :key="skeletonCard"
+        class="skeleton h-40 w-full rounded-xl"
+      ></div>
+    </div>
+    <div
+      v-else-if="props.rows.length > 0"
       class="w-full bg-transparent flex flex-col items-stretch justify-start gap-4 rounded-xl md:hidden"
     >
       <TableCard
@@ -142,7 +175,7 @@ function prepareCellValue(row: TRow, column: TableColumn): unknown {
     </div>
     <div
       v-else
-      class="w-full bg-base-300/50 flex items-center justify-start gap-2 rounded-xl p-4 overflow-x-auto overflow-y-hidden md:hidden"
+      class="w-full bg-base-100 flex items-center justify-start gap-2 rounded-box p-4 overflow-x-auto overflow-y-hidden md:hidden"
     >
       <Icon icon="lucide:info" />
       Nenhum registro encontrado.

@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useUserForm } from '@/composables/modules/user/use-user-form'
 
-const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = useUserForm()
+const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate, isLoading } =
+  useUserForm()
 </script>
 
 <template>
+  <!-- Seção "Dados Básicos", com os 8 campos sempre visíveis. -->
+
+  <FormSkeleton v-if="isLoading" :sections="[8]" />
+
   <Form
+    v-else
     v-model:form="userFormData"
     :disabled="true"
     :classes="{
@@ -18,7 +24,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="id"
           type="hidden"
@@ -29,7 +35,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nome_usuario"
           type="text"
@@ -40,7 +46,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="nome_exibicao"
           type="text"
@@ -55,7 +61,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="cargo"
           type="select"
@@ -66,7 +72,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="email"
           type="email"
@@ -77,7 +83,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="numero_celular"
           type="text"
@@ -89,7 +95,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="data_nascimento"
           type="date"
@@ -100,7 +106,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="reputacao"
           type="number"
@@ -111,7 +117,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="foto_url"
           type="text"
@@ -124,7 +130,7 @@ const { userFormData, normalizedBirthDate, normalizedBlockExpirationDate } = use
           :classes="{
             label: 'font-bold',
             input:
-              'w-full bg-base-300 border border-base-content/50 text-base-content rounded-md mt-2 p-1',
+              'w-full bg-base-100 border border-base-300 text-base-content rounded-md mt-2 p-1',
           }"
           name="bloqueado_ate"
           type="date"

@@ -7,9 +7,12 @@ const {
   namespace,
   users,
   pagination,
+  isLoading,
   actionsModalIsVisible,
+  detailsModalIsVisible,
   selectedUser,
   openActionsModal,
+  openDetailsModal,
   forceUsersListingReload,
   setNamespaceQueryParams,
 } = useUserList()
@@ -22,9 +25,21 @@ const {
       :columns="USER_TABLE_COLUMNS"
       :rows="users"
       :pagination="pagination"
+      :is-loading="isLoading"
       @updateParams="(params) => setNamespaceQueryParams(params)"
     >
       <template #reputacao="{ data }">{{ Decimal(data.reputacao.toFixed(2)) }}%</template>
+
+      <template #foto_url="{ data }">
+        <img
+          v-if="data.foto_url"
+          :src="data.foto_url"
+          :alt="`Foto de ${data.nome_usuario}`"
+          class="size-10 rounded-full object-cover"
+        />
+
+        <span v-else class="truncate">Não Definido(a)</span>
+      </template>
 
       <template #banido="{ data }">
         <ConditionBadge
@@ -67,21 +82,12 @@ const {
       icon="lucide:user-2"
     >
       <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
-        <RouterLink
-          :to="{
-            name: 'userForm',
-            params: {
-              user: selectedUser.nome_usuario,
-            },
-          }"
-          class="w-full"
-        >
-          <Button
-            label="Dados Completos"
-            icon="lucide:form"
-            custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
-          />
-        </RouterLink>
+        <Button
+          label="Dados Completos"
+          icon="lucide:form"
+          custom-class="btn-info w-full flex items-center justify-center gap-2 p-4"
+          @click="openDetailsModal"
+        />
 
         <BlockUserModal
           v-if="!selectedUser.bloqueado && !selectedUser.banido"
@@ -101,6 +107,15 @@ const {
           @ban-processed="forceUsersListingReload"
         />
       </div>
+    </Modal>
+
+    <Modal
+      v-if="selectedUser"
+      v-model:is-visible="detailsModalIsVisible"
+      :title="`Usuário (#${selectedUser.id})`"
+      icon="lucide:user-2"
+    >
+      <UserDetails :user="selectedUser" />
     </Modal>
   </div>
 </template>

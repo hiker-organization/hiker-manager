@@ -4,6 +4,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/auth',
     component: () => import('@/layouts/AuthLayout.vue'),
+    meta: { guestOnly: true }, // Só acessível sem sessão.
     children: [
       {
         path: '',
@@ -16,6 +17,7 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     component: () => import('@/layouts/AppLayout.vue'),
+    meta: { requiresAuth: true }, // Vale para todas as rotas filhas.
     children: [
       {
         path: '',
@@ -74,6 +76,12 @@ export const routes: Array<RouteRecordRaw> = [
             name: 'reviewsListing',
             component: () => import('@/views/modules/review/ReviewListing.vue'),
             meta: { title: 'Listagem de Postagens' },
+          },
+          {
+            path: 'auto-blocked',
+            name: 'autoBlockedReviewsListing',
+            component: () => import('@/views/modules/review/AutoBlockedReviewsListing.vue'),
+            meta: { title: 'Postagens Bloqueadas pelo Modelo' },
           },
           {
             path: ':reviewCode',

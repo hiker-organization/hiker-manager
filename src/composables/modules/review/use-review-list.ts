@@ -19,17 +19,29 @@ export function useReviewList() {
     sortable_fields: [],
   })
 
+  // Começa verdadeiro, pois a primeira busca é disparada ao montar a listagem.
+
+  const isLoading = ref<boolean>(true)
+
   const actionsModalIsVisible = ref<boolean>(false)
+
+  // Dados completos do registro selecionado, abertos a partir do modal de ações.
+
+  const detailsModalIsVisible = ref<boolean>(false)
 
   const selectedReview = ref<ReviewListRow | null>(null)
 
   const { currentNamespaceQueryParams, setNamespaceQueryParams } = useUrlParamsManager({
     namespace,
     onNamespaceQueryParamsChange: async () => {
+      isLoading.value = true
+
       const { data, statusCode } = await reviewStore.fetchReviews(
         currentNamespaceQueryParams.value,
         {},
       )
+
+      isLoading.value = false
 
       if (statusCode.value === 200 && data.value) {
         reviews.value = data.value.data
@@ -49,13 +61,22 @@ export function useReviewList() {
     actionsModalIsVisible.value = true
   }
 
+  function openDetailsModal() {
+    actionsModalIsVisible.value = false
+
+    detailsModalIsVisible.value = true
+  }
+
   return {
     namespace,
     reviews,
     pagination,
+    isLoading,
     actionsModalIsVisible,
+    detailsModalIsVisible,
     selectedReview,
     openActionsModal,
+    openDetailsModal,
     setNamespaceQueryParams,
   }
 }

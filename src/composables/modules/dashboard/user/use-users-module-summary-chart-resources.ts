@@ -103,8 +103,14 @@ export function useUsersModuleSummaryChartResources() {
     },
   }))
 
+  // Começa verdadeiro, pois a busca é disparada ao montar o componente.
+
+  const isLoading = ref<boolean>(true)
+
   onMounted(async () => {
     const { data, statusCode } = await usersDashboardStore.getUsersModuleSummary({}, {})
+
+    isLoading.value = false
 
     if (statusCode.value === 200 && data.value) {
       usersModuleSummaryResponse.value = data.value
@@ -112,6 +118,7 @@ export function useUsersModuleSummaryChartResources() {
   })
 
   return {
+    isLoading,
     usersModuleSummaryChartSeries,
     usersModuleSummaryChartOptions,
   }
